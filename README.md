@@ -8,6 +8,7 @@ This project key objectives can be summarized in the points below:
 * Tracking and monitoring spare parts allocation to existing fleet.
 * Automation of the ordering cycle using a centralized system and well-defined process.
 * Device-independent, highly-available warehouse management/auditing system.
+* Fleet management and monitoring.
 
 ## BENEFICIARIES
 City Stars Tours
