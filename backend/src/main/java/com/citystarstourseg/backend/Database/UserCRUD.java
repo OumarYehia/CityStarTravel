@@ -28,7 +28,7 @@ public class UserCRUD extends EntityCRUD<User> {
         preparedStatement.setString(1, user.getUserName());
         preparedStatement.setString(2, user.getFullName());
         preparedStatement.setString(3, user.getEmailAddress());
-        preparedStatement.setString(4, user.getPasswordSalt());
+        preparedStatement.setBytes(4, user.getPasswordSalt());
         preparedStatement.setString(5, user.getPasswordHash());
         preparedStatement.setString(6, user.getMobileNumber());
         preparedStatement.setInt(7, user.getRoleID());
@@ -36,27 +36,28 @@ public class UserCRUD extends EntityCRUD<User> {
         return preparedStatement .executeUpdate();
     }
 
-    public String[] getUserPasswordHash(String username) throws SQLException {
-//        String query = "select passwordSalt, passwordHash from users where userName = ?";
+    public List<byte[]> getUserPasswordSaltAndHash(String username) throws SQLException {
 
-
+        List<byte[]> saltAndHash = new ArrayList<>();
         String query = "select passwordSalt, passwordHash from users where userName = ?";
         PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(query);
         preparedStatement.setString(1, username);
 
         ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.beforeFirst();
         if(resultSet.next()){
-            return new String[] {resultSet.getString("passwordSalt"), resultSet.getString("passwordHash")};
+            saltAndHash.add(resultSet.getBytes("passwordSalt"));
+            saltAndHash.add(resultSet.getBytes("passwordHash"));
+            //return new String[] {resultSet.getString("passwordSalt"), resultSet.getString("passwordHash")};
         }
-        else{
-            return new String[] {"-1","-1"};
-        }
+        return saltAndHash;
+
     }
 
     @Override
-    public int readRecords(User o) {
+    public List<User> readRecords(String userID) {
         // TODO: to be implemented
-        return -1000;
+        return new ArrayList<>();
     }
 
     @Override

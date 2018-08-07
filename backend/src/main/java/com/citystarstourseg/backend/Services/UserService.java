@@ -2,11 +2,12 @@ package com.citystarstourseg.backend.Services;
 
 import com.citystarstourseg.backend.DAOs.User;
 import com.citystarstourseg.backend.Database.UserCRUD;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 public class UserService {
 
@@ -18,15 +19,18 @@ public class UserService {
     public UserService(String userName, String fullName, String emailAddress,
                        String password, String mobileNumber, String roleID) throws NoSuchAlgorithmException {
         this.encryption = new Encryption("hard");
-        String[] passwordAlterations = getPasswordAlterations(password); // [0]: salt, [1]: hash
+        List<byte[]> passwordAlterations = getPasswordAlterations(password); // [0]: salt, [1]: hash
         int roleIDint = Integer.parseInt(roleID);
-        user = new User(userName,fullName,emailAddress,passwordAlterations[0], passwordAlterations[1],mobileNumber,roleIDint, LocalDateTime.now());
+
+        //              str     ,str     ,str         ,bytes (salt)                     ,str(hash)              ,str         ,int
+        user = new User(userName,fullName,emailAddress,passwordAlterations.get(0), new String(passwordAlterations.get(1)),mobileNumber,roleIDint, LocalDateTime.now());
         userCRUD = new UserCRUD();
     }
 
     // constructor for sign in
     public UserService () {
         userCRUD = new UserCRUD();
+        this.encryption = new Encryption("hard");
     }
 
     /**
@@ -35,7 +39,7 @@ public class UserService {
      * @return String[] containing salt at [0] and hash at [1]
      * @throws NoSuchAlgorithmException if hashing algorithm could not be found
      */
-    private String[] getPasswordAlterations(String password) throws NoSuchAlgorithmException {
+    private List<byte[]> getPasswordAlterations(String password) throws NoSuchAlgorithmException {
         return encryption.encrypt(password, null);
     }
 
@@ -43,18 +47,14 @@ public class UserService {
         return userCRUD.createRecords(user);
     }
 
-    public int signInCheck(String username, String password) throws SQLException, NoSuchAlgorithmException {
-        String[] encryptedPassword = userCRUD.getUserPasswordHash(username); // get salt and hash from DB for comparison
-        if(encryptedPassword[0].equals("-1") && encryptedPassword[1].equals("-1") ) { // username not found
+    public int signIn(String username, String password) throws SQLException, NoSuchAlgorithmException {
+        List<byte[]> encryptedPassword = userCRUD.getUserPasswordSaltAndHash(username); // get salt and hash from DB for comparison
+        if(encryptedPassword.isEmpty()) // user not found
             return -1;
-        }
-        else { // username found
-            // TODO: Compare password entered (param: password) hashed with obtained salt(param: encryptedPassword[0]) with hash value obtained (param: encryptedPassword[1])
-            String[] testedPasswordHash = encryption.encrypt(password, encryptedPassword[0].getBytes());
-            if(encryptedPassword[1].equals(testedPasswordHash[1])){
-                return 1;
-            }
-            return -1;
-        }
+        byte[] passwordSalt = encryptedPassword.get(0), passwordHash = encryptedPassword.get(1);
+        List<byte[]>  testedPasswordHash = encryption.encrypt(password, passwordSalt); // [0]: salt, [1]: hash password
+        if(Arrays.equals(passwordHash,testedPasswordHash.get(1)))
+            return 1;
+        return -1;
     }
 }

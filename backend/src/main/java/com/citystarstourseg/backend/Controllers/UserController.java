@@ -14,7 +14,7 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping("/signUp")
-    public int userService(@RequestParam(value="userName", defaultValue="") String userName,
+    public int signUp(@RequestParam(value="userName", defaultValue="") String userName,
                             @RequestParam(value="fullName", defaultValue="") String fullName,
                             @RequestParam(value="emailAddress", defaultValue="") String emailAddress,
                             @RequestParam(value="password", defaultValue="") String password,
@@ -26,15 +26,10 @@ public class UserController {
     }
 
     @RequestMapping("/signIn")
-    public int userService(@RequestParam(value="userName", defaultValue="") String userName,
+    public int signIn(@RequestParam(value="userName", defaultValue="") String userName,
                            @RequestParam(value="password", defaultValue="") String password) throws NoSuchAlgorithmException, SQLException {
 
         userService = new UserService();
-        return userService.signInCheck(userName,password);
+        return userService.signIn(userName,password);
     }
-
-
-
-
-
 }

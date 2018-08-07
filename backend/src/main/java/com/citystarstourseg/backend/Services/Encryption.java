@@ -3,7 +3,9 @@ package com.citystarstourseg.backend.Services;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 public class Encryption {
 
@@ -34,7 +36,7 @@ public class Encryption {
         return salt;
     }
 
-    public String[] encrypt(String password, byte[] salt) throws NoSuchAlgorithmException {
+    public List<byte[]> encrypt(String password, byte[] salt) throws NoSuchAlgorithmException {
         String passwordHash = null;
         if(salt == null)
             salt = getSalt();
@@ -52,12 +54,16 @@ public class Encryption {
         {
             e.printStackTrace();
         }
-        String saltString = new String(salt);
-//        String saltString = Base64.getEncoder().encodeToString(salt);
+        /*String saltString = new String(salt);
         String[] returnedArray = new String[2];
         returnedArray[0] = saltString;
-        returnedArray[1] = passwordHash;
-        return returnedArray;
+        returnedArray[1] = passwordHash;*/
+        List<byte[]> returnedList = new ArrayList<>();
+        returnedList.add(salt);
+        assert passwordHash != null;
+        returnedList.add(passwordHash.getBytes());
+
+        return returnedList;
     }
 
 
