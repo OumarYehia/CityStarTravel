@@ -1,3 +1,40 @@
-<p>
-  buses works!
-</p>
+<section>
+  <div class="row">
+
+    <div class=" col-md-4 col-sm-6 col-xs-12 bus-div" *ngFor="let bus of buses">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <!--<div mat-card-avatar class="example-header-image"></div>-->
+          <mat-card-title>
+            {{bus.name}}
+          </mat-card-title>
+          <mat-card-subtitle>
+            <div class="license-plate">
+              <img class="license-bg" src="../../../assets/license.png">
+              <div class="body">
+                <span class="numbers">{{bus.licencePlate.numbers}}</span>
+                <span class="letters">{{bus.licencePlate.letters}}</span>
+              </div>
+            </div>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <!--<img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of the bus">-->
+        <img mat-card-image src="http://fakeimg.pl/365x365/" alt="Photo of the bus">
+        <mat-card-content>
+          <p>
+            Some data
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <!--<button mat-button>LIKE</button>-->
+          <!--<button mat-button>SHARE</button>-->
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+
+  </div>
+</section>
+
+
+

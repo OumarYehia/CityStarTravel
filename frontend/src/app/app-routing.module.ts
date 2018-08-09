@@ -21,6 +21,11 @@ const routes: Routes = [
         component: HomeComponent,
         children: [
           {
+            path: '',
+            pathMatch: 'prefix',
+            redirectTo: 'buses'
+          },
+          {
             path: 'buses',
             component: BusesComponent
           },
