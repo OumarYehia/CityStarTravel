@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-home',
-  template: '<p>Yay! You are logged in!</p>',
-  styles: []
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {}
+export class HomeComponent {
+  
+}

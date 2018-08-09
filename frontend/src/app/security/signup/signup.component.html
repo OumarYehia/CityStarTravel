@@ -1,0 +1,51 @@
+<div class="signin-content">
+  <mat-card>
+    <mat-card-content>
+      <img src="assets/logo.png">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="إسم المستخدم" formControlName="userName" required>
+          <mat-error *ngIf="isFieldInvalid('userName')">
+            من فضلك أدخل إسم المستخدم
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width-input">
+          <input matInput type="password" placeholder="كلمة السر" formControlName="password" required>
+          <mat-error *ngIf="isFieldInvalid('userName')">
+            من فضلك أدخل كلمة السر
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="تأكيد كلمة السر" formControlName="confirmPassword" required>
+          <mat-error *ngIf="isFieldInvalid('confirmPassword')">
+            من فضلك أكد كلمة السر
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="الاسم" formControlName="fullName" required>
+          <mat-error *ngIf="isFieldInvalid('fullName')">
+            من فضلك أدخل اسمك كاملاً
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="البريد الإلكتروني" formControlName="email" required>
+          <mat-error *ngIf="isFieldInvalid('email')">
+            من فضلك أدخل البريد الالكترون
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="Mobile number" formControlName="mobileNumber" required>
+          <mat-error *ngIf="isFieldInvalid('mobileNumber')">
+            من فضلك أدخل رقم هاتفك المحمول
+          </mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary">انشئ حساب</button>
+        <div>
+          <a routerLink="/login">هل تملك حساب؟ سجل دخول</a>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<img id="video-background" src="assets/login-bg.jpg">

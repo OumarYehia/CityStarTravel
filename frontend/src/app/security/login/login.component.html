@@ -1,0 +1,30 @@
+<div class="signin-content">
+  <mat-card>
+    <mat-card-content>
+      <img src="assets/logo.png">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <p>من فضلك سجل دخولك للتكملة</p>
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="إسم المستخدم" formControlName="userName" required>
+          <mat-error *ngIf="isFieldInvalid('userName')">
+            من فضلك أدخل إسم المستخدم
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width-input">
+          <input matInput type="password" placeholder="كلمة المرور" formControlName="password" required>
+          <mat-error *ngIf="isFieldInvalid('password')">
+            من فضلك أدخل كلمة المرور
+          </mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary">تسجيل دخول</button>
+        <div>
+          <a routerLink="/signup">لا تملك حساب؟ انشئ حساب جديد </a>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<img id="video-background" src="assets/login-bg.jpg">
+
+
