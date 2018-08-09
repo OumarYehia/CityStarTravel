@@ -15,6 +15,7 @@ import { SignupComponent } from './security/signup/signup.component';
 import { BusesComponent } from './home/buses/buses.component';
 import { WarehouseManagementComponent } from './home/warehouse-management/warehouse-management.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     AppMaterialModule,
     AppRoutingModule,

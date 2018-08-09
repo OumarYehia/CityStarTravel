@@ -1,3 +1,32 @@
-<p>
-  warehouse-management works!
-</p>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+
+  <!--sparepartName qty -->
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> إسم القطعة </th>
+    <td mat-cell [ngClass]="{'error': element.qty==0}" *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="qty">
+    <th mat-header-cell *matHeaderCellDef> الكمية </th>
+    <td mat-cell [ngClass]="{'error': element.qty==0}" *matCellDef="let element"> {{element.qty}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="bus">
+    <th mat-header-cell *matHeaderCellDef> الأتوبيس </th>
+    <td mat-cell [ngClass]="{'error': element.qty==0}" *matCellDef="let element"> {{element.bus}} </td>
+  </ng-container>
+
+  <!--&lt;!&ndash; Symbol Column &ndash;&gt;-->
+  <!--<ng-container matColumnDef="symbol">-->
+    <!--<th mat-header-cell *matHeaderCellDef> Symbol </th>-->
+    <!--<td mat-cell *matCellDef="let element"> {{element.symbol}} </td>-->
+  <!--</ng-container>-->
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

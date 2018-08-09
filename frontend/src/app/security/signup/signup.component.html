@@ -16,7 +16,7 @@
           </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width-input">
-          <input matInput placeholder="تأكيد كلمة السر" formControlName="confirmPassword" required>
+          <input matInput type="password" placeholder="تأكيد كلمة السر" formControlName="confirmPassword" required>
           <mat-error *ngIf="isFieldInvalid('confirmPassword')">
             من فضلك أكد كلمة السر
           </mat-error>
@@ -34,7 +34,7 @@
           </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width-input">
-          <input matInput placeholder="Mobile number" formControlName="mobileNumber" required>
+          <input matInput placeholder="رقم المحمول" formControlName="mobileNumber" required>
           <mat-error *ngIf="isFieldInvalid('mobileNumber')">
             من فضلك أدخل رقم هاتفك المحمول
           </mat-error>

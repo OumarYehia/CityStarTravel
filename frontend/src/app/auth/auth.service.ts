@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Router} from '@angular/router';
-import {User} from './user';
+import {NewUser, User} from './user';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -15,17 +16,39 @@ export class AuthService {
   }
 
   constructor(
-    private router: Router
-  ) {}
+    private router: Router,
+    private http: HttpClient
+  ) {
+  }
 
-  login(user: User){
-    if (user.userName !== '' && user.password !== '' ) {
-      this.loggedIn.next(true);
-      this.router.navigate(['/']);
-    }
+  API_URL = 'https://192.168.1.7:8443';
+
+  signup(user: NewUser) {
+    return this.http.post(`${this.API_URL}/signUp`, user);
+  }
+
+  login(user: User) {
+    this.http.post(`${this.API_URL}/signIn`, user).subscribe(
+      data => {
+        console.log('successful login');
+        this.loggedIn.next(true);
+        this.router.navigate(['/']);
+      },
+      error => {
+        console.log('failed in login');
+        console.log(error);
+      }
+    );
+    //
+    // if (user.userName !== '' && user.password !== '') {
+    //   this.loggedIn.next(true);
+    //   this.router.navigate(['/']);
+    // }
   }
 
   logout() {
     this.loggedIn.next(false);
     this.router.navigate(['/login']);
-  }}
+  }
+
+}
