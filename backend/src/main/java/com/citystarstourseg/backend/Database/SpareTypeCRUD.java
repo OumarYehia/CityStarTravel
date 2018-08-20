@@ -1,7 +1,7 @@
 package com.citystarstourseg.backend.Database;
-
 import com.citystarstourseg.backend.DAOs.Bus;
 import com.citystarstourseg.backend.DAOs.Spare;
+import com.citystarstourseg.backend.DAOs.SpareType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -11,38 +11,35 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
-public class SpareCRUD extends EntityCRUD<Spare> {
+public class SpareTypeCRUD extends EntityCRUD<SpareType> {
 
     @Autowired
     private DatabaseConnection databaseConnection;
     @Override
-    public int createRecords(Spare spare) throws SQLException {
-        String dataIntoUsers = "INSERT INTO SPARES"
-                + "(spareName, spareTypeID, busID) VALUES"
-                + "(?,?,?)";
+    public int createRecords(SpareType spareType) throws SQLException {
+        String dataIntoUsers = "INSERT INTO SPARESTYPES"
+                + "(spareType) VALUES"
+                + "(?)";
         PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(dataIntoUsers);
-        preparedStatement.setString(1, spare.getSpareName());
-        preparedStatement.setInt(2, Integer.parseInt(spare.getSpareTypeID()));
-        preparedStatement.setInt(3, Integer.parseInt(spare.getBusID()));
+        preparedStatement.setString(1, spareType.getSpareType());
         // execute insert SQL statement
         return preparedStatement .executeUpdate();
     }
 
     @Override
-    public List<Spare> readRecords(String spareID) throws SQLException {
+    public List<SpareType> readRecords(String spareTypeID) throws SQLException {
         // TODO: to be implemented
         return new ArrayList<>();
     }
 
     @Override
-    public int updateRecords(Spare spare) {
+    public int updateRecords(SpareType spareType) {
         // TODO: to be implemented
         return -1000;
     }
 
     @Override
-    public int deleteRecords(Spare spare) {
+    public int deleteRecords(SpareType spareType) {
         // TODO: to be implemented
         return -1000;
     }

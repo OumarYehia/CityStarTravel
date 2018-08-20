@@ -27,7 +27,7 @@ public class UserCRUD extends EntityCRUD<User> {
         PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(dataIntoUsers);
         preparedStatement.setString(1, user.getUserName());
         preparedStatement.setString(2, user.getFullName());
-        preparedStatement.setString(3, user.getEmailAddress());
+        preparedStatement.setString(3, user.getEmail());
         preparedStatement.setBytes(4, user.getPasswordSalt());
         preparedStatement.setString(5, user.getPasswordHash());
         preparedStatement.setString(6, user.getMobileNumber());

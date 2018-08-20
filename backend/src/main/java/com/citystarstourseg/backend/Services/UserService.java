@@ -23,14 +23,21 @@ public class UserService {
         int roleIDint = Integer.parseInt(roleID);
 
         //              str     ,str     ,str         ,bytes (salt)                     ,str(hash)              ,str         ,int
-        user = new User(userName,fullName,emailAddress,passwordAlterations.get(0), new String(passwordAlterations.get(1)),mobileNumber,roleIDint, LocalDateTime.now());
-        userCRUD = new UserCRUD();
+        this.user = new User(userName,fullName,emailAddress,passwordAlterations.get(0), new String(passwordAlterations.get(1)),mobileNumber,roleIDint, LocalDateTime.now());
+        this.userCRUD = new UserCRUD();
+    }
+
+    public UserService(User user) {
+        this.encryption = new Encryption("hard");
+        this.user = user;
+        this.userCRUD = new UserCRUD();
     }
 
     // constructor for sign in
     public UserService () {
         userCRUD = new UserCRUD();
         this.encryption = new Encryption("hard");
+
     }
 
     /**
@@ -44,6 +51,7 @@ public class UserService {
     }
 
     public int createUser() throws SQLException {
+
         return userCRUD.createRecords(user);
     }
 

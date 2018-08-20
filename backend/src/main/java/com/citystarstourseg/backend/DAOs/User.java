@@ -1,11 +1,10 @@
 package com.citystarstourseg.backend.DAOs;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class User {
 
-    private String userName, fullName, emailAddress, passwordHash, mobileNumber;
+    private String userName, fullName, email, password, mobileNumber, passwordHash, confirmPassword;
     private byte[] passwordSalt;
     private int roleID;
     private String isApproved, isBlocked;
@@ -13,16 +12,18 @@ public class User {
 
     private String roleName;
 
-    public User(String userName, String fullName, String emailAddress, byte[] passwordSalt, String passwordHash, String mobileNumber, int roleID, LocalDateTime dateAccountCreated) {
+    public User(String userName, String fullName, String email, byte[] passwordSalt, String passwordHash, String mobileNumber, int roleID, LocalDateTime dateAccountCreated) {
         this.userName = userName;
         this.fullName = fullName;
-        this.emailAddress = emailAddress;
+        this.email = email;
         this.passwordSalt = passwordSalt;
         this.passwordHash = passwordHash;
         this.mobileNumber = mobileNumber;
         this.roleID = roleID;
         this.dateAccountCreated = dateAccountCreated;
     }
+
+    public User() {}
 
     public String getUserName() {
         return userName;
@@ -34,8 +35,8 @@ public class User {
     }
 
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getEmail() {
+        return email;
     }
 
 
@@ -69,5 +70,10 @@ public class User {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    @Override
+    public String toString() {
+        return userName +" - "+ fullName +" - "+ email +" - "+ password +" - "+ mobileNumber +" - "+ passwordHash;
     }
 }

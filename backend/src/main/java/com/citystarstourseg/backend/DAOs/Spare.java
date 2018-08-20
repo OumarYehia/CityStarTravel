@@ -2,40 +2,43 @@ package com.citystarstourseg.backend.DAOs;
 
 public class Spare {
 
-    private String id, plates, make;
+    private String spareID, spareName, spareTypeID, busID;
 
-    public Spare(String id, String plates, String make) {
-        this.id = id;
-        this.plates = plates;
-        this.make = make;
+    public Spare(String spareName, String spareTypeID, String busID) {
+        this.spareName = spareName;
+        this.spareTypeID = spareTypeID;
+        this.busID = busID;
     }
 
-    public Spare(String plates, String make) {
-        this.plates = plates;
-        this.make = make;
+    public String getSpareID() {
+        return spareID;
     }
 
-    public String getId() {
-        return id;
+    public void setSpareID(String spareID) {
+        this.spareID = spareID;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getSpareName() {
+        return spareName;
     }
 
-    public String getPlates() {
-        return plates;
+    public void setSpareName(String spareName) {
+        this.spareName = spareName;
     }
 
-    public void setPlates(String plates) {
-        this.plates = plates;
+    public String getSpareTypeID() {
+        return spareTypeID;
     }
 
-    public String getMake() {
-        return make;
+    public void setSpareTypeID(String spareTypeID) {
+        this.spareTypeID = spareTypeID;
     }
 
-    public void setMake(String make) {
-        this.make = make;
+    public String getBusID() {
+        return busID;
+    }
+
+    public void setBusID(String busID) {
+        this.busID = busID;
     }
 }

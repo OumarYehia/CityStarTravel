@@ -1,9 +1,9 @@
 package com.citystarstourseg.backend.Controllers;
 
+import com.citystarstourseg.backend.DAOs.User;
+import com.citystarstourseg.backend.DAOs.UserRequest;
 import com.citystarstourseg.backend.Services.UserService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -13,19 +13,30 @@ public class UserController {
 
     private UserService userService;
 
-    @RequestMapping("/signUp")
+    /*@RequestMapping(value = "/signUp", method = RequestMethod.POST)
     public int signUp(@RequestParam(value="userName", defaultValue="") String userName,
-                            @RequestParam(value="fullName", defaultValue="") String fullName,
-                            @RequestParam(value="emailAddress", defaultValue="") String emailAddress,
-                            @RequestParam(value="password", defaultValue="") String password,
-                            @RequestParam(value="mobileNumber", defaultValue="") String mobileNumber,
-                            @RequestParam(value="roleID", defaultValue="") String roleID) throws NoSuchAlgorithmException, SQLException {
+                            @RequestParam(value="fullName") String fullName,
+                            @RequestParam(value="email") String emailAddress,
+                            @RequestParam(value="password") String password,
+                            @RequestParam(value="mobileNumber") String mobileNumber,
+                            @RequestParam(value="roleID", defaultValue="2") String roleID) throws NoSuchAlgorithmException, SQLException {
 
         userService = new UserService(userName,fullName,emailAddress,password,mobileNumber,roleID);
         return userService.createUser();
+    }*/
+
+    @RequestMapping(value = "/signUp", method = RequestMethod.POST)
+    public int signUp(@RequestBody UserRequest userRequest) throws SQLException, NoSuchAlgorithmException {
+
+        userService = new UserService(userRequest.getUserName(), userRequest.getFullName(),
+                                      userRequest.getEmail(), userRequest.getPassword(),
+                                      userRequest.getMobileNumber(), "2");
+        return userService.createUser();
     }
 
-    @RequestMapping("/signIn")
+
+
+    @RequestMapping(value = "/signIn", method = RequestMethod.POST)
     public int signIn(@RequestParam(value="userName", defaultValue="") String userName,
                            @RequestParam(value="password", defaultValue="") String password) throws NoSuchAlgorithmException, SQLException {
 
