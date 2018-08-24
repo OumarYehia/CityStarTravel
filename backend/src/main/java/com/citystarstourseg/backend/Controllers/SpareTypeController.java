@@ -8,15 +8,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
 import java.util.List;
 
-
+@RestController
 public class SpareTypeController {
     private SpareTypeService spareTypeService;
 
     @RequestMapping(value = "/createSpareType", method = RequestMethod.POST)
-    public int createSpareType(@RequestParam(value="spareType", defaultValue="") String spareType,
-                               @RequestParam(value="spareTypeQuantity", defaultValue ="0") String spareTypeQuantity)  {
+    public SpareType createSpareType(@RequestParam(value="spareType", defaultValue="") String spareType,
+                               @RequestParam(value="spareTypeQuantity", defaultValue ="0") String spareTypeQuantity) throws SQLException {
         spareTypeService = new SpareTypeService();
         return spareTypeService.createSpareType(spareType);        }
 

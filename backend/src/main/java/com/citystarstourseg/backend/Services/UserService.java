@@ -52,7 +52,14 @@ public class UserService {
 
     public int createUser() throws SQLException {
 
-        return userCRUD.createRecords(user);
+        try{
+            userCRUD.createRecords(user);
+            return 1;
+        }
+        catch (SQLException ex) {
+            return -1;
+        }
+
     }
 
     public int signIn(String username, String password) throws SQLException, NoSuchAlgorithmException {

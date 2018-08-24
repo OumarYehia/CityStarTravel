@@ -16,14 +16,26 @@ public class SpareTypeCRUD extends EntityCRUD<SpareType> {
     @Autowired
     private DatabaseConnection databaseConnection;
     @Override
-    public int createRecords(SpareType spareType) throws SQLException {
+    public SpareType createRecords(SpareType spareType) throws SQLException {
         String dataIntoUsers = "INSERT INTO SPARESTYPES"
                 + "(spareType) VALUES"
                 + "(?)";
         PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(dataIntoUsers);
         preparedStatement.setString(1, spareType.getSpareType());
-        // execute insert SQL statement
-        return preparedStatement .executeUpdate();
+
+        int affectedRows = preparedStatement.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Creating user failed, no rows affected.");
+        }
+        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                spareType.setSpareTypeID(generatedKeys.getString(1));
+            }
+            else {
+                throw new SQLException("Creating user failed, no ID obtained.");
+            }
+        }
+        return spareType;
     }
 
     @Override

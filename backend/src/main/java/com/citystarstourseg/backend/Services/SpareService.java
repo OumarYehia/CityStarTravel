@@ -17,13 +17,8 @@ public class SpareService {
         spareCRUD = new SpareCRUD();
     }
 
-    public int createSparePart(String spareName, String spareTypeID,String busID) {
-        try {
-            return spareCRUD.createRecords(new Spare(spareName,spareTypeID,busID));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return - 1;
+    public Spare createSparePart(String spareName, String spareTypeID,String busID) throws SQLException{
+        return spareCRUD.createRecords(new Spare(spareName,spareTypeID,busID));
     }
 
     /**
@@ -41,6 +36,10 @@ public class SpareService {
             e.printStackTrace();
             return new ArrayList<>(null);
         }
+    }
+
+    public List<Spare> getSparesForBus(String bus_id) throws SQLException {
+        return spareCRUD.readSparesForBus(bus_id);
     }
 
 }

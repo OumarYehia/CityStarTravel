@@ -2,40 +2,46 @@ package com.citystarstourseg.backend.DAOs;
 
 public class Bus {
 
-    private String id, plates, make;
+    private String id, name, platesAlpha, platesNum, make;
 
-    public Bus(String id, String plates, String make) {
+    public Bus(String id, String name, String platesAlpha, String platesNum, String make) {
         this.id = id;
-        this.plates = plates;
+        this.name = name;
+        this.platesAlpha = platesAlpha;
+        this.platesNum = platesNum;
         this.make = make;
     }
 
-    public Bus(String plates, String make) {
-        this.plates = plates;
+    public Bus(String name, String platesAlpha, String platesNum, String make) {
+        this.name = name;
+        this.platesAlpha = platesAlpha;
+        this.platesNum = platesNum;
         this.make = make;
     }
+
+    public Bus(){}
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getName() {
+        return name;
     }
 
-    public String getPlates() {
-        return plates;
+    public String getPlatesAlpha() {
+        return platesAlpha;
     }
 
-    public void setPlates(String plates) {
-        this.plates = plates;
+    public String getPlatesNum() {
+        return platesNum;
     }
 
     public String getMake() {
         return make;
     }
 
-    public void setMake(String make) {
-        this.make = make;
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -18,13 +18,9 @@ public class SpareTypeService {
         spareTypeCRUD = new SpareTypeCRUD();
     }
 
-    public int createSpareType(String spareType) {
-        try {
-            return spareTypeCRUD.createRecords(new SpareType(spareType));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return - 1;
+    public SpareType createSpareType(String spareType) throws SQLException {
+
+        return spareTypeCRUD.createRecords(new SpareType(spareType));
     }
 
     /**

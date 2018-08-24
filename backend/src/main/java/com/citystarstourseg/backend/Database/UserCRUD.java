@@ -18,7 +18,7 @@ public class UserCRUD extends EntityCRUD<User> {
     private DatabaseConnection databaseConnection;
     private Statement statement;
     @Override
-    public int createRecords(User user) throws SQLException {
+    public User createRecords(User user) throws SQLException {
 
         //statement = databaseConnection.connectToDatabase();
         String dataIntoUsers = "INSERT INTO USERS"
@@ -32,8 +32,20 @@ public class UserCRUD extends EntityCRUD<User> {
         preparedStatement.setString(5, user.getPasswordHash());
         preparedStatement.setString(6, user.getMobileNumber());
         preparedStatement.setInt(7, user.getRoleID());
-        // execute insert SQL statement
-        return preparedStatement .executeUpdate();
+
+        int affectedRows = preparedStatement.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Creating user failed, no rows affected.");
+        }
+        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                user.setID(generatedKeys.getString(1));
+            }
+            else {
+                throw new SQLException("Creating user failed, no ID obtained.");
+            }
+        }
+        return user;
     }
 
     public List<byte[]> getUserPasswordSaltAndHash(String username) throws SQLException {

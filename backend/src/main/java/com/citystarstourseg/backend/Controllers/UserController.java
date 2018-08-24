@@ -1,6 +1,5 @@
 package com.citystarstourseg.backend.Controllers;
 
-import com.citystarstourseg.backend.DAOs.User;
 import com.citystarstourseg.backend.DAOs.UserRequest;
 import com.citystarstourseg.backend.Services.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -37,10 +36,9 @@ public class UserController {
 
 
     @RequestMapping(value = "/signIn", method = RequestMethod.POST)
-    public int signIn(@RequestParam(value="userName", defaultValue="") String userName,
-                           @RequestParam(value="password", defaultValue="") String password) throws NoSuchAlgorithmException, SQLException {
+    public int signIn(@RequestBody UserRequest userRequest) throws NoSuchAlgorithmException, SQLException {
 
         userService = new UserService();
-        return userService.signIn(userName,password);
+        return userService.signIn(userRequest.getUserName(),userRequest.getPassword());
     }
 }

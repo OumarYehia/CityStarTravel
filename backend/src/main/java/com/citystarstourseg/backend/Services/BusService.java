@@ -16,13 +16,8 @@ public class BusService {
         busCRUD = new BusCRUD();
     }
 
-    public int createBus(String busPlates, String busMake) {
-        try {
-            return busCRUD.createRecords(new Bus(busPlates,busMake));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return - 1;
+    public Bus createBus(String busName, String busPlatesAlpha, String busPlatesNum, String busMake) throws SQLException{
+        return busCRUD.createRecords(new Bus(busName, busPlatesAlpha, busPlatesNum, busMake));
     }
 
     /**

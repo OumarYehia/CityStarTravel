@@ -15,21 +15,22 @@ public class DatabaseConnection {
     private static String host;
     private static String username;
     private static String password;
+    private static Connection connection;
 
 
     @Autowired
     DatabaseConnection(@Value("${database-live-url}") String host,
                        @Value("${database-username}") String username,
-                       @Value("${database-password}") String password){
+                       @Value("${database-password}") String password) throws SQLException {
         this.host = host;
         this.username = username;
         this.password = password;
+        connection = DriverManager.getConnection(host, username, password);
     }
 
 
-    public static Statement connectToDatabase(){
+    static Statement connectToDatabase(){
         try {
-            Connection connection = DriverManager.getConnection(host, username, password);
             statement = connection.createStatement();
         }
         catch(Exception ex){
@@ -39,17 +40,20 @@ public class DatabaseConnection {
         return statement;
     }
 
-    public static PreparedStatement connectToDatabase(String sql){
+    static PreparedStatement connectToDatabase(String sql){
         PreparedStatement preparedStatement = null;
         try {
-            Connection connection = DriverManager.getConnection(host, username, password);
-            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
         }
         catch(Exception ex){
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
         return preparedStatement;
+    }
+
+    static CallableStatement callStoredProcedure(String storedProcedureName) throws SQLException {
+        return connection.prepareCall("{CALL "+storedProcedureName+"(?)}");
     }
 
 

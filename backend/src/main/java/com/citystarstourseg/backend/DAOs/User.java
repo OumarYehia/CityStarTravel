@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class User {
 
-    private String userName, fullName, email, password, mobileNumber, passwordHash, confirmPassword;
+    private String ID, userName, fullName, email, password, mobileNumber, passwordHash, confirmPassword;
     private byte[] passwordSalt;
     private int roleID;
     private String isApproved, isBlocked;
@@ -24,6 +24,10 @@ public class User {
     }
 
     public User() {}
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
 
     public String getUserName() {
         return userName;
