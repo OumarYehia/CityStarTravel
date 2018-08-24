@@ -1,30 +1,44 @@
-<div class="signin-content">
-  <mat-card>
-    <mat-card-content>
-      <img src="assets/logo.png">
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <p>من فضلك سجل دخولك للتكملة</p>
-        <mat-form-field class="full-width-input">
-          <input matInput placeholder="إسم المستخدم" formControlName="userName" required>
-          <mat-error *ngIf="isFieldInvalid('userName')">
-            من فضلك أدخل إسم المستخدم
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field class="full-width-input">
-          <input matInput type="password" placeholder="كلمة المرور" formControlName="password" required>
-          <mat-error *ngIf="isFieldInvalid('password')">
-            من فضلك أدخل كلمة المرور
-          </mat-error>
-        </mat-form-field>
-        <button mat-raised-button color="primary">تسجيل دخول</button>
-        <div>
-          <a routerLink="/signup">لا تملك حساب؟ انشئ حساب جديد </a>
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100 p-l-50 p-r-50 p-t-77 p-b-30">
+      <form class="login100-form validate-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+					<span class="login100-form-title p-b-55">
+						تسجيل دخول
+					</span>
+
+        <div class="wrap-input100 validate-input m-b-16" data-validate="من فضلك أدخل إسم المستخدم">
+          <input class="input100" type="text" formControlName="userName" required placeholder="إسم المستخدم">
+          <span class="focus-input100"></span>
+          <span class="symbol-input100">
+							<span class="lnr lnr-envelope"></span>
+						</span>
+        </div>
+
+        <div class="wrap-input100 validate-input m-b-16" data-validate="من فضلك أدخل كلمة المرور">
+          <input class="input100" type="password" formControlName="password" required placeholder="كلمة المرور">
+          <span class="focus-input100"></span>
+          <span class="symbol-input100">
+            <span class="lnr lnr-lock"></span>
+          </span>
+        </div>
+
+        <div class="container-login100-form-btn p-t-25">
+          <button type="submit" class="login100-form-btn">
+            تسجيل دخول
+          </button>
+        </div>
+
+
+        <div class="text-center w-full p-t-115">
+						<span class="txt1">
+							لا تملك حساب؟
+						</span>
+
+          <a class="txt1 bo1 hov1" routerLink="/signup">
+            انشئ حساب جديد
+          </a>
         </div>
       </form>
-    </mat-card-content>
-  </mat-card>
+    </div>
+  </div>
 </div>
-
-<img id="video-background" src="assets/login-bg.jpg">
-
-

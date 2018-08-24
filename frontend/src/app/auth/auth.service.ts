@@ -22,8 +22,6 @@ export class AuthService {
   ) {
   }
 
-  //environment.API_URL = 'https://192.168.1.7:8443';
-  API_URL = 'https://localhost:8443';
 
   signup(user: NewUser) {
     console.log(`${environment.API_URL}/signUp`);
@@ -32,23 +30,17 @@ export class AuthService {
   }
 
   login(user: User) {
-    console.log(`${this.API_URL}/signIn`);
-    console.log(`${environment.API_URL}/signIn`);
-    this.http.post(`${this.API_URL}/signIn`, user).subscribe(
+    this.http.post(`${environment.API_URL}/signIn`, user).subscribe(
       data => {
-        console.log(`${this.API_URL}/signIn`);
-        if(data == 1) {
+        if (data === 1) {
           this.loggedIn.next(true);
           this.router.navigate(['/']);
-        }
-        else {
-          console.log(`${this.API_URL}/signIn`);
+        } else {
           alert('Wrong Credentials');
         }
-
       },
       error => {
-        console.log(`${this.API_URL}/signIn`);
+        console.log(`${environment.API_URL}/signIn`);
         console.log('failed in login');
         console.log(error);
       }
