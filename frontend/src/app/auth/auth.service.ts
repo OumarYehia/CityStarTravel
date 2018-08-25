@@ -24,8 +24,6 @@ export class AuthService {
 
 
   signup(user: NewUser) {
-    console.log(`${environment.API_URL}/signUp`);
-    console.log(user);
     return this.http.post(`${environment.API_URL}/signUp`, user);
   }
 

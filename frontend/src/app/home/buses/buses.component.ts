@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {BusesService} from './buses.service';
+import {Bus} from './bus';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-buses',
@@ -7,62 +10,40 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BusesComponent implements OnInit {
 
-  buses = [
-    {
-      name: 'أتوبيس الأحلام',
-      licencePlate: {
-        numbers: 123,
-        letters: 'ا ب ت'
-      }
-    },
-    {
-      name: 'أتوبيس الإخوة',
-      licencePlate: {
-        numbers: 123,
-        letters: 'ب ك ا'
-      }
-    },
-    {
-      name: 'أتوبيس الهنا',
-      licencePlate: {
-        numbers: 123,
-        letters: 'ا ب ت'
-      }
-    },
-    {
-      name: 'أتوبيس رايح راجع',
-      licencePlate: {
-        numbers: 123,
-        letters: 'ا ب ت'
-      }
-    },
-    {
-      name: 'أتوبيس الهنا 2',
-      licencePlate: {
-        numbers: 123,
-        letters: 'ا ب ت'
-      }
-    },
-    {
-      name: 'أتوبيس الإخوة 2',
-      licencePlate: {
-        numbers: 123,
-        letters: 'ا ب ت'
-      }
-    },
-    {
-      name: 'أتوبيس الأحلام 3',
-      licencePlate: {
-        numbers: 123,
-        letters: 'ا ب ت'
-      }
-    }
+  buses: Bus[];
 
-  ];
+  form: FormGroup;
 
-  constructor() { }
+  constructor(
+    private busesService: BusesService,
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit() {
+    this.busesService.getBuses();
+    this.getBuses();
+
+    this.form = this.fb.group({
+      name: ['', Validators.required],
+      make: ['', Validators.required],
+      platesAlpha: [''],
+      platesNum: ['', Validators.required]
+    });
+  }
+
+  getBuses(): void {
+    this.busesService.getBuses().subscribe(
+      buses => this.buses = buses
+    );
+  }
+
+  addBus() {
+    this.busesService.createBus(this.form.value).subscribe(
+      data => {
+        this.form.reset();
+        this.getBuses();
+      }
+    );
   }
 
 }

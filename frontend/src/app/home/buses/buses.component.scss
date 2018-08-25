@@ -39,12 +39,30 @@ mat-card-subtitle {
       position: absolute;
       top: 1.8rem;
       right: 0.6rem;
+
+      input {
+        position: absolute;
+        width: 3rem;
+        right: 0;
+        border: 0;
+        background: transparent;
+      }
+
     }
+
 
     .numbers {
       position: absolute;
       top: 1.8rem;
       left: 0.6rem;
+
+      input {
+        position: absolute;
+        width: 3rem;
+        left: -0.7rem;
+        border: 0;
+        background: transparent;
+      }
     }
   }
 }
