@@ -62,12 +62,13 @@ public class SpareCRUD extends EntityCRUD<Spare> {
         PreparedStatement preparedStatement;
         if(busID.isEmpty()) {
             if(spareID.isEmpty()) { // get all spare parts for all buses
-                query = "SELECT s.*, st.spareType, b.busName, COUNT(s.spareID) as quantity " +
+                query = "SELECT s.spareID, s.spareName,s.spareTypeID, st.spareType, b.busID, b.busName " +
                         "FROM spares s, sparetypes st, buses b " +
-                        "WHERE s.spareTypeID = st.spareTypeID AND s.busID = b.busID";
+                        "WHERE s.busID = b.busID and s.spareTypeID = st.spareTypeID";
                 preparedStatement = DatabaseConnection.connectToDatabase(query);
             }
             else { // get a specific spare part
+                // TODO: Needs to be reimplemented
                 query = "SELECT s.*, st.spareType, b.busName, COUNT(s.spareID) as quantity " +
                         "FROM spares s, sparetypes st, buses b " +
                         "WHERE s.spareTypeID = st.spareTypeID AND s.spareID = ? AND s.busID = b.busID";
@@ -76,7 +77,9 @@ public class SpareCRUD extends EntityCRUD<Spare> {
             }
         }
         else { // get all spare parts for specific bus
-            query = "SELECT s.*, st.spareType FROM spares s, sparetypes st where s.spareTypeID = st.spareTypeID and s.busID = ?";
+            query = "SELECT s.spareID, s.spareName, s.spareTypeID, st.spareType, b.busID, b.busName " +
+                    "FROM spares s, sparetypes st, buses b " +
+                    "WHERE s.busID = b.busID and s.spareTypeID = st.spareTypeID and s.busID = ?";
             preparedStatement = DatabaseConnection.connectToDatabase(query);
             preparedStatement.setInt(1, Integer.parseInt(busID));
         }
@@ -91,7 +94,8 @@ public class SpareCRUD extends EntityCRUD<Spare> {
                     resultSet.getString("spareType"),
                     resultSet.getString("busID"),
                     resultSet.getString("busName"),
-                    resultSet.getInt("quantity")
+                    3
+                    /* TODO: fix quantity in SQL,resultSet.getInt("quantity")*/
             ));
         }
         return spares;

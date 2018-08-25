@@ -31,6 +31,7 @@ public class SpareController {
 //    public List<Spare> getSparesForBus(@RequestBody SimplePostRequestBody simplePostRequestBody) throws SQLException {
     @RequestMapping(value = "/getSparesForBus")
     public List<Spare> getSparesForBus(@RequestParam(value="busID", defaultValue="") String busID) throws SQLException {
+        System.out.println("Inside getSparesForBus. ID: "+busID);
         spareService = new SpareService();
         return spareService.getSparesForBus(busID);
     }
