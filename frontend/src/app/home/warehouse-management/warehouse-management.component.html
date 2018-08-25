@@ -1,31 +1,22 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<table mat-table [dataSource]="spareParts" class="mat-elevation-z8">
 
-
-  <!--sparepartName qty -->
-
-  <!-- Position Column -->
-  <ng-container matColumnDef="name">
+  <!-- Spare Name Column -->
+  <ng-container matColumnDef="spareName">
     <th mat-header-cell *matHeaderCellDef> إسم القطعة </th>
-    <td mat-cell [ngClass]="{'error': element.qty==0}" *matCellDef="let element"> {{element.name}} </td>
+    <td mat-cell [ngClass]="{'error': spare.quantity==0}" *matCellDef="let spare"> {{spare.spareName}} </td>
   </ng-container>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="qty">
+  <!-- Spare Qty Column -->
+  <ng-container matColumnDef="quantity">
     <th mat-header-cell *matHeaderCellDef> الكمية </th>
-    <td mat-cell [ngClass]="{'error': element.qty==0}" *matCellDef="let element"> {{element.qty}} </td>
+    <td mat-cell [ngClass]="{'error': spare.quantity==0}" *matCellDef="let spare"> {{spare.quantity}} </td>
   </ng-container>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="bus">
-    <th mat-header-cell *matHeaderCellDef> الأتوبيس </th>
-    <td mat-cell [ngClass]="{'error': element.qty==0}" *matCellDef="let element"> {{element.bus}} </td>
+  <!-- Location Column -->
+  <ng-container matColumnDef="busName">
+    <th mat-header-cell *matHeaderCellDef> المكان </th>
+    <td mat-cell [ngClass]="{'error': spare.quantity==0}" *matCellDef="let spare"> {{spare.busName}} </td>
   </ng-container>
-
-  <!--&lt;!&ndash; Symbol Column &ndash;&gt;-->
-  <!--<ng-container matColumnDef="symbol">-->
-    <!--<th mat-header-cell *matHeaderCellDef> Symbol </th>-->
-    <!--<td mat-cell *matCellDef="let element"> {{element.symbol}} </td>-->
-  <!--</ng-container>-->
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

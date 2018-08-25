@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {BusesService} from './buses.service';
 import {Bus} from './bus';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-buses',
@@ -16,6 +17,7 @@ export class BusesComponent implements OnInit {
 
   constructor(
     private busesService: BusesService,
+    private router: Router,
     private fb: FormBuilder
   ) { }
 
@@ -44,6 +46,11 @@ export class BusesComponent implements OnInit {
         this.getBuses();
       }
     );
+  }
+
+  navigateToBusSpare(busID) {
+    this.router.navigate(['/warehouseManagement/' + busID]);
+    console.log('navigating');
   }
 
 }

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {WarehouseManagementService} from './warehouse-management.service';
+import {SparePart} from './warehouse-management';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-warehouse-management',
@@ -7,29 +10,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WarehouseManagementComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'qty', 'bus'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = ['spareName', 'quantity', 'busName'];
 
-  constructor() { }
+  spareParts: SparePart[];
 
-  ngOnInit() {
+  busID: number;
+
+  constructor(
+    private warehouseManagementService: WarehouseManagementService,
+    private route: ActivatedRoute
+  ) {
+    this.busID = undefined;
+    this.route.params.subscribe( params => {
+      this.busID = params['id'];
+      console.log(params);
+    } );
   }
 
+  ngOnInit() {
+    console.log(this.busID);
+
+    if (this.busID == undefined) {
+      console.log("getting all");
+      this.warehouseManagementService.getAllSpares().subscribe(
+        spares => {
+          this.spareParts = spares;
+        });
+    } else {
+      this.warehouseManagementService.getSpareByID(this.busID).subscribe(
+        spares => {
+          this.spareParts = spares;
+        }
+      );
+    }
+  }
 }
 
-export interface PeriodicElement {
-  name: string;
-  qty: number;
-  bus: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {name: 'تيل فرامل', qty: 1, bus: 'أتوبيس الأحلام'},
-  {name: 'اطارات', qty: 6, bus: 'أتوبيس الهنا'},
-  {name: 'تيل فرامل', qty: 4, bus: 'أتوبيس الإخوة'},
-  {name: 'سير موتور', qty: 0, bus: 'أتوبيس رايح راجع'},
-  {name: 'فلتر زيت', qty: 12, bus: 'أتوبيس الهنا'},
-  {name: 'سير موتور', qty: 0, bus: 'أتوبيس رايح راجع'},
-  {name: 'تيل فرامل', qty: 4, bus: 'أتوبيس الإخوة'},
-  {name: 'اطارات', qty: 6, bus: 'أتوبيس الهنا'},
-];

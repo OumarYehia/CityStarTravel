@@ -30,6 +30,10 @@ const routes: Routes = [
             component: BusesComponent
           },
           {
+            path: 'warehouseManagement/:id',
+            component: WarehouseManagementComponent
+          },
+          {
             path: 'warehouseManagement',
             component: WarehouseManagementComponent
           }

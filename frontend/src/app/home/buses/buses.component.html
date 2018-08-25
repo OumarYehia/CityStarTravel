@@ -1,6 +1,6 @@
 <section>
   <div class="row">
-    <div class=" col-md-4 col-sm-6 col-xs-12 bus-div" *ngFor="let bus of buses">
+    <div class=" col-md-4 col-sm-6 col-xs-12 bus-div clickable" (click)="navigateToBusSpare(bus.id)" *ngFor="let bus of buses">
       <mat-card class="example-card">
         <mat-card-header>
           <!--<div mat-card-avatar class="example-header-image"></div>-->
