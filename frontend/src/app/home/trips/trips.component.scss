@@ -1,0 +1,12 @@
+table {
+  width: 100%;
+}
+
+th.mat-header-cell {
+  text-align: right;
+}
+
+td.mat-cell:first-child, td.mat-footer-cell:first-child, th.mat-header-cell:first-child {
+  padding-right: 24px;
+  padding-left: 0;
+}

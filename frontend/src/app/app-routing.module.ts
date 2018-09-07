@@ -9,6 +9,7 @@ import {SignupComponent} from './security/signup/signup.component';
 import {BusesComponent} from './home/buses/buses.component';
 import {WarehouseManagementComponent} from './home/warehouse-management/warehouse-management.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
+import {TripsComponent} from './home/trips/trips.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
           {
             path: 'warehouseManagement',
             component: WarehouseManagementComponent
+          },
+          {
+            path: 'trips',
+            component: TripsComponent
           }
         ]
       }

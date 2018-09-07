@@ -16,6 +16,7 @@ import { BusesComponent } from './home/buses/buses.component';
 import { WarehouseManagementComponent } from './home/warehouse-management/warehouse-management.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import {HttpClientModule} from '@angular/common/http';
+import { TripsComponent } from './home/trips/trips.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {HttpClientModule} from '@angular/common/http';
     SignupComponent,
     BusesComponent,
     WarehouseManagementComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    TripsComponent
   ],
   imports: [
     BrowserModule,
