@@ -18,6 +18,15 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import {HttpClientModule} from '@angular/common/http';
 import { TripsComponent } from './home/trips/trips.component';
 
+
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+
+// TODO: only include needed icons
+library.add(fas, far);
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +47,8 @@ import { TripsComponent } from './home/trips/trips.component';
     BrowserAnimationsModule,
     AppMaterialModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

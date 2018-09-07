@@ -35,10 +35,18 @@
           </mat-card-content>
           <mat-card-actions>
             <span class="fa fa-pen"></span>
-            <button mat-button *ngIf="bus.id !== editableBus" (click)="editableBus = bus.id">edit </button>
-            <button mat-button *ngIf="bus.id !== editableBus" (click)="deleteBus(bus.id)">delete</button>
-            <button mat-button *ngIf="bus.id === editableBus" (click)="editBus(bus)">save</button>
-            <button mat-button *ngIf="bus.id === editableBus" (click)="editableBus = -1">cancel</button>
+            <button mat-button *ngIf="bus.id !== editableBus" (click)="editableBus = bus.id">
+              <fa-icon [icon]="['fas', 'pen']"></fa-icon>
+            </button>
+            <button mat-button *ngIf="bus.id !== editableBus" (click)="deleteBus(bus.id)">
+              <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+            </button>
+            <button mat-button *ngIf="bus.id === editableBus" (click)="editBus(bus)">
+              <fa-icon [icon]="['fas', 'save']"></fa-icon>
+            </button>
+            <button mat-button *ngIf="bus.id === editableBus" (click)="editableBus = -1">
+              <fa-icon [icon]="['fas', 'times']"></fa-icon>
+            </button>
           </mat-card-actions>
         </mat-card>
       </form>
