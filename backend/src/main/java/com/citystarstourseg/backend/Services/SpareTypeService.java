@@ -25,12 +25,13 @@ public class SpareTypeService {
 
     /**
      * Returns a list of SpareTypes in the database, or details of a specific bus if spareTypeID is provided
+     *
      * @param spareTypeID if SpareTypeID == -1, method will return all buses in the database
      * @return
      */
     public List<SpareType> getSpareType(String spareTypeID) {
         try {
-            if(spareTypeID.equals("-1"))
+            if (spareTypeID.equals("-1"))
                 return spareTypeCRUD.readRecords("");
             return spareTypeCRUD.readRecords(spareTypeID);
 
@@ -40,5 +41,12 @@ public class SpareTypeService {
         }
     }
 
-
+    public int deleteSpareType(String spareTypeID) {
+        try {
+            return  spareTypeCRUD.deleteRecords(spareTypeID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 }

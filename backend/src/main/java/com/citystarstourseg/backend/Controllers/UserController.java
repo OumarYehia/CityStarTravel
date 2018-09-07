@@ -14,11 +14,13 @@ public class UserController {
 
     /*@RequestMapping(value = "/signUp", method = RequestMethod.POST)
     public int signUp(@RequestParam(value="userName", defaultValue="") String userName,
+                            @RequestParam(value="userID") String userID,
                             @RequestParam(value="fullName") String fullName,
                             @RequestParam(value="email") String emailAddress,
                             @RequestParam(value="password") String password,
                             @RequestParam(value="mobileNumber") String mobileNumber,
                             @RequestParam(value="roleID", defaultValue="2") String roleID) throws NoSuchAlgorithmException, SQLException {
+
 
         userService = new UserService(userName,fullName,emailAddress,password,mobileNumber,roleID);
         return userService.createUser();
@@ -41,4 +43,7 @@ public class UserController {
         userService = new UserService();
         return userService.signIn(userRequest.getUserName(),userRequest.getPassword());
     }
+
+
+
 }

@@ -2,6 +2,7 @@ package com.citystarstourseg.backend.Services;
 
 import com.citystarstourseg.backend.DAOs.Bus;
 import com.citystarstourseg.backend.Database.BusCRUD;
+import io.micrometer.core.instrument.Meter;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,6 +35,13 @@ public class BusService {
             e.printStackTrace();
             return new ArrayList<>(null);
         }
+    }
+    public int updateBuses(Bus bus) throws SQLException {
+
+        return busCRUD.updateRecords(bus);
+    }
+    public int deleteBuses(String busID) throws SQLException {
+        return busCRUD.deleteRecords(busID);
     }
 
 }

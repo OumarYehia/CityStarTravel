@@ -42,4 +42,8 @@ public class SpareService {
         return spareCRUD.readSparesForBus(bus_id);
     }
 
+    public int deleteSparesForBus(String busID) throws SQLException {
+       // int SPAREID=Integer.parseInt(spareID);
+        return spareCRUD.deleteRecords(busID);
+    }
 }

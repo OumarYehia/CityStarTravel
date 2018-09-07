@@ -25,6 +25,8 @@ public class SpareCRUD extends EntityCRUD<Spare> {
         preparedStatement.setString(1, spare.getSpareName());
         preparedStatement.setInt(2, Integer.parseInt(spare.getSpareTypeID()));
         preparedStatement.setInt(3, Integer.parseInt(spare.getBusID()));
+        preparedStatement.setString(4, spare.getSpareID());
+
 
         int affectedRows = preparedStatement.executeUpdate();
         if (affectedRows == 0) {
@@ -102,14 +104,47 @@ public class SpareCRUD extends EntityCRUD<Spare> {
     }
 
     @Override
-    public int updateRecords(Spare spare) {
+    public int updateRecords(Spare spare) throws SQLException {
         // TODO: to be implemented
-        return -1000;
+        String updateSpare ="update SPARES set spareName=?,spareTypeID0=?,busID=? where spareID=?";
+
+        PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(updateSpare);
+        preparedStatement.setString(1, spare.getSpareName());
+        preparedStatement.setInt(2, Integer.parseInt(spare.getSpareTypeID()));
+        preparedStatement.setInt(3, Integer.parseInt(spare.getBusID()));
+
+        int affectedRows = preparedStatement.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Updating spare failed, no rows affected.");
+        }
+        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                spare.setSpareID(generatedKeys.getString(1));
+            }
+            else {
+                throw new SQLException("Updating spare failed, no ID obtained.");
+            }
+        }
+            return affectedRows;
     }
 
     @Override
-    public int deleteRecords(Spare spare) {
+    public int deleteRecords(String spareID) throws SQLException {
         // TODO: to be implemented
-        return -1000;
+
+        String deleteSpare ="delete from SPARES where busID=?";
+       PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(deleteSpare);
+        //preparedStatement.setString(1, spare.getSpareName());
+        //preparedStatement.setInt(2, Integer.parseInt(spare.getSpareTypeID()));
+       // preparedStatement.setInt(1, Integer.parseInt(spare.getBusID()));
+
+        int affectedRows = preparedStatement.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Deleting spare failed, no rows affected.");
+        }
+
+
+
+        return affectedRows;
     }
 }

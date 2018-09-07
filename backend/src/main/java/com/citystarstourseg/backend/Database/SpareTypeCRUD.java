@@ -45,14 +45,43 @@ public class SpareTypeCRUD extends EntityCRUD<SpareType> {
     }
 
     @Override
-    public int updateRecords(SpareType spareType) {
+    public int updateRecords(SpareType spareType) throws SQLException{
         // TODO: to be implemented
-        return -1000;
+        String updateSpareType ="update SPARETYPES set spareType=? where spareTypeID=?";
+
+        PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(updateSpareType);
+        preparedStatement.setString(1, spareType.getSpareType());
+
+        int affectedRows = preparedStatement.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Updating user failed, no rows affected.");
+        }
+        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                spareType.setSpareTypeID(generatedKeys.getString(1));
+            }
+            else {
+                throw new SQLException("Updating user failed, no ID obtained.");
+            }
+        }
+        return affectedRows;
     }
 
     @Override
-    public int deleteRecords(SpareType spareType) {
+    public int deleteRecords(String spareType)throws SQLException {
         // TODO: to be implemented
-        return -1000;
+        String deleteSpareType ="delete from SPARETYPES where spareTypeID=?";
+
+        PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(deleteSpareType);
+        preparedStatement.setString(1, spareType);
+
+        int affectedRows = preparedStatement.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Deleting user failed, no rows affected.");
+        }
+
+
+
+        return affectedRows;
     }
 }

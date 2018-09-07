@@ -73,14 +73,47 @@ public class UserCRUD extends EntityCRUD<User> {
     }
 
     @Override
-    public int updateRecords(User o) {
+    public int updateRecords(User o) throws SQLException {
         // TODO: to be implemented
-        return -1000;
+        String updateUser ="update USERS set userName=?,fullName=?,emailAddress=?, passwordSalt=?,passwordHash=?, mobileNumber=?, roleID=? where spareID=?";
+
+        PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(updateUser);
+        preparedStatement.setString(1, o.getUserName());
+        preparedStatement.setString(2, o.getFullName());
+        preparedStatement.setString(3, o.getEmail());
+        preparedStatement.setBytes(4, o.getPasswordSalt());
+        preparedStatement.setString(5, o.getPasswordHash());
+        preparedStatement.setString(6, o.getMobileNumber());
+        preparedStatement.setInt(7, o.getRoleID());
+
+        int affectedRows = preparedStatement.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Updating user failed, no rows affected.");
+        }
+        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                o.setID(generatedKeys.getString(1));
+            }
+            else {
+                throw new SQLException("Updating user failed, no ID obtained.");
+            }
+        }
+
+        return affectedRows;
     }
 
     @Override
-    public int deleteRecords(User o) {
+    public int deleteRecords(String userPassword) throws SQLException{
         // TODO: to be implemented
+        String deleteUser ="delete from USERS where userID=?";
+        PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(deleteUser);
+        preparedStatement.setString(1, userPassword);
+
+        int affectedRows = preparedStatement.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Deleting user failed, no rows affected.");
+        }
+
         return -1000;
     }
 }

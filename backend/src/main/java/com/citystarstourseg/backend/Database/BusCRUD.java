@@ -2,6 +2,7 @@ package com.citystarstourseg.backend.Database;
 
 import com.citystarstourseg.backend.DAOs.Bus;
 import com.citystarstourseg.backend.DAOs.Spare;
+import io.micrometer.core.instrument.Meter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -27,6 +28,7 @@ public class BusCRUD extends EntityCRUD<Bus> {
         preparedStatement.setString(2, bus.getPlatesAlpha());
         preparedStatement.setString(3, bus.getPlatesNum());
         preparedStatement.setString(4, bus.getMake());
+
 
 
         int affectedRows = preparedStatement.executeUpdate();
@@ -61,14 +63,40 @@ public class BusCRUD extends EntityCRUD<Bus> {
     }
 
     @Override
-    public int updateRecords(Bus bus) {
+    public int updateRecords(Bus bus) throws SQLException {
         // TODO: to be implemented
-        return -1000;
+            String updateBuses ="update BUSES set busName=?,busPlatesAlpha=?,busPlatesNumbers=?,busMake=? where busID=?";
+        PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(updateBuses);
+        preparedStatement.setString(1, bus.getName());
+        preparedStatement.setString(2, bus.getPlatesAlpha());
+        preparedStatement.setString(3, bus.getPlatesNum());
+        preparedStatement.setString(4, bus.getMake());
+        preparedStatement.setString(5,bus.getId());
+
+
+        int affectedRows = preparedStatement.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Updating bus failed, no rows affected.");
+        }
+
+        return affectedRows;
+
     }
 
     @Override
-    public int deleteRecords(Bus bus) {
+    public int deleteRecords(String busID) throws SQLException {
         // TODO: to be implemented
-        return -1000;
+
+
+        String deleteBuses ="delete from BUSES where busID=?";
+
+        PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(deleteBuses);
+        preparedStatement.setString(1, busID);
+
+        int affectedRows = preparedStatement.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Deleting bus failed, no rows affected.");
+        }
+        return affectedRows;
     }
 }

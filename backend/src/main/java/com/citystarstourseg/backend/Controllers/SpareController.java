@@ -2,6 +2,7 @@ package com.citystarstourseg.backend.Controllers;
 
 import com.citystarstourseg.backend.DAOs.SimplePostRequestBody;
 import com.citystarstourseg.backend.DAOs.Spare;
+import com.citystarstourseg.backend.Services.BusService;
 import com.citystarstourseg.backend.Services.SpareService;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +13,11 @@ import java.util.List;
 public class SpareController {
     private SpareService spareService;
 
-    @RequestMapping("/createSparePart")
+    @RequestMapping(value="/createSparePart",method = RequestMethod.POST)
     public Spare createSparePart(@RequestParam(value="spareName", defaultValue="") String spareName,
                                @RequestParam(value="spareTypeID", defaultValue ="") String spareTypeID,
-                               @RequestParam(value="busID", defaultValue ="") String busID) throws SQLException {
+                               @RequestParam(value="busID", defaultValue ="") String busID,
+                                 @RequestParam(value="spareID", defaultValue ="") String spareID)  throws SQLException {
         spareService = new SpareService();
         return spareService.createSparePart(spareName, spareTypeID, busID);        }
 
@@ -35,4 +37,19 @@ public class SpareController {
         spareService = new SpareService();
         return spareService.getSparesForBus(busID);
     }
+
+
+    @RequestMapping(value="/updateSpare", method = RequestMethod.POST)
+    public int updateSpare(@RequestBody String spareID) throws SQLException {
+      spareService = new SpareService();
+        return 1;
+    }
+    @RequestMapping(value = "/deleteSparesForBus",method = RequestMethod.DELETE)
+
+    public int deleteSpareForBus(@RequestParam(value="busID", defaultValue = "")String busID) throws SQLException {
+        spareService = new SpareService();
+        return spareService.deleteSparesForBus(busID);
+    }
+
+
 }
