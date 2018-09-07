@@ -13,7 +13,10 @@ export class BusesComponent implements OnInit {
 
   buses: Bus[];
 
-  form: FormGroup;
+  editableBus: number;
+
+  newBusForm: FormGroup;
+  editBusForm: FormGroup;
 
   constructor(
     private busesService: BusesService,
@@ -24,12 +27,21 @@ export class BusesComponent implements OnInit {
   ngOnInit() {
     this.busesService.getBuses();
     this.getBuses();
+    this.editableBus = -1;
 
-    this.form = this.fb.group({
+    this.newBusForm = this.fb.group({
       name: ['', Validators.required],
       make: ['', Validators.required],
       platesAlpha: [''],
       platesNum: ['', Validators.required]
+    });
+
+    this.editBusForm = this.fb.group({
+      id: '',
+      name: '',
+      make: '',
+      platesAlpha: '',
+      platesNum: ''
     });
   }
 
@@ -40,17 +52,58 @@ export class BusesComponent implements OnInit {
   }
 
   addBus() {
-    this.busesService.createBus(this.form.value).subscribe(
+    this.busesService.createBus(this.newBusForm.value).subscribe(
       data => {
-        this.form.reset();
+        this.newBusForm.reset();
         this.getBuses();
       }
     );
   }
 
-  navigateToBusSpare(busID) {
+  navigateToBusSpare(busID: number) {
     this.router.navigate(['/warehouseManagement/' + busID]);
-    console.log('navigating');
+  }
+
+  editBus(bus: Bus) {
+    this.editBusForm.controls['id'].setValue(bus.id);
+
+    if (!this.editBusForm.dirty) {
+      console.log('no changes');
+      return;
+    }
+
+    if (this.editBusForm.controls['name'].value === '') {
+      this.editBusForm.controls['name'].setValue(bus.name);
+    }
+
+    if (this.editBusForm.controls['make'].value === '') {
+      this.editBusForm.controls['make'].setValue(bus.make);
+    }
+
+    if (this.editBusForm.controls['platesAlpha'].value === '') {
+      this.editBusForm.controls['platesAlpha'].setValue(bus.platesAlpha);
+    }
+
+    if (this.editBusForm.controls['platesNum'].value === '') {
+      this.editBusForm.controls['platesNum'].setValue(bus.platesNum);
+    }
+
+    this.busesService.updateBus(this.editBusForm.value).subscribe(
+      data => {
+        this.editableBus = -1;
+        this.getBuses();
+      }
+    );
+  }
+
+  deleteBus(busID: number) {
+    console.log('Deleting bus' + busID);
+    this.busesService.deleteBus(busID).subscribe(
+      data => {
+        console.log('delete response');
+        console.log(data);
+      }
+    );
   }
 
 }

@@ -1,40 +1,52 @@
 <section>
   <div class="row">
-    <div class=" col-md-4 col-sm-6 col-xs-12 bus-div clickable" (click)="navigateToBusSpare(bus.id)" *ngFor="let bus of buses">
-      <mat-card class="example-card">
-        <mat-card-header>
-          <!--<div mat-card-avatar class="example-header-image"></div>-->
-          <mat-card-title>
-            {{bus.name}}
-          </mat-card-title>
-          <mat-card-subtitle>
-            <div class="license-plate">
-              <img class="license-bg" src="../../../assets/license.png">
-              <div class="body">
-                <span class="letters">{{bus.platesAlpha}}</span>
-                <span class="numbers">{{bus.platesNum}}</span>
+    <div class=" col-md-4 col-sm-6 col-xs-12 bus-div clickable" *ngFor="let bus of buses">
+      <form [formGroup]="editBusForm">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <!--<div mat-card-avatar class="example-header-image"></div>-->
+            <mat-card-title (click)="bus.id !== editableBus?navigateToBusSpare(bus.id):null">
+              <ng-container *ngIf="bus.id !== editableBus"> {{bus.name}} </ng-container>
+              <input *ngIf="bus.id === editableBus" formControlName="name" value="{{bus.name}}" placeholder="إسم الاتوبيس">
+            </mat-card-title>
+            <mat-card-subtitle>
+              <div class="license-plate">
+                <img class="license-bg" src="../../../assets/license.png">
+                <div class="body" *ngIf="bus.id !== editableBus">
+                  <span class="letters">{{bus.platesAlpha}}</span>
+                  <span class="numbers">{{bus.platesNum}}</span>
+                </div>
+                <div class="body" *ngIf="bus.id === editableBus">
+                  <span class="letters"><input formControlName="platesAlpha" value="{{bus.platesAlpha}}" placeholder="حروف"></span>
+                  <span class="numbers"><input formControlName="platesNum" value="{{bus.platesNum}}" placeholder="أرقام"></span>
+                </div>
               </div>
-            </div>
-          </mat-card-subtitle>
-        </mat-card-header>
-        <!--<img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of the bus">-->
-        <img mat-card-image src="../../../assets/mode-bus.png" alt="Photo of the bus">
-        <mat-card-content>
-          <strong>موديل الاتوبيس: </strong>
-          {{bus.make}}
-          <p>
-            <!-- Some data -->
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <!--<button mat-button>LIKE</button>-->
-          <!--<button mat-button>SHARE</button>-->
-        </mat-card-actions>
-      </mat-card>
+            </mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image src="../../../assets/mode-bus.png" alt="Photo of the bus"
+               (click)="navigateToBusSpare(bus.id)">
+          <mat-card-content>
+            <strong>موديل الاتوبيس: </strong>
+            <ng-container *ngIf="bus.id !== editableBus">{{bus.make}}</ng-container>
+            <input *ngIf="bus.id === editableBus" formControlName="make" value="{{bus.make}}" placeholder="موديل الاتوبيس">
+            <p>
+              <!-- Some data -->
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <span class="fa fa-pen"></span>
+            <button mat-button *ngIf="bus.id !== editableBus" (click)="editableBus = bus.id">edit </button>
+            <button mat-button *ngIf="bus.id !== editableBus" (click)="deleteBus(bus.id)">delete</button>
+            <button mat-button *ngIf="bus.id === editableBus" (click)="editBus(bus)">save</button>
+            <button mat-button *ngIf="bus.id === editableBus" (click)="editableBus = -1">cancel</button>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+
     </div>
 
     <div class=" col-md-4 col-sm-6 col-xs-12 bus-div">
-      <form [formGroup]="form">
+      <form [formGroup]="newBusForm">
         <mat-card class="example-card">
           <mat-card-header>
             <!--<div mat-card-avatar class="example-header-image"></div>-->
