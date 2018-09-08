@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 
 @Configuration
-public class Configurations  {
+public class Configurations implements WebMvcConfigurer  {
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {

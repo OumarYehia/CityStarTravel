@@ -41,6 +41,15 @@ public class SpareTypeService {
         }
     }
 
+    public int updateSpareType(SpareType spareType) {
+        try {
+            return  spareTypeCRUD.updateRecords(spareType);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     public int deleteSpareType(String spareTypeID) {
         try {
             return  spareTypeCRUD.deleteRecords(spareTypeID);

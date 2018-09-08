@@ -1,50 +1,47 @@
 package com.citystarstourseg.backend.DAOs;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Trip {
 
-    private String id, destination,serialNumber;
-    private double kmStart, kmEnd,basePrice,taxes,tips,tolls,repairs;
+    private String id, destination,client, serialNumber, driverName, busName, orderID;
+    private double kmStart, kmEnd,price_basePrice,price_taxes,price_tips,price_tolls,price_repairs;
     private int driverID,busID,capacity;
-    private Date date;
-   // private LocalDateTime date;
+    private LocalDate tripDate;
 
-    public Trip(String id, String destination, String serialNumber, double kmStart, double kmEnd, double basePrice, double taxes, double tips, double tolls, double repairs, int driverID, int busID, int capacity/*, LocalDateTime date*/) {
+    public Trip(String id, String destination, String client, String serialNumber, double kmStart, double kmEnd, double basePrice, double taxes, double tips, double tolls, double repairs, int driverID, int busID, int capacity,LocalDate tripDate) {
         this.id = id;
         this.destination = destination;
+        this.client = client;
         this.serialNumber = serialNumber;
         this.kmStart = kmStart;
         this.kmEnd = kmEnd;
-        this.basePrice=basePrice;
-        this.taxes=taxes;
-        this.tips=tips;
-        this.tolls=tolls;
-        this.repairs=repairs;
+        this.price_basePrice=basePrice;
+        this.price_taxes=taxes;
+        this.price_tips=tips;
+        this.price_tolls=tolls;
+        this.price_repairs=repairs;
         this.driverID=driverID;
         this.busID=busID;
         this.capacity=capacity;
-       // this.date=date;
-
-
-
+        this.tripDate = tripDate;
     }
 
-    public Trip(String destination, String serialNumber, double kmStart, double kmEnd, double basePrice, double taxes, double tips, double tolls, double repairs, int driverID, int busID, int capacity/*, LocalDateTime date*/) {
+    public Trip(String destination, String client, String serialNumber, double kmStart, double kmEnd, double basePrice, double taxes, double tips, double tolls, double repairs, int driverID, int busID, int capacity, LocalDate tripDate) {
         this.destination = destination;
+        this.client = client;
         this.serialNumber = serialNumber;
         this.kmStart = kmStart;
         this.kmEnd = kmEnd;
-        this.basePrice=basePrice;
-        this.taxes=taxes;
-        this.tips=tips;
-        this.tolls=tolls;
-        this.repairs=repairs;
+        this.price_basePrice=basePrice;
+        this.price_taxes=taxes;
+        this.price_tips=tips;
+        this.price_tolls=tolls;
+        this.price_repairs=repairs;
         this.driverID=driverID;
         this.busID=busID;
         this.capacity=capacity;
-        //this.date=date;
+        this.tripDate = tripDate;
     }
 
     public Trip(){}
@@ -61,7 +58,19 @@ public class Trip {
         return serialNumber;
     }
 
-    public double getkmStart() {
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public String getBusName() {
+        return busName;
+    }
+
+    public String getOrderID() {
+        return orderID;
+    }
+
+    public double getKmStart() {
         return kmStart;
     }
 
@@ -69,24 +78,24 @@ public class Trip {
         return kmEnd;
     }
 
-    public double getBasePrice() {
-        return basePrice;
+    public double getPrice_basePrice() {
+        return price_basePrice;
     }
 
-    public double getTaxes() {
-        return taxes;
+    public double getPrice_taxes() {
+        return price_taxes;
     }
 
-    public double getTips() {
-        return tips;
+    public double getPrice_tips() {
+        return price_tips;
     }
 
-    public double getTolls() {
-        return tolls;
+    public double getPrice_tolls() {
+        return price_tolls;
     }
 
-    public double getRepairs() {
-        return repairs;
+    public double getPrice_repairs() {
+        return price_repairs;
     }
 
     public int getDriverID() {
@@ -101,12 +110,20 @@ public class Trip {
         return capacity;
     }
 
-   /* public LocalDateTime getDate() {
-        return date;
-    }*/
+    public LocalDate getTripDate() {
+        return tripDate;
+    }
 
+    public String getClient() {
+        return client;
+    }
+
+    public void setClient(String client) {
+        this.client = client;
+    }
 
     public void setId(String id) {
         this.id = id;
     }
+
 }

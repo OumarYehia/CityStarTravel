@@ -27,9 +27,9 @@ public class SpareTypeController {
 
 
     @RequestMapping(value="/updateSpareType", method = RequestMethod.POST)
-    public int updateSpareType(@RequestBody String spareTypeID) throws SQLException {
+    public int updateSpareType(@RequestBody SpareType spareType) throws SQLException {
         spareTypeService = new SpareTypeService();
-        return 1;
+        return spareTypeService.updateSpareType(spareType);
     }
 
     @RequestMapping(value="/deleteSpareType",method = RequestMethod.DELETE)

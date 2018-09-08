@@ -1,7 +1,11 @@
 package com.citystarstourseg.backend.Services;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
 import com.citystarstourseg.backend.DAOs.User;
 import com.citystarstourseg.backend.Database.UserCRUD;
+import com.citystarstourseg.backend.Utility.Encryption;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -64,12 +68,15 @@ public class UserService {
 
     public int signIn(String username, String password) throws SQLException, NoSuchAlgorithmException {
         List<byte[]> encryptedPassword = userCRUD.getUserPasswordSaltAndHash(username); // get salt and hash from DB for comparison
+
         if(encryptedPassword.isEmpty()) // user not found
             return -1;
+
         byte[] passwordSalt = encryptedPassword.get(0), passwordHash = encryptedPassword.get(1);
         List<byte[]>  testedPasswordHash = encryption.encrypt(password, passwordSalt); // [0]: salt, [1]: hash password
         if(Arrays.equals(passwordHash,testedPasswordHash.get(1)))
             return 1;
+
         return -1;
     }
 
