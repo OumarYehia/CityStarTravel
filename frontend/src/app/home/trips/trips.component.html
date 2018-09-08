@@ -1,23 +1,89 @@
-<table mat-table [dataSource]="trips" class="mat-elevation-z8">
+<div [ngClass]="{'right-side': tripInView}">
+  <table mat-table [dataSource]="trips" class="mat-elevation-z8">
 
-  <!-- Spare Name Column -->
-  <ng-container matColumnDef="destination">
-    <th mat-header-cell *matHeaderCellDef> إسم القطعة </th>
-    <td mat-cell *matCellDef="let trip"> {{trip.destination}} </td>
-  </ng-container>
+    <!-- Trip Destination Column -->
+    <ng-container matColumnDef="destination">
+      <th mat-header-cell *matHeaderCellDef>الوجهة</th>
+      <td mat-cell *matCellDef="let trip">
+        {{trip.destination}}
+      </td>
+    </ng-container>
 
-  <!-- Spare Qty Column -->
-  <ng-container matColumnDef="quantity">
-    <th mat-header-cell *matHeaderCellDef> الكمية </th>
-    <td mat-cell *matCellDef="let trip"> {{trip.quantity}} </td>
-  </ng-container>
+    <!-- Bus Name Column -->
+    <ng-container matColumnDef="bus">
+      <th mat-header-cell *matHeaderCellDef>الاتوبيس</th>
+      <td mat-cell *matCellDef="let trip">
+        {{trip.busName}}
+      </td>
+    </ng-container>
 
-  <!-- Location Column -->
-  <ng-container matColumnDef="busName">
-    <th mat-header-cell *matHeaderCellDef> المكان </th>
-    <td mat-cell *matCellDef="let trip"> {{trip.busName}} </td>
-  </ng-container>
+    <!-- Client Name Column -->
+    <ng-container matColumnDef="client">
+      <th mat-header-cell *matHeaderCellDef>العميل</th>
+      <td mat-cell *matCellDef="let trip">
+        {{trip.client}}
+      </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+    <!-- Trip Date Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>تاريخ الرحلة</th>
+      <td mat-cell *matCellDef="let trip">
+        {{trip.tripDate | date:'longDate'}}
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row [ngClass]="{'highlight-row': tripInView && tripInView.id === row.id}" (click)="viewTrip(row)"
+        *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+<div class="lef-side" *ngIf="tripInView">
+  <div>
+    <label>الوجهة:</label>
+    <span>{{tripInView.destination}}</span>
+  </div>
+  <div>
+    <label>العميل:</label>
+    <span>{{tripInView.client}}</span>
+  </div>
+  <div>
+    <label>الكيلومترات عند البداية:</label>
+    <span>{{tripInView.kmStart}}</span>
+  </div>
+  <div>
+    <label>الكيلومترات عند النهاية:</label>
+    <span>{{tripInView.kmEnd}}</span>
+  </div>
+  <div>
+    <label>السائق:</label>
+    <span>{{tripInView.driverID}}</span>
+  </div>
+  <div>
+    <label>الاتوبيس:</label>
+    <span>{{tripInView.busName}}</span>
+  </div>
+  <div>
+    <label>الرقم المسلسل:</label>
+    <span>{{tripInView.serialNumber}}</span>
+  </div>
+  <div>
+    <label>سعة الاتوبيس:</label>
+    <span>{{tripInView.capacity}}</span>
+  </div>
+  <div>
+    <label>تاريخ الرحلة:</label>
+    <span>{{tripInView.tripDate | date:'longDate'}}</span>
+  </div>
+  <div>
+
+    {{tripInView.price_basePrice}}
+    {{tripInView.price_taxes}}
+    {{tripInView.price_tips}}
+    {{tripInView.price_tolls}}
+    {{tripInView.price_repairs}}
+  </div>
+
+</div>

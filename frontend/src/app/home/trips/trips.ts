@@ -1,10 +1,12 @@
-export interface Trips {
-  tripID: number;
+export interface Trip {
+  id: number;
   destination: string;
+  client: string;
   kmStart: number;
   kmEnd: number;
   driverID: number;
   busID: number;
+  busName: string;
   serialNumber: string;
   capacity: number;
   price_basePrice: number;

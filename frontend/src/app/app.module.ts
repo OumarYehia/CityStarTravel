@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -17,6 +17,10 @@ import { WarehouseManagementComponent } from './home/warehouse-management/wareho
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import {HttpClientModule} from '@angular/common/http';
 import { TripsComponent } from './home/trips/trips.component';
+import {registerLocaleData} from '@angular/common';
+import localeAr from '@angular/common/locales/ar';
+
+registerLocaleData(localeAr);
 
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -50,7 +54,9 @@ library.add(fas, far);
     ReactiveFormsModule,
     FontAwesomeModule
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'ar' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -11,6 +11,10 @@ td.mat-cell:first-child, td.mat-footer-cell:first-child, th.mat-header-cell:firs
   padding-left: 0;
 }
 
+th.mat-header-cell:last-child {
+  padding-right: 0;
+}
+
 .error {
   color: red;
 }

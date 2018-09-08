@@ -25,7 +25,6 @@ export class BusesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.busesService.getBuses();
     this.getBuses();
     this.editableBus = -1;
 
