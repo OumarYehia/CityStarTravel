@@ -1,21 +1,62 @@
+<button *ngIf="!addingNewSpare" mat-button class="float-left" (click)="addingNewSpare=true">
+  <fa-icon [icon]="['fas', 'cart-plus']"></fa-icon>
+  أضف قطعة غيار
+</button>
+
+<form *ngIf="addingNewSpare" [formGroup]="newSpareForm" (submit)="addSparePart()">
+  <mat-form-field class="new-spare-input">
+    <input matInput formControlName="spareName" placeholder="إسم قطعة الغيار">
+  </mat-form-field>
+  <mat-form-field class="new-spare-input">
+    <!--<input matInput formControlName="spareTypeName" placeholder="نوع قطعة الغيار"-->
+           <!--[matAutocomplete]="spareTypes">-->
+
+    <!--&lt;!&ndash;<input type="text" placeholder="Assignee" aria-label="Assignee" matInput [matAutocomplete]="auto">&ndash;&gt;-->
+    <!--<mat-autocomplete #spareTypes="matAutocomplete" [displayWith]="displayFn">-->
+      <!--<mat-option *ngFor="let spareType of filteredOptions | async" [value]="spareType">-->
+        <!--{{spareType.name}}-->
+      <!--</mat-option>-->
+    <!--</mat-autocomplete>-->
+
+    <mat-select formControlName="spareTypeID" placeholder="نوع قطعة الغيار">
+      <mat-option *ngFor="let spareType of spareTypes" [value]="spareType.id">
+        {{spareType.name}}
+      </mat-option>
+    </mat-select>
+
+  </mat-form-field>
+
+  <!--<mat-autocomplete #spareTypes="matAutocomplete">-->
+    <!--<mat-option *ngFor="let spareType of spareTypes" [value]="spareType.id">{{spareType.name}}</mat-option>-->
+    <!--&lt;!&ndash;<mat-option *ngFor="let spareType of spareParts" [value]="spareType.spareID">{{spareType.spareName}}</mat-option>&ndash;&gt;-->
+  <!--</mat-autocomplete>-->
+
+  <mat-form-field class="new-spare-input">
+    <input matInput formControlName="quantity" placeholder="الكمية">
+  </mat-form-field>
+  <button mat-button type="submit">
+    أضف
+  </button>
+</form>
+
 <table mat-table [dataSource]="spareParts" class="mat-elevation-z8">
 
   <!-- Spare Name Column -->
   <ng-container matColumnDef="spareName">
-    <th mat-header-cell *matHeaderCellDef> إسم القطعة </th>
-    <td mat-cell [ngClass]="{'error': spare.quantity==0}" *matCellDef="let spare"> {{spare.spareName}} </td>
+    <th mat-header-cell *matHeaderCellDef> إسم القطعة</th>
+    <td mat-cell [ngClass]="{'error': spare.quantity==0}" *matCellDef="let spare"> {{spare.spareName}}</td>
   </ng-container>
 
   <!-- Spare Qty Column -->
   <ng-container matColumnDef="quantity">
-    <th mat-header-cell *matHeaderCellDef> الكمية </th>
-    <td mat-cell [ngClass]="{'error': spare.quantity==0}" *matCellDef="let spare"> {{spare.quantity}} </td>
+    <th mat-header-cell *matHeaderCellDef> الكمية</th>
+    <td mat-cell [ngClass]="{'error': spare.quantity==0}" *matCellDef="let spare"> {{spare.quantity}}</td>
   </ng-container>
 
   <!-- Location Column -->
   <ng-container matColumnDef="busName">
-    <th mat-header-cell *matHeaderCellDef> المكان </th>
-    <td mat-cell [ngClass]="{'error': spare.quantity==0}" *matCellDef="let spare"> {{spare.busName}} </td>
+    <th mat-header-cell *matHeaderCellDef> المكان</th>
+    <td mat-cell [ngClass]="{'error': spare.quantity==0}" *matCellDef="let spare"> {{spare.busName}}</td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

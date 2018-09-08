@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
-import {SparePart} from './warehouse-management';
+import {SparePart, SpareType} from './warehouse-management';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +19,16 @@ export class WarehouseManagementService {
 
 
   getSpareByID(busID): Observable<SparePart[]> {
-    let params = new HttpParams().set('busID', busID);
+    const params = new HttpParams().set('busID', busID);
     return this.http.get<SparePart[]>(`${environment.API_URL}/getSparesForBus`, {headers: new HttpHeaders(), params: params});
+  }
+
+  getSpareTypes(): Observable<SpareType[]> {
+    return this.http.get<SpareType[]>(`${environment.API_URL}/getSpareTypes`);
+  }
+
+  addSparePart(spare) {
+    return this.http.post(`${environment.API_URL}/createSpare`, spare);
   }
 
 }
