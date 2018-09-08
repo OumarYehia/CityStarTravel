@@ -1,0 +1,72 @@
+.bus-div {
+  margin-bottom: 1rem;
+}
+
+.example-card {
+  max-width: 400px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+mat-card-header {
+  margin-bottom: 2rem;
+}
+
+mat-card-subtitle {
+  left: 1rem;
+  position: absolute;
+  top: 1rem;
+}
+
+.license-plate {
+
+  position: relative;
+  text-align: center;
+  color: black;
+  font-weight: bolder;
+  font-size: large;
+
+  .license-bg {
+    height: 4rem;
+    width: 7rem;
+  }
+
+  .body {
+    .letters {
+      position: absolute;
+      top: 1.8rem;
+      right: 0.6rem;
+
+      input {
+        position: absolute;
+        width: 3rem;
+        right: 0;
+        border: 0;
+        background: transparent;
+      }
+
+    }
+
+
+    .numbers {
+      position: absolute;
+      top: 1.8rem;
+      left: 0.6rem;
+
+      input {
+        position: absolute;
+        width: 3rem;
+        left: -0.7rem;
+        border: 0;
+        background: transparent;
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+<table mat-table [dataSource]="spareParts" class="mat-elevation-z8">
+
+  <!-- Spare Name Column -->
+  <ng-container matColumnDef="spareName">
+    <th mat-header-cell *matHeaderCellDef> إسم القطعة </th>
+    <td mat-cell [ngClass]="{'error': spare.quantity==0}" *matCellDef="let spare"> {{spare.spareName}} </td>
+  </ng-container>
+
+  <!-- Spare Qty Column -->
+  <ng-container matColumnDef="quantity">
+    <th mat-header-cell *matHeaderCellDef> الكمية </th>
+    <td mat-cell [ngClass]="{'error': spare.quantity==0}" *matCellDef="let spare"> {{spare.quantity}} </td>
+  </ng-container>
+
+  <!-- Location Column -->
+  <ng-container matColumnDef="busName">
+    <th mat-header-cell *matHeaderCellDef> المكان </th>
+    <td mat-cell [ngClass]="{'error': spare.quantity==0}" *matCellDef="let spare"> {{spare.busName}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
