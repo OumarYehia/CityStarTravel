@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {WarehouseManagementService} from './warehouse-management.service';
-import {SparePart, SpareType} from './warehouse-management';
-import {ActivatedRoute} from '@angular/router';
+import {Order, SparePart, SpareType} from './warehouse-management';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
@@ -13,10 +13,16 @@ import {map, startWith} from 'rxjs/operators';
 })
 export class WarehouseManagementComponent implements OnInit {
 
-  displayedColumns: string[] = ['spareName', 'quantity', 'busName'];
+  displayedColumns: string[] = [
+    'spareName',
+    // 'quantity',
+    'busName',
+    'orderID'
+  ];
 
   spareParts: SparePart[];
   spareTypes: SpareType[];
+  orders: Order[];
 
   busID: number;
 
@@ -24,21 +30,25 @@ export class WarehouseManagementComponent implements OnInit {
 
   addingNewSpare: boolean;
 
-  filteredOptions: Observable<SpareType[]>;
+  editableSpare: number;
 
+  // filteredOptions: Observable<SpareType[]>;
 
   constructor(
     private warehouseManagementService: WarehouseManagementService,
     private route: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder
   ) {
     this.busID = undefined;
+    this.editableSpare = -1;
     this.route.params.subscribe( params => {
       this.busID = params['id'];
-      console.log(params);
+      console.log(params['id']);
+      // if (this.busID === undefined) { this.displayedColumns.push('actions'); }
     } );
   }
-  
+
   getSpareParts() {
     if (this.busID == undefined) {
       console.log('getting all');
@@ -68,10 +78,18 @@ export class WarehouseManagementComponent implements OnInit {
       }
     );
 
+    this.warehouseManagementService.getOrders().subscribe(
+      orders => {
+        this.orders = orders;
+        console.log(this.orders);
+      }
+    );
+
     this.newSpareForm = this.fb.group({
       spareName: ['', Validators.required],
       spareTypeID: ['', Validators.required],
-      quantity: ['', Validators.required]
+      orderID: ['', Validators.required],
+      busID: ''
     });
 
     // this.filteredOptions = this.newSpareForm.valueChanges
@@ -85,6 +103,7 @@ export class WarehouseManagementComponent implements OnInit {
 
   addSparePart() {
     console.log('adding');
+    this.newSpareForm.controls['busID'].setValue('-1');
     console.log(this.newSpareForm.value);
     this.addingNewSpare = false;
     this.warehouseManagementService.addSparePart(this.newSpareForm.value).subscribe(
@@ -109,6 +128,18 @@ export class WarehouseManagementComponent implements OnInit {
   //
   //   return this.spareTypes.filter(option => option.name.indexOf(filterValue) === 0);
   // }
+
+  assign(spareID: number) {
+    this.editableSpare = spareID;
+  }
+
+  navigateToBusSpare(busID: number) {
+    console.log('clicked');
+    if (this.busID === undefined) {
+      console.log('undefined');
+      this.router.navigate(['', busID]);
+    }
+  }
 
 }
 

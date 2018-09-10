@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
-import {SparePart, SpareType} from './warehouse-management';
+import {Order, SparePart, SpareType} from './warehouse-management';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +25,10 @@ export class WarehouseManagementService {
 
   getSpareTypes(): Observable<SpareType[]> {
     return this.http.get<SpareType[]>(`${environment.API_URL}/getSpareTypes`);
+  }
+
+  getOrders(): Observable<Order[]> {
+    return this.http.get<Order[]>(`${environment.API_URL}/getOrders`);
   }
 
   addSparePart(spare) {

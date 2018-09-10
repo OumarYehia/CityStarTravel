@@ -6,8 +6,9 @@
           <mat-card-header>
             <!--<div mat-card-avatar class="example-header-image"></div>-->
             <mat-card-title (click)="bus.id !== editableBus?navigateToBusSpare(bus.id):null">
-              <ng-container *ngIf="bus.id !== editableBus"> {{bus.name}} </ng-container>
-              <input *ngIf="bus.id === editableBus" formControlName="name" value="{{bus.name}}" placeholder="إسم الاتوبيس">
+              <ng-container *ngIf="bus.id !== editableBus"> {{bus.name}}</ng-container>
+              <input *ngIf="bus.id === editableBus" formControlName="name" value="{{bus.name}}"
+                     placeholder="إسم الاتوبيس">
             </mat-card-title>
             <mat-card-subtitle>
               <div class="license-plate">
@@ -17,8 +18,10 @@
                   <span class="numbers">{{bus.platesNum}}</span>
                 </div>
                 <div class="body" *ngIf="bus.id === editableBus">
-                  <span class="letters"><input formControlName="platesAlpha" value="{{bus.platesAlpha}}" placeholder="حروف"></span>
-                  <span class="numbers"><input formControlName="platesNum" value="{{bus.platesNum}}" placeholder="أرقام"></span>
+                  <span class="letters"><input formControlName="platesAlpha" value="{{bus.platesAlpha}}"
+                                               placeholder="حروف"></span>
+                  <span class="numbers"><input formControlName="platesNum" value="{{bus.platesNum}}"
+                                               placeholder="أرقام"></span>
                 </div>
               </div>
             </mat-card-subtitle>
@@ -28,7 +31,8 @@
           <mat-card-content>
             <strong>موديل الاتوبيس: </strong>
             <ng-container *ngIf="bus.id !== editableBus">{{bus.make}}</ng-container>
-            <input *ngIf="bus.id === editableBus" formControlName="make" value="{{bus.make}}" placeholder="موديل الاتوبيس">
+            <input *ngIf="bus.id === editableBus" formControlName="make" value="{{bus.make}}"
+                   placeholder="موديل الاتوبيس">
             <p>
               <!-- Some data -->
             </p>

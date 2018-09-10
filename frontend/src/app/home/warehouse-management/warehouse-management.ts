@@ -8,9 +8,16 @@ export interface SparePart {
 
   busName: string;
   quantity: number;
+  orderSerialNumber: number;
 }
 
 export interface SpareType {
   id: number;
   name: string;
+}
+
+
+export interface Order {
+  id: string;
+  serialNumber: string;
 }
