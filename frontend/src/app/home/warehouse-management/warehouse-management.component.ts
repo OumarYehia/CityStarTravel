@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {WarehouseManagementService} from './warehouse-management.service';
-import {Order, SparePart, SpareType} from './warehouse-management';
+import {Order, SparePart, SpareType, SparePartsLegendItem} from './warehouse-management';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-warehouse-management',
@@ -19,10 +20,13 @@ export class WarehouseManagementComponent implements OnInit {
     'busName',
     'orderID'
   ];
-
+  spareTypesDisplayedColumns: string[]=['spareTypeName','quantityAllocated','quantityAvailable'];
   spareParts: SparePart[];
   spareTypes: SpareType[];
   orders: Order[];
+  sparePartsLegendItems:SparePartsLegendItem[];
+  
+  legendDataReady: boolean;
 
   busID: number;
 
@@ -66,10 +70,21 @@ export class WarehouseManagementComponent implements OnInit {
     }
   }
 
+  getLegendData() {
+    this.warehouseManagementService.getAllSparePartsLegend().subscribe(
+      legend => {
+        this.sparePartsLegendItems = legend;
+        this.legendDataReady = true;
+      }
+    )
+  }
+
   ngOnInit() {
+    this.legendDataReady = false;
     this.addingNewSpare = false;
 
     this.getSpareParts();
+    this.getLegendData();
 
     this.warehouseManagementService.getSpareTypes().subscribe(
       spareTypes => {
@@ -142,4 +157,5 @@ export class WarehouseManagementComponent implements OnInit {
   }
 
 }
+
 

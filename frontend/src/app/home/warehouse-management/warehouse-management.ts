@@ -21,3 +21,9 @@ export interface Order {
   id: string;
   serialNumber: string;
 }
+
+export interface SparePartsLegendItem{
+  spareTypeName: String;
+  quantityAllocated: number;
+  quantityAvailable: number;
+}

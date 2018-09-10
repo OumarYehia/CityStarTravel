@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
-import {Order, SparePart, SpareType} from './warehouse-management';
+import {Order, SparePart, SpareType, SparePartsLegendItem} from './warehouse-management';
 
 @Injectable({
   providedIn: 'root'
@@ -35,4 +35,13 @@ export class WarehouseManagementService {
     return this.http.post(`${environment.API_URL}/createSpare`, spare);
   }
 
+  
+  getAllSparePartsLegend(): Observable<SparePartsLegendItem[]> {
+    return this.http.get<SparePartsLegendItem[]>(`${environment.API_URL}/getSparesLegend`);
+
+}
+getSpareTypeByID(spareTypeID): Observable<SpareType[]> {
+  let params = new HttpParams().set('spareTypeID', spareTypeID);
+  return this.http.get<SpareType[]>(`${environment.API_URL}/getSpareTypesForBus`, {headers: new HttpHeaders(), params: params});
+}
 }
