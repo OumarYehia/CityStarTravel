@@ -29,16 +29,12 @@ public class SpareTypeService {
      * @param spareTypeID if SpareTypeID == -1, method will return all buses in the database
      * @return
      */
-    public List<SpareType> getSpareType(String spareTypeID) {
-        try {
-            if (spareTypeID.equals("-1"))
-                return spareTypeCRUD.readRecords("");
-            return spareTypeCRUD.readRecords(spareTypeID);
+    public List<SpareType> getSpareType(String spareTypeID) throws SQLException {
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return new ArrayList<>(null);
-        }
+        if (spareTypeID.equals("-1"))
+            return spareTypeCRUD.readRecords("");
+        return spareTypeCRUD.readRecords(spareTypeID);
+
     }
 
     public int updateSpareType(SpareType spareType) {

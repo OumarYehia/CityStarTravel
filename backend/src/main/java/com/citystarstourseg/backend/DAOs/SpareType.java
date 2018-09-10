@@ -1,36 +1,30 @@
 package com.citystarstourseg.backend.DAOs;
 
 public class SpareType {
-    private String spareTypeID, spareType;
-    private int spareTypeQuantity;
+    private String id, name;
 
-    public SpareType(String spareType) {
-        this.spareType = spareType;
-        this.spareTypeQuantity = 0;
+    public SpareType(String name) {
+        this.name = name;
     }
 
-    public String getSpareTypeID() {
-        return spareTypeID;
+    public SpareType(String id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public void setSpareTypeID(String spareTypeID) {
-        this.spareTypeID = spareTypeID;
+    public String getId() {
+        return id;
     }
 
-    public String getSpareType() {
-        return spareType;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setSpareType(String spareType) {
-        this.spareType = spareType;
+    public String getName() {
+        return name;
     }
 
-    public int getSpareTypeQuantity() {
-        return spareTypeQuantity;
+    public void setName(String name) {
+        this.name = name;
     }
-
-    public void setSpareTypeQuantity(int spareTypeQuantity) {
-        this.spareTypeQuantity = spareTypeQuantity;
-    }
-
 }

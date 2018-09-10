@@ -1,6 +1,7 @@
 package com.citystarstourseg.backend.Services;
 import com.citystarstourseg.backend.DAOs.Bus;
 import com.citystarstourseg.backend.DAOs.Spare;
+import com.citystarstourseg.backend.DAOs.SparePartsLegendItem;
 import com.citystarstourseg.backend.Database.BusCRUD;
 import com.citystarstourseg.backend.Database.SpareCRUD;
 
@@ -45,5 +46,9 @@ public class SpareService {
     public int deleteSparesForBus(String busID) throws SQLException {
        // int SPAREID=Integer.parseInt(spareID);
         return spareCRUD.deleteRecords(busID);
+    }
+
+    public List<SparePartsLegendItem> getSparePartsLegend() throws SQLException {
+        return spareCRUD.getSparePartsLegend();
     }
 }

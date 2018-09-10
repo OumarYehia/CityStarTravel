@@ -21,7 +21,7 @@ public class SpareTypeCRUD extends EntityCRUD<SpareType> {
                 + "(spareType) VALUES"
                 + "(?)";
         PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(dataIntoUsers);
-        preparedStatement.setString(1, spareType.getSpareType());
+        preparedStatement.setString(1, spareType.getName());
 
         int affectedRows = preparedStatement.executeUpdate();
         if (affectedRows == 0) {
@@ -29,7 +29,7 @@ public class SpareTypeCRUD extends EntityCRUD<SpareType> {
         }
         try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
             if (generatedKeys.next()) {
-                spareType.setSpareTypeID(generatedKeys.getString(1));
+                spareType.setId(generatedKeys.getString(1));
             }
             else {
                 throw new SQLException("Creating user failed, no ID obtained.");
@@ -41,7 +41,15 @@ public class SpareTypeCRUD extends EntityCRUD<SpareType> {
     @Override
     public List<SpareType> readRecords(String spareTypeID) throws SQLException {
         // TODO: to be implemented
-        return new ArrayList<>();
+        CRUDServices crudServices = new CRUDServices();
+        ResultSet resultSet = crudServices.readDataFromDatabase(spareTypeID, "sparetypes", "spareTypeID");
+        resultSet.beforeFirst();
+        List<SpareType> spareTypes = new ArrayList<>();
+        while(resultSet.next()){
+            spareTypes.add(new SpareType(resultSet.getString("spareTypeID"), resultSet.getString("spareType")));
+
+        }
+        return spareTypes;
     }
 
     @Override
@@ -50,20 +58,14 @@ public class SpareTypeCRUD extends EntityCRUD<SpareType> {
         String updateSpareType ="update SPARETYPES set spareType=? where spareTypeID=?";
 
         PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(updateSpareType);
-        preparedStatement.setString(1, spareType.getSpareType());
+        preparedStatement.setString(1, spareType.getName());
+        preparedStatement.setString(2, spareType.getId());
 
         int affectedRows = preparedStatement.executeUpdate();
         if (affectedRows == 0) {
             throw new SQLException("Updating user failed, no rows affected.");
         }
-        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-            if (generatedKeys.next()) {
-                spareType.setSpareTypeID(generatedKeys.getString(1));
-            }
-            else {
-                throw new SQLException("Updating user failed, no ID obtained.");
-            }
-        }
+
         return affectedRows;
     }
 

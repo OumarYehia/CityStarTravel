@@ -1,6 +1,7 @@
 package com.citystarstourseg.backend.Database;
 
 import com.citystarstourseg.backend.DAOs.Spare;
+import com.citystarstourseg.backend.DAOs.SparePartsLegendItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -19,13 +20,13 @@ public class SpareCRUD extends EntityCRUD<Spare> {
     @Override
     public Spare createRecords(Spare spare) throws SQLException {
         String dataIntoUsers = "INSERT INTO SPARES"
-                + "(spareName, spareTypeID, busID) VALUES"
-                + "(?,?,?)";
+                + "(spareName, spareTypeID) VALUES"
+                + "(?,?)";
         PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(dataIntoUsers);
         preparedStatement.setString(1, spare.getSpareName());
         preparedStatement.setInt(2, Integer.parseInt(spare.getSpareTypeID()));
-        preparedStatement.setInt(3, Integer.parseInt(spare.getBusID()));
-        preparedStatement.setString(4, spare.getSpareID());
+//        preparedStatement.setInt(3, Integer.parseInt(spare.getBusID()));
+//        preparedStatement.setString(4, spare.getSpareID());
 
 
         int affectedRows = preparedStatement.executeUpdate();
@@ -90,6 +91,7 @@ public class SpareCRUD extends EntityCRUD<Spare> {
         resultSet.beforeFirst();
         List<Spare> spares = new ArrayList<>();
         while(resultSet.next()){
+
             spares.add(new Spare(resultSet.getString("spareID"),
                     resultSet.getString("spareName"),
                     resultSet.getString("spareTypeID"),
@@ -132,19 +134,27 @@ public class SpareCRUD extends EntityCRUD<Spare> {
     public int deleteRecords(String spareID) throws SQLException {
         // TODO: to be implemented
 
-        String deleteSpare ="delete from SPARES where busID=?";
+       String deleteSpare ="delete from SPARES where busID=?";
        PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(deleteSpare);
-        //preparedStatement.setString(1, spare.getSpareName());
-        //preparedStatement.setInt(2, Integer.parseInt(spare.getSpareTypeID()));
-       // preparedStatement.setInt(1, Integer.parseInt(spare.getBusID()));
 
         int affectedRows = preparedStatement.executeUpdate();
         if (affectedRows == 0) {
             throw new SQLException("Deleting spare failed, no rows affected.");
         }
-
-
-
         return affectedRows;
+    }
+
+    public List<SparePartsLegendItem> getSparePartsLegend() throws SQLException {
+        CallableStatement callableStatement = DatabaseConnection.callStoredProcedure("sp_spareType_legend");
+        ResultSet resultSet = callableStatement.executeQuery();
+        resultSet.beforeFirst();
+        List<SparePartsLegendItem> sparePartsLegendItems = new ArrayList<>();
+        while(resultSet.next()){
+            sparePartsLegendItems.add(new SparePartsLegendItem(resultSet.getString("spareTypeID"),
+                    resultSet.getString("spareType"),
+                    Integer.parseInt(resultSet.getString("quantityAvailable")),
+                    Integer.parseInt(resultSet.getString("quantityAllocated"))));
+        }
+        return sparePartsLegendItems;
     }
 }

@@ -1,8 +1,11 @@
 package com.citystarstourseg.backend.Controllers;
 
 import com.citystarstourseg.backend.DAOs.Spare;
+import com.citystarstourseg.backend.DAOs.SparePartsLegendItem;
+import com.citystarstourseg.backend.DAOs.SpareType;
 import com.citystarstourseg.backend.Services.BusService;
 import com.citystarstourseg.backend.Services.SpareService;
+import com.citystarstourseg.backend.Services.SpareTypeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -12,13 +15,16 @@ import java.util.List;
 public class SpareController {
     private SpareService spareService;
 
-    @RequestMapping(value="/createSparePart",method = RequestMethod.POST)
-    public Spare createSparePart(@RequestParam(value="spareName", defaultValue="") String spareName,
-                               @RequestParam(value="spareTypeID", defaultValue ="") String spareTypeID,
-                               @RequestParam(value="busID", defaultValue ="") String busID,
-                                 @RequestParam(value="spareID", defaultValue ="") String spareID)  throws SQLException {
+    @RequestMapping(value="/createSpare",method = RequestMethod.POST)
+    public Spare createSpare(@RequestBody Spare spare)  throws SQLException {
+        if(spare.getSpareTypeID().equals("-1")) { // new spare part to be inserted
+            SpareTypeService spareTypeService = new SpareTypeService();
+            SpareType newSpareType = spareTypeService.createSpareType(spare.getSpareName());
+            spare.setSpareTypeID(newSpareType.getId());
+        }
+
         spareService = new SpareService();
-        return spareService.createSparePart(spareName, spareTypeID, busID);
+        return spareService.createSparePart(spare.getSpareName(), spare.getSpareTypeID(), spare.getBusID());
     }
 
     @RequestMapping(value = "/getSpare")
@@ -31,6 +37,12 @@ public class SpareController {
     public List<Spare> getSparesForBus(@RequestParam(value="busID", defaultValue="") String busID) throws SQLException {
         spareService = new SpareService();
         return spareService.getSparesForBus(busID);
+    }
+
+    @RequestMapping(value = "/getSparesLegend")
+    public List<SparePartsLegendItem> getSparesLegend() throws SQLException {
+        spareService = new SpareService();
+        return spareService.getSparePartsLegend();
     }
 
 

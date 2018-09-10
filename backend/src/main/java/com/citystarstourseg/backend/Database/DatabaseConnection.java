@@ -53,7 +53,7 @@ public class DatabaseConnection {
     }
 
     static CallableStatement callStoredProcedure(String storedProcedureName) throws SQLException {
-        return connection.prepareCall("{CALL "+storedProcedureName+"(?)}");
+        return connection.prepareCall("{CALL "+storedProcedureName+"}");
     }
 
 

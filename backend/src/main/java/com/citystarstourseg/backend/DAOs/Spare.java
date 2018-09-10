@@ -2,8 +2,10 @@ package com.citystarstourseg.backend.DAOs;
 
 public class Spare {
 
-    private String spareID, spareName, spareTypeID, spareTypeName, busID, busName;
+    private String spareID, spareName, spareTypeID, spareTypeName, busID, busName, orderID;
     private int quantity;
+
+    public Spare() {}
 
     public Spare(String spareName, String spareTypeID, String busID) {
         this.spareName = spareName;
@@ -66,7 +68,23 @@ public class Spare {
         return busName;
     }
 
+    public void setBusName(String busName) {
+        this.busName = busName;
+    }
+
+    public String getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
+    }
+
     public int getQuantity() {
         return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

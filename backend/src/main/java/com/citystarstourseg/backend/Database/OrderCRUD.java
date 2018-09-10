@@ -70,7 +70,7 @@ public class OrderCRUD extends EntityCRUD<Order> {
     }
 
     @Override
-    public int deleteRecords(Order order) {
+    public int deleteRecords(String orderID) {
         // TODO: to be implemented
         return -1000;
     }
