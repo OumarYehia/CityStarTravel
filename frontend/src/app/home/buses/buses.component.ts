@@ -14,6 +14,7 @@ export class BusesComponent implements OnInit {
   buses: Bus[];
 
   editableBus: number;
+  addingBus: boolean;
 
   newBusForm: FormGroup;
   editBusForm: FormGroup;
@@ -27,6 +28,7 @@ export class BusesComponent implements OnInit {
   ngOnInit() {
     this.getBuses();
     this.editableBus = -1;
+    this.addingBus = false;
 
     this.newBusForm = this.fb.group({
       name: ['', Validators.required],
@@ -44,6 +46,10 @@ export class BusesComponent implements OnInit {
     });
   }
 
+  startAddingBus() {
+    this.addingBus = true;
+  }
+
   getBuses(): void {
     this.busesService.getBuses().subscribe(
       buses => this.buses = buses
@@ -51,6 +57,7 @@ export class BusesComponent implements OnInit {
   }
 
   addBus() {
+    this.addingBus = false;
     this.busesService.createBus(this.newBusForm.value).subscribe(
       data => {
         this.newBusForm.reset();

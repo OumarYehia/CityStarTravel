@@ -70,3 +70,47 @@ mat-card-subtitle {
     }
   }
 }
+
+.overlay-parent {
+  position: relative;
+
+  .under-lay {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    filter: blur(10px);
+    -webkit-filter: blur(10px);
+    -moz-filter: blur(10px);
+    -o-filter: blur(10px);
+    -ms-filter: blur(10px);
+  }
+
+  .overlay-dim {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 25rem;
+    height: 24rem;
+    z-index: 9999;
+    background-color: rgba(128, 128, 128, 0.5);
+
+    .overlay-container {
+      position: absolute;
+      top: 24%;
+      left: 35%;
+      opacity: 1;
+      color: white;
+      cursor: pointer;
+
+      .overlay-text {
+        margin-top: 1rem;
+        font-size: larger;
+        font-weight: 600;
+      }
+    }
+  }
+
+}
+
+

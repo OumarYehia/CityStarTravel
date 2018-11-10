@@ -58,36 +58,46 @@
     </div>
 
     <div class=" col-md-4 col-sm-6 col-xs-12 bus-div">
-      <form [formGroup]="newBusForm">
-        <mat-card class="example-card">
-          <mat-card-header>
-            <!--<div mat-card-avatar class="example-header-image"></div>-->
-            <mat-card-title>
-              <input formControlName="name" placeholder="إسم الاتوبيس">
-            </mat-card-title>
-            <mat-card-subtitle>
-              <div class="license-plate">
-                <img class="license-bg" src="../../../assets/license.png">
-                <div class="body">
-                  <span class="letters"><input formControlName="platesAlpha" placeholder="حروف"></span>
-                  <span class="numbers"><input formControlName="platesNum" placeholder="أرقام"></span>
-                </div>
-              </div>
-            </mat-card-subtitle>
-          </mat-card-header>
-          <!--<img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of the bus">-->
-          <img mat-card-image src="../../../assets/mode-bus.png" alt="Photo of the bus">
-          <mat-card-content>
-            <strong>موديل الاتوبيس: </strong>
-            <input formControlName="make" placeholder="موديل الاتوبيس">
-            <button mat-button (click)="addBus()">أضف</button>
+      <div class="overlay-parent">
+        <div [ngClass]="{'under-lay': !addingBus}">
+          <form [formGroup]="newBusForm">
+            <mat-card class="example-card">
+              <mat-card-header>
+                <!--<div mat-card-avatar class="example-header-image"></div>-->
+                <mat-card-title>
+                  <input formControlName="name" placeholder="إسم الاتوبيس">
+                </mat-card-title>
+                <mat-card-subtitle>
+                  <div class="license-plate">
+                    <img class="license-bg" src="../../../assets/license.png">
+                    <div class="body">
+                      <span class="letters"><input formControlName="platesAlpha" placeholder="حروف"></span>
+                      <span class="numbers"><input formControlName="platesNum" placeholder="أرقام"></span>
+                    </div>
+                  </div>
+                </mat-card-subtitle>
+              </mat-card-header>
+              <!--<img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of the bus">-->
+              <img mat-card-image src="../../../assets/mode-bus.png" alt="Photo of the bus">
+              <mat-card-content>
+                <strong>موديل الاتوبيس: </strong>
+                <input formControlName="make" placeholder="موديل الاتوبيس">
+                <button mat-button (click)="addBus()">أضف</button>
 
-          </mat-card-content>
-          <mat-card-actions>
-            <!--<button mat-button>SHARE</button>-->
-          </mat-card-actions>
-        </mat-card>
-      </form>
+              </mat-card-content>
+              <mat-card-actions>
+                <!--<button mat-button>SHARE</button>-->
+              </mat-card-actions>
+            </mat-card>
+          </form>
+        </div>
+        <div class="overlay-dim" *ngIf="!addingBus">
+          <div class="overlay-container">
+            <fa-icon [icon]="['fas', 'plus-circle']" (click)="startAddingBus()" size="6x"></fa-icon>
+            <div class="overlay-text">أضف أتوبيس</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
