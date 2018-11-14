@@ -3,6 +3,8 @@ package com.citystarstourseg.backend.DAOs;
 public class SpareType {
     private String id, name;
 
+    public SpareType(){}
+
     public SpareType(String name) {
         this.name = name;
     }

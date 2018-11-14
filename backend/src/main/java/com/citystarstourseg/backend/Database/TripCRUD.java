@@ -18,7 +18,7 @@ public class TripCRUD extends EntityCRUD<Trip> {
     public Trip createRecords(Trip trip) throws SQLException {
 
         String dataIntoTrips = "INSERT INTO TRIPS"
-                + "(destination,serialNumber,  kmStart, kmEnd,  basePrice, taxes, tips,  tolls,repairs,driverID,busID,capacity,date,client) VALUES"
+                + "(destination,serialNumber,  kmStart, kmEnd,  price_basePrice, price_taxes, price_tips,  price_tolls,price_repairs,driverID,busID,capacity,tripDate,client) VALUES"
                 + "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(dataIntoTrips);
         preparedStatement.setString(1, trip.getDestination());
@@ -81,7 +81,7 @@ public class TripCRUD extends EntityCRUD<Trip> {
     @Override
     public int updateRecords(Trip trip) throws SQLException {
 
-        String updateTrips ="update TRIPS set" +
+        String updateTrips ="update TRIPS set " +
                 "destination=?,client=?,kmStart=?,kmEnd=?," +
                 "driverID=?,busID=?,serialNumber=?,capacity=?," +
                 "price_basePrice=?,price_taxes=?,price_tips=?,price_tolls=?," +

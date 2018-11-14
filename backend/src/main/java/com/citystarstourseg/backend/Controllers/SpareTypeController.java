@@ -14,10 +14,9 @@ public class SpareTypeController {
     private SpareTypeService spareTypeService;
 
     @RequestMapping(value = "/createSpareType", method = RequestMethod.POST)
-    public SpareType createSpareType(@RequestParam(value="spareType", defaultValue="") String spareType,
-                               @RequestParam(value="spareTypeQuantity", defaultValue ="0") String spareTypeQuantity) throws SQLException {
+    public SpareType createSpareType(@RequestBody SpareType spareType) throws SQLException {
         spareTypeService = new SpareTypeService();
-        return spareTypeService.createSpareType(spareType);        }
+        return spareTypeService.createSpareType(spareType.getName());        }
 
     @RequestMapping(value = "/getSpareTypes", method = RequestMethod.GET)
     public List<SpareType> getSpareTypes(@RequestParam(value="spareTypeID", defaultValue="-1") String spareTypeID) throws SQLException {

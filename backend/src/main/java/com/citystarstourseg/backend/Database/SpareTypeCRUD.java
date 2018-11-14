@@ -17,7 +17,7 @@ public class SpareTypeCRUD extends EntityCRUD<SpareType> {
     private DatabaseConnection databaseConnection;
     @Override
     public SpareType createRecords(SpareType spareType) throws SQLException {
-        String dataIntoUsers = "INSERT INTO SPARESTYPES"
+        String dataIntoUsers = "INSERT INTO SPARETYPES"
                 + "(spareType) VALUES"
                 + "(?)";
         PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(dataIntoUsers);
@@ -25,14 +25,14 @@ public class SpareTypeCRUD extends EntityCRUD<SpareType> {
 
         int affectedRows = preparedStatement.executeUpdate();
         if (affectedRows == 0) {
-            throw new SQLException("Creating user failed, no rows affected.");
+            throw new SQLException("Creating spareType failed, no rows affected.");
         }
         try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
             if (generatedKeys.next()) {
                 spareType.setId(generatedKeys.getString(1));
             }
             else {
-                throw new SQLException("Creating user failed, no ID obtained.");
+                throw new SQLException("Creating spareType failed, no ID obtained.");
             }
         }
         return spareType;
