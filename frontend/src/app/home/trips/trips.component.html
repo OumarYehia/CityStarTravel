@@ -1,3 +1,67 @@
+<div class="row">
+  <button *ngIf="!addingNewTrip" mat-button (click)="addingNewTrip=true">
+    <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+    أضف رحلة
+  </button>
+</div>
+
+<form *ngIf="addingNewTrip" [formGroup]="newTripForm" (submit)="addNewTrip()">
+  <mat-form-field>
+    <input matInput formControlName="destination" placeholder="الوجهة">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="client" placeholder="العميل">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="kmStart" placeholder="الكيلومترات عند البداية">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="kmEnd" placeholder="الكيلومترات عند النهاية">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="driverID" placeholder="السائق">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select formControlName="busID" placeholder="الاتوبيس">
+      <mat-option *ngFor="let bus of buses" [value]="bus.id">
+        {{bus.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="serialNumber" placeholder="الرقم المسلسل">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="capacity" placeholder="سعة الاتوبيس">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [matDatepicker]="tripDate" formControlName="tripDate" placeholder="تاريخ الرحلة">
+    <mat-datepicker-toggle matSuffix [for]="tripDate"></mat-datepicker-toggle>
+    <mat-datepicker #tripDate></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="price_basePrice" placeholder="base price">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="price_taxes" placeholder="taxes">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="price_tips" placeholder="tips">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="price_tolls" placeholder="tolls">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="price_repairs" placeholder="repairs">
+  </mat-form-field>
+
+
+  <button mat-button type="submit">
+    أضف
+  </button>
+</form>
+
+
 <div [ngClass]="{'right-side': tripInView}">
   <table mat-table [dataSource]="trips" class="mat-elevation-z8">
 
@@ -40,7 +104,7 @@
   </table>
 </div>
 
-<div class="lef-side" *ngIf="tripInView">
+<div class="lef-side" *ngIf="tripInView && editableTrip !== tripInView.id">
   <div>
     <label>الوجهة:</label>
     <span>{{tripInView.destination}}</span>
@@ -86,4 +150,69 @@
     {{tripInView.price_repairs}}
   </div>
 
+  <button mat-button class="float-left" (click)="editTrip(tripInView)">
+    <fa-icon [icon]="['fas', 'edit']"></fa-icon>
+    تعديل رحلة
+  </button>
+</div>
+
+<div class="lef-side" *ngIf="tripInView && editableTrip === tripInView.id">
+  <form [formGroup]="editTripForm" (submit)="updateTrip()">
+    <mat-form-field>
+      <input matInput formControlName="destination" placeholder="الوجهة">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="client" placeholder="العميل">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="kmStart" placeholder="الكيلومترات عند البداية">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="kmEnd" placeholder="الكيلومترات عند النهاية">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="driverID" placeholder="السائق">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select formControlName="busID" placeholder="الاتوبيس">
+        <mat-option *ngFor="let bus of buses" [value]="bus.id">
+          {{bus.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="serialNumber" placeholder="الرقم المسلسل">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="capacity" placeholder="سعة الاتوبيس">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="tripDate" formControlName="tripDate" placeholder="تاريخ الرحلة">
+      <mat-datepicker-toggle matSuffix [for]="tripDate"></mat-datepicker-toggle>
+      <mat-datepicker #tripDate></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="price_basePrice" placeholder="base price">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="price_taxes" placeholder="taxes">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="price_tips" placeholder="tips">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="price_tolls" placeholder="tolls">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="price_repairs" placeholder="repairs">
+    </mat-form-field>
+
+
+    <button mat-button type="submit">
+      تعديل
+    </button>
+    <button mat-button (click)="cancelEdit()">
+      الغاء
+    </button>
+  </form>
 </div>

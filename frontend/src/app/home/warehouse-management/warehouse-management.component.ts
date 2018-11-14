@@ -20,19 +20,22 @@ export class WarehouseManagementComponent implements OnInit {
     'busName',
     'orderID'
   ];
-  spareTypesDisplayedColumns: string[]=['spareTypeName','quantityAllocated','quantityAvailable'];
+  spareTypesDisplayedColumns: string[] = ['spareTypeName', 'quantityAllocated', 'quantityAvailable'];
   spareParts: SparePart[];
   spareTypes: SpareType[];
   orders: Order[];
-  sparePartsLegendItems:SparePartsLegendItem[];
-  
+  sparePartsLegendItems: SparePartsLegendItem[];
+
   legendDataReady: boolean;
 
   busID: number;
 
   newSpareForm: FormGroup;
+  newSpareTypeForm: FormGroup;
 
   addingNewSpare: boolean;
+  addingNewSpareType: boolean;
+  newSpareType: string;
 
   editableSpare: number;
 
@@ -76,12 +79,13 @@ export class WarehouseManagementComponent implements OnInit {
         this.sparePartsLegendItems = legend;
         this.legendDataReady = true;
       }
-    )
+    );
   }
 
   ngOnInit() {
     this.legendDataReady = false;
     this.addingNewSpare = false;
+    this.addingNewSpareType = false;
 
     this.getSpareParts();
     this.getLegendData();
@@ -99,6 +103,10 @@ export class WarehouseManagementComponent implements OnInit {
         console.log(this.orders);
       }
     );
+
+    this.newSpareTypeForm = this.fb.group({
+      name: ['', Validators.required]
+    });
 
     this.newSpareForm = this.fb.group({
       spareName: ['', Validators.required],
@@ -127,6 +135,18 @@ export class WarehouseManagementComponent implements OnInit {
         this.getSpareParts();
       }
     );
+  }
+
+  addSpareType() {
+    if (!this.newSpareTypeForm.valid) { return; }
+
+    this.warehouseManagementService.addSpareType(this.newSpareTypeForm.value).subscribe(res => {
+      this.warehouseManagementService.getSpareTypes().subscribe(
+        spareTypes => {
+          this.spareTypes = spareTypes;
+        }
+      );
+    });
   }
 
   // displayFn(spareType?: SpareType): string | undefined {

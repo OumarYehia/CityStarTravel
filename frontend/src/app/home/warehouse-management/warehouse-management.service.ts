@@ -35,6 +35,11 @@ export class WarehouseManagementService {
     return this.http.post(`${environment.API_URL}/createSpare`, spare);
   }
 
+  addSpareType(spareType) {
+    console.log(spareType);
+    return this.http.post(`${environment.API_URL}/createSpareType`, spareType);
+  }
+
   
   getAllSparePartsLegend(): Observable<SparePartsLegendItem[]> {
     return this.http.get<SparePartsLegendItem[]>(`${environment.API_URL}/getSparesLegend`);

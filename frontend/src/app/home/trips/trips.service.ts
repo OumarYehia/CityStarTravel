@@ -16,4 +16,14 @@ export class TripsService {
   getTrips (): Observable<Trip[]> {
     return this.http.get<Trip[]>(`${environment.API_URL}/getTrips`);
   }
+
+  addTrip(trip: Trip) {
+    console.log(trip);
+    return this.http.post(`${environment.API_URL}/createTrip`, trip);
+  }
+
+  updateTrip(trip: Trip) {
+    console.log(trip);
+    return this.http.post(`${environment.API_URL}/updateTrip`, trip);
+  }
 }
