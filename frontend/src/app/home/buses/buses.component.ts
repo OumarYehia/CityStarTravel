@@ -51,9 +51,9 @@ export class BusesComponent implements OnInit {
   }
 
   getBuses(): void {
-    this.busesService.getBuses().subscribe(
-      buses => this.buses = buses
-    );
+    this.busesService.getBuses().subscribe(buses => {
+      this.buses = buses.filter(bus => bus.id != -1);
+    });
   }
 
   addBus() {

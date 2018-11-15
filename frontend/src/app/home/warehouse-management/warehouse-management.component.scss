@@ -6,6 +6,10 @@ th.mat-header-cell {
   text-align: right;
 }
 
+td mat-select {
+  width: 7rem;
+}
+
 td.mat-cell:first-child, td.mat-footer-cell:first-child, th.mat-header-cell:first-child {
   padding-right: 24px;
   padding-left: 0;
@@ -13,6 +17,7 @@ td.mat-cell:first-child, td.mat-footer-cell:first-child, th.mat-header-cell:firs
 
 th.mat-header-cell:last-child {
   padding-right: 0;
+  width: 5rem;
 }
 
 .error {

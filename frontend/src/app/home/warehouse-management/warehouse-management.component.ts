@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {WarehouseManagementService} from './warehouse-management.service';
 import {Order, SparePart, SpareType, SparePartsLegendItem} from './warehouse-management';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {Bus} from '../buses/bus';
+import {BusesService} from '../buses/buses.service';
 
 
 @Component({
@@ -16,9 +18,7 @@ export class WarehouseManagementComponent implements OnInit {
 
   displayedColumns: string[] = [
     'spareName',
-    // 'quantity',
     'busName',
-    'orderID',
     'actions'
   ];
   spareTypesDisplayedColumns: string[] = ['spareTypeName', 'quantityAllocated', 'quantityAvailable'];
@@ -29,6 +29,8 @@ export class WarehouseManagementComponent implements OnInit {
 
   legendDataReady: boolean;
 
+  buses: Bus[];
+
   busID: number;
 
   newSpareForm: FormGroup;
@@ -38,23 +40,25 @@ export class WarehouseManagementComponent implements OnInit {
   addingNewSpareType: boolean;
   newSpareType: string;
 
-  editableSpare: number;
+  editableSpare: SparePart;
+  editableSpareBusID: number;
 
   // filteredOptions: Observable<SpareType[]>;
 
   constructor(
     private warehouseManagementService: WarehouseManagementService,
+    private busesService: BusesService,
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder
   ) {
     this.busID = undefined;
-    this.editableSpare = -1;
-    this.route.params.subscribe( params => {
+    this.editableSpare = null;
+    this.route.params.subscribe(params => {
       this.busID = params['id'];
       console.log(params['id']);
       // if (this.busID === undefined) { this.displayedColumns.push('actions'); }
-    } );
+    });
   }
 
   getSpareParts() {
@@ -83,6 +87,12 @@ export class WarehouseManagementComponent implements OnInit {
     );
   }
 
+  getBuses() {
+    this.busesService.getBuses().subscribe(buses => {
+      this.buses = buses;
+    });
+  }
+
   ngOnInit() {
     this.legendDataReady = false;
     this.addingNewSpare = false;
@@ -90,6 +100,7 @@ export class WarehouseManagementComponent implements OnInit {
 
     this.getSpareParts();
     this.getLegendData();
+    this.getBuses();
 
     this.warehouseManagementService.getSpareTypes().subscribe(
       spareTypes => {
@@ -139,7 +150,9 @@ export class WarehouseManagementComponent implements OnInit {
   }
 
   addSpareType() {
-    if (!this.newSpareTypeForm.valid) { return; }
+    if (!this.newSpareTypeForm.valid) {
+      return;
+    }
 
     this.warehouseManagementService.addSpareType(this.newSpareTypeForm.value).subscribe(res => {
       this.warehouseManagementService.getSpareTypes().subscribe(
@@ -165,8 +178,26 @@ export class WarehouseManagementComponent implements OnInit {
   //   return this.spareTypes.filter(option => option.name.indexOf(filterValue) === 0);
   // }
 
-  assign(spareID: number) {
-    this.editableSpare = spareID;
+  assign(spare: SparePart) {
+    this.editableSpare = spare;
+  }
+
+  editSpare() {
+    this.warehouseManagementService.editSparePart(this.editableSpare).subscribe(res => {
+        this.getSpareParts();
+        this.getLegendData();
+        this.editableSpare = null;
+      }
+    );
+  }
+
+  sendToWarehouse(spare: SparePart) {
+    spare.busID = -1;
+    this.warehouseManagementService.editSparePart(spare).subscribe(res => {
+        this.getSpareParts();
+        this.getLegendData();
+      }
+    );
   }
 
   navigateToBusSpare(busID: number) {

@@ -20,7 +20,7 @@ export class WarehouseManagementService {
 
   getSpareByID(busID): Observable<SparePart[]> {
     const params = new HttpParams().set('busID', busID);
-    return this.http.get<SparePart[]>(`${environment.API_URL}/getSparesForBus`, {headers: new HttpHeaders(), params: params});
+    return this.http.get<any>(`${environment.API_URL}/getSparesForBus`, {headers: new HttpHeaders(), params: params});
   }
 
   getSpareTypes(): Observable<SpareType[]> {
@@ -38,6 +38,10 @@ export class WarehouseManagementService {
   addSpareType(spareType) {
     console.log(spareType);
     return this.http.post(`${environment.API_URL}/createSpareType`, spareType);
+  }
+
+  editSparePart(spare: SparePart) {
+    return this.http.post(`${environment.API_URL}/updateSpare`, spare);
   }
 
   

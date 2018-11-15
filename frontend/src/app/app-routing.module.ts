@@ -15,7 +15,8 @@ const routes: Routes = [
   {
     path: '',
     component: HomeLayoutComponent,
-    canActivate: [AuthGuard],
+    // todo uncomment it
+    // canActivate: [AuthGuard],
     children: [
       {
         path: '',
