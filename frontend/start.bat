@@ -1,1 +1,1 @@
-ng s --open
+ng s

@@ -1,5 +1,6 @@
 package com.citystarstourseg.backend.Services;
 import com.citystarstourseg.backend.DAOs.Bus;
+import com.citystarstourseg.backend.DAOs.Order;
 import com.citystarstourseg.backend.DAOs.Spare;
 import com.citystarstourseg.backend.DAOs.SparePartsLegendItem;
 import com.citystarstourseg.backend.Database.BusCRUD;
@@ -39,8 +40,12 @@ public class SpareService {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return new ArrayList<>(null);
+            return new ArrayList<>();
         }
+    }
+
+    public List<Order> getOrder() throws SQLException {
+        return spareCRUD.getOrders();
     }
 
     public List<Spare> getSparesForBus(String bus_id) throws SQLException {
@@ -54,5 +59,9 @@ public class SpareService {
 
     public List<SparePartsLegendItem> getSparePartsLegend() throws SQLException {
         return spareCRUD.getSparePartsLegend();
+    }
+
+    public int updateSpare(Spare spare) throws SQLException {
+        return spareCRUD.updateRecords(spare);
     }
 }

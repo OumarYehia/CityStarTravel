@@ -14,13 +14,6 @@ public class BusController {
     private BusService busService;
 
     @RequestMapping(value="/createBus",method = RequestMethod.POST)
-    /*public int createBus(@RequestParam(value="busName", defaultValue="") String busName,
-                         @RequestParam(value="busPlatesAlpha", defaultValue="") String busPlatesAlpha,
-                         @RequestParam(value="busPlatesNum", defaultValue="") String busPlatesNum,
-                         @RequestParam(value="busMake", defaultValue="") String busMake,
-                         @RequestParam(value="busID", defaultValue="") String busID,
-
-                         )  {*/
     public Bus createBus(@RequestBody Bus bus)  throws SQLException, NoSuchAlgorithmException {
         busService = new BusService();
         return busService.createBus(bus.getName(), bus.getPlatesAlpha(), bus.getPlatesNum(), bus.getMake());

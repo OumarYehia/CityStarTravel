@@ -18,7 +18,8 @@ export class WarehouseManagementComponent implements OnInit {
     'spareName',
     // 'quantity',
     'busName',
-    'orderID'
+    'orderID',
+    'actions'
   ];
   spareTypesDisplayedColumns: string[] = ['spareTypeName', 'quantityAllocated', 'quantityAvailable'];
   spareParts: SparePart[];

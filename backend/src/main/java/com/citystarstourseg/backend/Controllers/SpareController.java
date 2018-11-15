@@ -1,5 +1,6 @@
 package com.citystarstourseg.backend.Controllers;
 
+import com.citystarstourseg.backend.DAOs.Order;
 import com.citystarstourseg.backend.DAOs.Spare;
 import com.citystarstourseg.backend.DAOs.SparePartsLegendItem;
 import com.citystarstourseg.backend.DAOs.SpareType;
@@ -24,9 +25,16 @@ public class SpareController {
         }
 
         spareService = new SpareService();
-        return spareService.createSparePart(spare.getSpareName(), spare.getSpareTypeID(), spare.getBusID(), spare.getOrderID());
+        if(spare.getBusID() == null)
+            spare.setBusID("-1");
+        return spareService.createSparePart(spare.getSpareName(), spare.getSpareTypeID() ,spare.getBusID(), spare.getOrderID());
     }
 
+    @RequestMapping(value = "/getOrders")
+    public List<Order> getOrders() throws SQLException {
+        spareService = new SpareService();
+        return spareService.getOrder();
+    }
     @RequestMapping(value = "/getSpare")
     public List<Spare> getSpare(@RequestParam(value="spareID", defaultValue="") String spareID)  {
         spareService = new SpareService();

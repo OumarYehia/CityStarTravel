@@ -89,21 +89,21 @@
     <td mat-cell [ngClass]="{'error': spare.quantity==0}" *matCellDef="let spare"> {{spare.orderSerialNumber}}</td>
   </ng-container>
 
-  <!-- Location Column -->
-  <!--<ng-container *ngIf="busID === undefined" matColumnDef="actions">-->
-  <!--<th mat-header-cell *matHeaderCellDef></th>-->
-  <!--<td mat-cell [ngClass]="{'error': spare.quantity==0}" *matCellDef="let spare">-->
-  <!--<button mat-button *ngIf="spare.busID == -1 && spare.spareID !== editableSpare" (click)="assign(spare.spareID)">-->
-  <!--تخصيص لاتوبيس-->
-  <!--</button>-->
-  <!--<button mat-button *ngIf="spare.busID == -1 && spare.spareID === editableSpare" (click)="assign(spare.spareID)">-->
-  <!--حفظ-->
-  <!--</button>-->
-  <!--<button mat-button *ngIf="spare.busID != -1" (click)="assign(spare.spareID)">-->
-  <!--ارسلها للمخزن-->
-  <!--</button>-->
-  <!--</td>-->
-  <!--</ng-container>-->
+   <!-- Location Column -->
+  <ng-container *ngIf="busID === undefined" matColumnDef="actions">
+  <th mat-header-cell *matHeaderCellDef></th>
+  <td mat-cell [ngClass]="{'error': spare.quantity==0}" *matCellDef="let spare">
+  <button mat-button *ngIf="spare.busID == -1 && spare.spareID !== editableSpare" (click)="assign(spare.spareID)">
+  تخصيص لاتوبيس
+  </button>
+  <button mat-button *ngIf="spare.busID == -1 && spare.spareID === editableSpare" (click)="assign(spare.spareID)">
+  حفظ
+  </button>
+  <button mat-button *ngIf="spare.busID != -1" (click)="assign(spare.spareID)">
+  ارسلها للمخزن
+  </button>
+  </td>
+  </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

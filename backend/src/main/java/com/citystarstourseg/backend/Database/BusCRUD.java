@@ -53,6 +53,8 @@ public class BusCRUD extends EntityCRUD<Bus> {
         resultSet.beforeFirst();
         List<Bus> buses = new ArrayList<>();
         while(resultSet.next()){
+            if(resultSet.getString("busID").equals("-1"))
+                continue;
             buses.add(new Bus(resultSet.getString("busID"),
                               resultSet.getString("busName"),
                               resultSet.getString("busPlatesAlpha"),
@@ -64,8 +66,7 @@ public class BusCRUD extends EntityCRUD<Bus> {
 
     @Override
     public int updateRecords(Bus bus) throws SQLException {
-        // TODO: to be implemented
-            String updateBuses ="update BUSES set busName=?,busPlatesAlpha=?,busPlatesNumbers=?,busMake=? where busID=?";
+        String updateBuses ="update BUSES set busName=?,busPlatesAlpha=?,busPlatesNumbers=?,busMake=? where busID=?";
         PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(updateBuses);
         preparedStatement.setString(1, bus.getName());
         preparedStatement.setString(2, bus.getPlatesAlpha());
@@ -73,21 +74,15 @@ public class BusCRUD extends EntityCRUD<Bus> {
         preparedStatement.setString(4, bus.getMake());
         preparedStatement.setString(5,bus.getId());
 
-
         int affectedRows = preparedStatement.executeUpdate();
         if (affectedRows == 0) {
             throw new SQLException("Updating bus failed, no rows affected.");
         }
-
         return affectedRows;
-
     }
 
     @Override
     public int deleteRecords(String busID) throws SQLException {
-        // TODO: to be implemented
-
-
         String deleteBuses ="delete from BUSES where busID=?";
 
         PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(deleteBuses);

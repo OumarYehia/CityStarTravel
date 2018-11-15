@@ -143,17 +143,39 @@
   </div>
   <div>
 
-    {{tripInView.price_basePrice}}
+
+    <!-- {{tripInView.price_basePrice}}
     {{tripInView.price_taxes}}
     {{tripInView.price_tips}}
     {{tripInView.price_tolls}}
-    {{tripInView.price_repairs}}
+    {{tripInView.price_repairs}} -->
   </div>
-
-  <button mat-button class="float-left" (click)="editTrip(tripInView)">
-    <fa-icon [icon]="['fas', 'edit']"></fa-icon>
-    تعديل رحلة
-  </button>
+  <div>
+      <label>التكلفة الأساسية:</label>
+      <span>{{tripInView.price_basePrice}}</span>
+  </div>
+  <div>
+      <label>الضرائب:</label>
+      <span>{{tripInView.price_taxes}}</span>
+  </div>
+  
+  <div>
+      <label>الاكراميات:</label>
+      <span>{{tripInView.price_tips}}</span>
+  </div>
+  <div>
+      <label>الكارتة:</label>
+      <span>{{tripInView.price_tolls}}</span>
+  </div>
+  <div>
+      <label>التصليحات:</label>
+      <span> {{tripInView.price_repairs}}</span>
+  </div>
+<hr><hr>
+<div>
+    <label>الاجمالي:</label>
+    <span> {{tripInView.price_basePrice+tripInView.price_taxes+tripInView.price_tips+tripInView.price_tolls+tripInView.price_repairs}}</span>
+</div>
 </div>
 
 <div class="lef-side" *ngIf="tripInView && editableTrip === tripInView.id">

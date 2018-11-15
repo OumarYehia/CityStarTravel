@@ -74,7 +74,6 @@ public class UserCRUD extends EntityCRUD<User> {
 
     @Override
     public int updateRecords(User o) throws SQLException {
-        // TODO: to be implemented
         String updateUser ="update USERS set userName=?,fullName=?,emailAddress=?, passwordSalt=?,passwordHash=?, mobileNumber=?, roleID=? where spareID=?";
 
         PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(updateUser);
@@ -104,7 +103,6 @@ public class UserCRUD extends EntityCRUD<User> {
 
     @Override
     public int deleteRecords(String userPassword) throws SQLException{
-        // TODO: to be implemented
         String deleteUser ="delete from USERS where userID=?";
         PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(deleteUser);
         preparedStatement.setString(1, userPassword);

@@ -40,21 +40,18 @@ public class SpareTypeCRUD extends EntityCRUD<SpareType> {
 
     @Override
     public List<SpareType> readRecords(String spareTypeID) throws SQLException {
-        // TODO: to be implemented
         CRUDServices crudServices = new CRUDServices();
         ResultSet resultSet = crudServices.readDataFromDatabase(spareTypeID, "sparetypes", "spareTypeID");
         resultSet.beforeFirst();
         List<SpareType> spareTypes = new ArrayList<>();
         while(resultSet.next()){
             spareTypes.add(new SpareType(resultSet.getString("spareTypeID"), resultSet.getString("spareType")));
-
         }
         return spareTypes;
     }
 
     @Override
     public int updateRecords(SpareType spareType) throws SQLException{
-        // TODO: to be implemented
         String updateSpareType ="update SPARETYPES set spareType=? where spareTypeID=?";
 
         PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(updateSpareType);
@@ -71,7 +68,6 @@ public class SpareTypeCRUD extends EntityCRUD<SpareType> {
 
     @Override
     public int deleteRecords(String spareType)throws SQLException {
-        // TODO: to be implemented
         String deleteSpareType ="delete from SPARETYPES where spareTypeID=?";
 
         PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(deleteSpareType);
