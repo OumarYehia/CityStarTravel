@@ -65,7 +65,7 @@ public class SpareCRUD extends EntityCRUD<Spare> {
         PreparedStatement preparedStatement;
         if(busID.isEmpty()) {
             if(spareID.isEmpty()) { // get all spare parts for all buses
-                query = "SELECT s.spareID, s.spareName,s.spareTypeID, st.spareType, b.busID, b.busName " +
+                query = "SELECT s.spareID, s.spareName,s.spareTypeID, s.orderID, st.spareType, b.busID, b.busName " +
                         "FROM spares s, sparetypes st, buses b " +
                         "WHERE s.busID = b.busID and s.spareTypeID = st.spareTypeID";
                 preparedStatement = DatabaseConnection.connectToDatabase(query);
@@ -80,7 +80,7 @@ public class SpareCRUD extends EntityCRUD<Spare> {
             }
         }
         else { // get all spare parts for specific bus
-            query = "SELECT s.spareID, s.spareName, s.spareTypeID, st.spareType, b.busID, b.busName " +
+            query = "SELECT s.spareID, s.spareName, s.spareTypeID, s.orderID, st.spareType, b.busID, b.busName " +
                     "FROM spares s, sparetypes st, buses b " +
                     "WHERE s.busID = b.busID and s.spareTypeID = st.spareTypeID and s.busID = ?";
             preparedStatement = DatabaseConnection.connectToDatabase(query);
@@ -98,8 +98,7 @@ public class SpareCRUD extends EntityCRUD<Spare> {
                     resultSet.getString("spareType"),
                     resultSet.getString("busID"),
                     resultSet.getString("busName"),
-                    3
-                    /* TODO: fix quantity in SQL,resultSet.getInt("quantity")*/
+                    resultSet.getString("orderID")
             ));
         }
         return spares;
@@ -108,26 +107,19 @@ public class SpareCRUD extends EntityCRUD<Spare> {
     @Override
     public int updateRecords(Spare spare) throws SQLException {
         // TODO: to be implemented
-        String updateSpare ="update SPARES set spareName=?,spareTypeID0=?,busID=? where spareID=?";
+        String updateSpare ="update SPARES set spareName=?,spareTypeID=?,busID=? where spareID=?";
 
         PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(updateSpare);
         preparedStatement.setString(1, spare.getSpareName());
         preparedStatement.setInt(2, Integer.parseInt(spare.getSpareTypeID()));
         preparedStatement.setInt(3, Integer.parseInt(spare.getBusID()));
+        preparedStatement.setInt(4, Integer.parseInt(spare.getSpareID()));
 
         int affectedRows = preparedStatement.executeUpdate();
         if (affectedRows == 0) {
             throw new SQLException("Updating spare failed, no rows affected.");
         }
-        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-            if (generatedKeys.next()) {
-                spare.setSpareID(generatedKeys.getString(1));
-            }
-            else {
-                throw new SQLException("Updating spare failed, no ID obtained.");
-            }
-        }
-            return affectedRows;
+        return affectedRows;
     }
 
     @Override

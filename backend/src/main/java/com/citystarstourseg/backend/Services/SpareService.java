@@ -18,8 +18,12 @@ public class SpareService {
         spareCRUD = new SpareCRUD();
     }
 
-    public Spare createSparePart(String spareName, String spareTypeID,String busID) throws SQLException{
-        return spareCRUD.createRecords(new Spare(spareName,spareTypeID,busID));
+    public Spare createSparePart(String spareName, String spareTypeID,String busID, String orderID) throws SQLException{
+        return spareCRUD.createRecords(new Spare(spareName,spareTypeID,busID, orderID));
+    }
+
+    public int updateSparePart(Spare spare) throws  SQLException{
+        return spareCRUD.updateRecords(spare);
     }
 
     /**

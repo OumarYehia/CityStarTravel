@@ -22,8 +22,8 @@ public class OrderController {
         return orderService.createOrder(order);
     }
 
-    @RequestMapping("/getOrder")
-    public List<Order> getOrder(@RequestParam(value="orderID", defaultValue="-1") String orderID)  {
+    @RequestMapping("/getOrders")
+    public List<Order> getOrders(@RequestParam(value="orderID", defaultValue="-1") String orderID)  {
         orderService = new OrderService();
         return orderService.getOrders(orderID);
     }

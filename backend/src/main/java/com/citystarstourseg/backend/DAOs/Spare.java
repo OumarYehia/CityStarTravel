@@ -7,21 +7,22 @@ public class Spare {
 
     public Spare() {}
 
-    public Spare(String spareName, String spareTypeID, String busID) {
+    public Spare(String spareName, String spareTypeID, String busID, String orderID) {
         this.spareName = spareName;
         this.spareTypeID = spareTypeID;
         this.busID = busID;
+        this.orderID = orderID;
     }
 
     public Spare(String spareID, String spareName, String spareTypeID,
-                 String spareTypeName, String busID, String busName, int quantity) {
+                 String spareTypeName, String busID, String busName, String orderID) {
         this.spareID = spareID;
         this.spareName = spareName;
         this.spareTypeID = spareTypeID;
         this.spareTypeName = spareTypeName;
         this.busID = busID;
         this.busName = busName;
-        this.quantity = quantity;
+        this.orderID = orderID;
     }
 
     public String getSpareID() {

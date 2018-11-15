@@ -52,12 +52,9 @@ public class OrderCRUD extends EntityCRUD<Order> {
             orders.add(new Order(resultSet.getString("orderID"),
                               resultSet.getString("orderSerialNumber"),
                               resultSet.getString("requesterID"),
-                              resultSet.getString("requesterName"),
                               resultSet.getString("approverID"),
-                              resultSet.getString("approverName"),
                               resultSet.getDate("orderDate").toLocalDate(),
-                              resultSet.getBoolean("isApproved")
-
+                              resultSet.getBoolean("isOrderApproved")
             ));
         }
         return orders;

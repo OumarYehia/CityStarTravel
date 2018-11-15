@@ -24,7 +24,7 @@ public class SpareController {
         }
 
         spareService = new SpareService();
-        return spareService.createSparePart(spare.getSpareName(), spare.getSpareTypeID(), spare.getBusID());
+        return spareService.createSparePart(spare.getSpareName(), spare.getSpareTypeID(), spare.getBusID(), spare.getOrderID());
     }
 
     @RequestMapping(value = "/getSpare")
@@ -47,9 +47,9 @@ public class SpareController {
 
 
     @RequestMapping(value="/updateSpare", method = RequestMethod.POST)
-    public int updateSpare(@RequestBody String spareID) throws SQLException {
+    public int updateSpare(@RequestBody Spare spare) throws SQLException {
       spareService = new SpareService();
-        return 1;
+      return spareService.updateSparePart(spare);
     }
 
     @RequestMapping(value = "/deleteSparesForBus",method = RequestMethod.DELETE)
