@@ -20,7 +20,7 @@ public class SpareService {
     }
 
     public Spare createSparePart(String spareName, String spareTypeID,String busID, String orderID) throws SQLException{
-        return spareCRUD.createRecords(new Spare(spareName,spareTypeID,busID, orderID));
+        return spareCRUD.createRecords(new Spare(spareName,spareTypeID,busID,orderID));
     }
 
     public int updateSparePart(Spare spare) throws  SQLException{
@@ -40,13 +40,13 @@ public class SpareService {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return new ArrayList<>();
+            return new ArrayList<>(null);
         }
     }
 
-    public List<Order> getOrder() throws SQLException {
-        return spareCRUD.getOrders();
-    }
+//    public List<Order> getOrder() throws SQLException {
+//        return spareCRUD.getOrders();
+//    }
 
     public List<Spare> getSparesForBus(String bus_id) throws SQLException {
         return spareCRUD.readSparesForBus(bus_id);
@@ -59,9 +59,5 @@ public class SpareService {
 
     public List<SparePartsLegendItem> getSparePartsLegend() throws SQLException {
         return spareCRUD.getSparePartsLegend();
-    }
-
-    public int updateSpare(Spare spare) throws SQLException {
-        return spareCRUD.updateRecords(spare);
     }
 }

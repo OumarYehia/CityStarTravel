@@ -2,7 +2,8 @@ package com.citystarstourseg.backend.DAOs;
 
 public class Spare {
 
-    private String spareID, spareName, spareTypeID, spareTypeName, busID, busName, orderID, orderSerialNumber;
+    private String spareID, spareName, spareTypeID, spareTypeName, busID, busName, orderID;
+    private int quantity;
 
     public Spare() {}
 
@@ -80,11 +81,11 @@ public class Spare {
         this.orderID = orderID;
     }
 
-    public String getOrderSerialNumber() {
-        return orderSerialNumber;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setOrderSerialNumber(String orderSerialNumber) {
-        this.orderSerialNumber = orderSerialNumber;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

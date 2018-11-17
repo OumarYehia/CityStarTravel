@@ -29,12 +29,12 @@ public class SpareController {
             spare.setBusID("-1");
         return spareService.createSparePart(spare.getSpareName(), spare.getSpareTypeID() ,spare.getBusID(), spare.getOrderID());
     }
-
-    @RequestMapping(value = "/getOrders")
-    public List<Order> getOrders() throws SQLException {
-        spareService = new SpareService();
-        return spareService.getOrder();
-    }
+//
+//    @RequestMapping(value = "/getOrders")
+//    public List<Order> getOrders() throws SQLException {
+//        spareService = new SpareService();
+//        return spareService.getOrders();
+//    }
     @RequestMapping(value = "/getSpare")
     public List<Spare> getSpare(@RequestParam(value="spareID", defaultValue="") String spareID)  {
         spareService = new SpareService();

@@ -176,6 +176,12 @@
     <label>الاجمالي:</label>
     <span> {{tripInView.price_basePrice+tripInView.price_taxes+tripInView.price_tips+tripInView.price_tolls+tripInView.price_repairs}}</span>
 </div>
+
+
+  <button mat-button class="float-left" (click)="editTrip(tripInView)">
+    <fa-icon [icon]="['fas', 'edit']"></fa-icon>
+    تعديل رحلة
+  </button>
 </div>
 
 <div class="lef-side" *ngIf="tripInView && editableTrip === tripInView.id">
@@ -228,7 +234,6 @@
     <mat-form-field>
       <input matInput formControlName="price_repairs" placeholder="repairs">
     </mat-form-field>
-
 
     <button mat-button type="submit">
       تعديل

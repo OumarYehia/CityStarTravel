@@ -1,6 +1,5 @@
 package com.citystarstourseg.backend.Database;
 
-import com.citystarstourseg.backend.DAOs.Order;
 import com.citystarstourseg.backend.DAOs.Spare;
 import com.citystarstourseg.backend.DAOs.SparePartsLegendItem;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,7 @@ public class SpareCRUD extends EntityCRUD<Spare> {
         preparedStatement.setInt(2, Integer.parseInt(spare.getSpareTypeID()));
         preparedStatement.setInt(3, Integer.parseInt(spare.getBusID()));
         preparedStatement.setInt(4, Integer.parseInt(spare.getOrderID()));
+
 
         int affectedRows = preparedStatement.executeUpdate();
         if (affectedRows == 0) {
@@ -73,8 +73,8 @@ public class SpareCRUD extends EntityCRUD<Spare> {
             else { // get a specific spare part
                 // TODO: Needs to be reimplemented
                 query = "SELECT s.*, st.spareType, b.busName, COUNT(s.spareID) as quantity " +
-                        "FROM spares s, sparetypes st, buses b, orders o " +
-                        "WHERE s.spareTypeID = st.spareTypeID AND s.spareID = ? AND s.busID = b.busID  and s.orderID = o.orderID";
+                        "FROM spares s, sparetypes st, buses b " +
+                        "WHERE s.spareTypeID = st.spareTypeID AND s.spareID = ? AND s.busID = b.busID";
                 preparedStatement = DatabaseConnection.connectToDatabase(query);
                 preparedStatement.setInt(1, Integer.parseInt(spareID));
             }
@@ -104,24 +104,6 @@ public class SpareCRUD extends EntityCRUD<Spare> {
         return spares;
     }
 
-    public List<Order> getOrders() throws SQLException {
-        String query;
-        PreparedStatement preparedStatement;
-
-        query = "SELECT orderID, orderSerialNumber from orders ";
-        preparedStatement = DatabaseConnection.connectToDatabase(query);
-
-        ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.beforeFirst();
-        List<Order> orders = new ArrayList<>();
-        while(resultSet.next()){
-
-            orders.add(new Order(resultSet.getString("orderID"),
-                    resultSet.getString("orderSerialNumber")));
-        }
-        return orders;
-    }
-
     @Override
     public int updateRecords(Spare spare) throws SQLException {
         // TODO: to be implemented
@@ -142,7 +124,9 @@ public class SpareCRUD extends EntityCRUD<Spare> {
 
     @Override
     public int deleteRecords(String spareID) throws SQLException {
-       String deleteSpare ="delete from SPARES where spareID=?";
+        // TODO: to be implemented
+
+       String deleteSpare ="delete from SPARES where busID=?";
        PreparedStatement preparedStatement = DatabaseConnection.connectToDatabase(deleteSpare);
 
         int affectedRows = preparedStatement.executeUpdate();
