@@ -4,3 +4,5 @@ backend/src/main/resources/application\.properties
 *.p12
 
 backend/application\.properties
+
+backend\.zip

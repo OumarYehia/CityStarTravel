@@ -1,4 +1,3 @@
-
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 
@@ -10,12 +9,6 @@
 .settings
 .springBeans
 .sts4-cache
-.properties
-./src/main/resources/application.properties
-./keystore.p12
-mvnw
-.cmd
-
 
 ### IntelliJ IDEA ###
 .idea
@@ -30,4 +23,3 @@ mvnw
 /dist/
 /nbdist/
 /.nb-gradle/
-/.mvn
