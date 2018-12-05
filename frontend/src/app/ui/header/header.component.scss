@@ -1,0 +1,91 @@
+@import "~src/assets/variables";
+
+.navbar {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.logo {
+  height: 2rem;
+}
+
+.topbar {
+  background-color: #212529;
+  padding: 0;
+
+  .container .row {
+    margin: -7px;
+    padding: 0;
+
+    .col-md-12 {
+      padding: 0;
+    }
+  }
+}
+
+ul.header-icons {
+  list-style: none;
+  margin: 5px 0 10px -25px;
+  float: left;
+
+  li {
+    display: inline;
+    margin: 0 5px;
+    border: 0px solid #2D2D2D;
+    padding: 5px 0 0;
+    width: 32px;
+    display: inline-block;
+    text-align: center;
+    height: 32px;
+    vertical-align: baseline;
+    color: #000;
+  }
+
+  .waves-effect {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    vertical-align: middle;
+    z-index: 1;
+    will-change: opacity, transform;
+    transition: .3s ease-out;
+    color: #fff;
+
+    &:hover {
+      color: $secondary-color;
+    }
+  }
+}
+
+a {
+  color: #0a0a0a;
+  text-decoration: none;
+}
+
+.mx-background-top-linear {
+  background: -webkit-linear-gradient(45deg, $primary-color 48%, $secondary-color 48%);
+  background: -webkit-linear-gradient(right, $primary-color 48%, $secondary-color 48%);
+  background: linear-gradient(45deg, $primary-color 48%, $secondary-color 48%);
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #FFFFFF;
+  cursor: pointer;
+
+  &:hover, &.active {
+    color: $primary-color;
+  }
+}

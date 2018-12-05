@@ -1,61 +1,50 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {LOCALE_ID, NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './security/login/login.component';
-import {AppMaterialModule} from './app-material/app-material.module';
-import {AppRoutingModule} from './app-routing.module';
-import {ReactiveFormsModule} from '@angular/forms';
-import { HomeLayoutComponent } from './layouts/home-layout.component';
-import { LoginLayoutComponent } from './layouts/login-layout.component';
-import { SignupComponent } from './security/signup/signup.component';
-import { BusesComponent } from './home/buses/buses.component';
-import { WarehouseManagementComponent } from './home/warehouse-management/warehouse-management.component';
+import { UiModule } from './ui/ui.module';
+import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import {HttpClientModule} from '@angular/common/http';
-import { TripsComponent } from './home/trips/trips.component';
-import {registerLocaleData} from '@angular/common';
-import localeAr from '@angular/common/locales/ar';
-
-registerLocaleData(localeAr);
-
-
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
-
-// TODO: only include needed icons
-library.add(fas, far);
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import {AuthGuard} from './shared/guards';
+import {AlertService, AuthenticationService, UserService} from './shared/services';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {ErrorInterceptor, fakeBackendProvider, JwtInterceptor} from './shared/helpers';
+import {ReactiveFormsModule} from '@angular/forms';
+import { BusDetailsComponent } from './bus/bus-details/bus-details.component';
+import {NgxGaugeModule} from 'ngx-gauge';
+import { VouchersComponent } from './vouchers/vouchers.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
+    PageNotFoundComponent,
     HomeComponent,
     LoginComponent,
-    HomeLayoutComponent,
-    LoginLayoutComponent,
-    SignupComponent,
-    BusesComponent,
-    WarehouseManagementComponent,
-    PageNotFoundComponent,
-    TripsComponent
+    RegisterComponent,
+    BusDetailsComponent,
+    VouchersComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    BrowserAnimationsModule,
-    AppMaterialModule,
+    UiModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    NgxGaugeModule
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'ar' }
+    AuthGuard,
+    AlertService,
+    AuthenticationService,
+    UserService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+
+    // provider used to create fake backend
+    fakeBackendProvider
   ],
   bootstrap: [AppComponent]
 })

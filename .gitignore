@@ -6,3 +6,5 @@ backend/src/main/resources/application\.properties
 backend/application\.properties
 
 backend\.zip
+
+frontend\.7z
