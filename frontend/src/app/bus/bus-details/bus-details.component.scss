@@ -14,6 +14,11 @@
   }
 }
 
+.bus-img {
+  width: 100%;
+  height: 95%;
+  margin-top: 1.5rem;
+}
 
 .license-plate {
   position: relative;
@@ -21,18 +26,18 @@
   color: black;
   font-weight: bolder;
   font-size: large;
-  width: 7rem;
+  width: 100%;
 
   .license-bg {
-    height: 4rem;
-    width: 7rem;
+    width: 100%;
   }
 
   .body {
     .letters {
       position: absolute;
-      top: 1.8rem;
-      right: 0.6rem;
+      bottom: 16%;
+      right: 10%;
+      font-size: 300%;
 
       input {
         position: absolute;
@@ -47,8 +52,9 @@
 
     .numbers {
       position: absolute;
-      top: 1.8rem;
-      left: 0.6rem;
+      bottom: 16%;
+      left: 10%;
+      font-size: 300%;
 
       input {
         position: absolute;
@@ -59,4 +65,44 @@
       }
     }
   }
+}
+
+nav {
+  .nav.nav-tabs{
+    border: none;
+    background: $primary-color;
+    border-radius:0;
+  }
+
+  div {
+    a {
+      cursor: pointer;
+      &.nav-item.nav-link {
+        border: none;
+        padding: 18px 25px;
+        color:#fff;
+        border-radius:0;
+
+        &:hover, &:focus, &.active {
+          border: none;
+          background: $secondary-color;
+          color:#fff;
+          border-radius:0;
+          transition:background 0.20s linear;
+        }
+
+      }
+    }
+  }
+
+}
+
+
+.tab-content{
+  background: #fdfdfd;
+  line-height: 25px;
+  border: 1px solid #ddd;
+  border-top:5px solid $secondary-color;
+  border-bottom:5px solid $secondary-color;
+  padding:20px 10px;
 }

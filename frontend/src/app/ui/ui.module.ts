@@ -5,11 +5,21 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { AlertComponent } from './alert/alert.component';
 import {AppRoutingModule} from '../app-routing.module';
+import {NgProgressModule} from '@ngx-progressbar/core';
+import {NgProgressHttpModule} from '@ngx-progressbar/http';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    NgProgressModule.forRoot({
+      direction: 'rtl+',
+      spinnerPosition: 'left',
+      color: '#FFA81F'
+    }),
+    NgProgressHttpModule.forRoot()
   ],
   declarations: [LayoutComponent, HeaderComponent, FooterComponent, AlertComponent],
   exports: [LayoutComponent]

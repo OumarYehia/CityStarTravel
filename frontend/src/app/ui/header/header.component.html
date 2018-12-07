@@ -1,36 +1,12 @@
-<!--<nav class="navbar navbar-dark bg-dark mb-5">-->
-  <!--<a class="navbar-brand" href="/">Angular & Bootstrap</a>-->
-  <!--<div class="navbar-expand mr-auto">-->
-    <!--<div class="navbar-nav">-->
-      <!--<a class="nav-item nav-link active" href="#">Home</a>-->
-      <!--<a class="nav-item nav-link" href="#">About</a>-->
-      <!--<a class="nav-item nav-link" href="#">Contact</a>-->
-    <!--</div>-->
-  <!--</div>-->
-  <!--<div class="navbar-expand ml-auto navbar-nav">-->
-    <!--<div class="navbar-nav">-->
-      <!--<a class="nav-item nav-link" href="https://github.com/MFateen/CityStarsWebapp" target="_blank">-->
-        <!--<i class="fa fa-github"></i>-->
-      <!--</a>-->
-      <!--<a class="nav-item nav-link" href="" target="_blank">-->
-        <!--<i class="fa fa-twitter"></i>-->
-      <!--</a>-->
-      <!--<a class="nav-item nav-link" href="" target="_blank">-->
-        <!--<i class="fa fa-medium"></i>-->
-      <!--</a>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</nav>-->
-
 <div class="fixed-top">
   <header class="topbar">
     <div class="container">
       <div class="row">
         <div class="col-sm-12">
           <ul class="header-icons">
-            <li><a class="waves-effect waves-dark" routerLink="['']"><i class="fa fa-user"></i></a></li>
-            <li><a class="waves-effect waves-dark" routerLink="['']"><i class="fa fa-gear"></i></a></li>
-            <li><a class="waves-effect waves-dark" routerLink="['']"><i class="fa fa-sign-out"></i></a></li>
+            <li><a class="waves-effect waves-dark" [routerLink]="['/user']"><i class="fa fa-user"></i></a></li>
+            <li><a class="waves-effect waves-dark" [routerLink]="['']"><i class="fa fa-gear"></i></a></li>
+            <li><a class="waves-effect waves-dark" [routerLink]="['/login']" (click)="logout()"><i class="fa fa-sign-out"></i></a></li>
           </ul>
         </div>
 

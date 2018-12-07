@@ -16,6 +16,10 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { BusDetailsComponent } from './bus/bus-details/bus-details.component';
 import {NgxGaugeModule} from 'ngx-gauge';
 import { VouchersComponent } from './vouchers/vouchers.component';
+import {NgProgressModule} from '@ngx-progressbar/core';
+import {NgProgressHttpModule} from '@ngx-progressbar/http';
+import { ProfileComponent } from './profile/profile.component';
+import { BusEventsComponent } from './bus/bus-details/bus-events/bus-events.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +29,9 @@ import { VouchersComponent } from './vouchers/vouchers.component';
     LoginComponent,
     RegisterComponent,
     BusDetailsComponent,
-    VouchersComponent
+    VouchersComponent,
+    ProfileComponent,
+    BusEventsComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +39,8 @@ import { VouchersComponent } from './vouchers/vouchers.component';
     UiModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    NgxGaugeModule
+    NgxGaugeModule,
+
   ],
   providers: [
     AuthGuard,
