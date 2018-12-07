@@ -11,6 +11,7 @@ import {Bus} from '../bus.dto';
 export class BusDetailsComponent implements OnInit {
 
   bus: Bus;
+  number = 123453;
 
   constructor(
     private busService: BusService

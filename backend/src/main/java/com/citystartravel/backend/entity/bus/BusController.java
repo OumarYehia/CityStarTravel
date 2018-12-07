@@ -31,7 +31,7 @@ public class BusController {
 
     @GetMapping("/getBus")
     public Bus getBus(@CurrentUser UserPrincipal currentUser,
-                      @RequestParam(value = "busID") Long id) {
+                      @RequestParam(value = "id") Long id) {
         return busService.getBusById(id, currentUser);
     }
 

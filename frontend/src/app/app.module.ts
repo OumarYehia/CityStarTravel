@@ -20,6 +20,7 @@ import {NgProgressModule} from '@ngx-progressbar/core';
 import {NgProgressHttpModule} from '@ngx-progressbar/http';
 import { ProfileComponent } from './profile/profile.component';
 import { BusEventsComponent } from './bus/bus-details/bus-events/bus-events.component';
+import {Ng2OdometerModule} from 'ng2-odometer';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { BusEventsComponent } from './bus/bus-details/bus-events/bus-events.comp
     AppRoutingModule,
     ReactiveFormsModule,
     NgxGaugeModule,
-
+    Ng2OdometerModule.forRoot()
   ],
   providers: [
     AuthGuard,
