@@ -2,8 +2,8 @@ package com.citystartravel.backend.entity.bus;
 
 
 import com.citystartravel.backend.payload.response.PagedResponse;
+import com.citystartravel.backend.security.CurrentUser;
 import com.citystartravel.backend.security.UserPrincipal;
-import com.citystartravel.backend.util.AppConstants;
 import com.citystartravel.backend.util.UtilityMethods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,14 +29,14 @@ public class BusService {
         return utilityMethods.getById(busRepository,currentUser,busId,"Bus");
     }
 
-    public Bus createBus(BusRequest busRequest) {
-        Bus bus = new Bus();
-        bus.setName(busRequest.getName());
-        bus.setPlatesLetters(busRequest.getPlatesLetters());
-        bus.setPlatesNumbers(busRequest.getPlatesNumbers());
-        bus.setBusCondition(AppConstants.CONDTION_OK);
-        bus.setStatus(AppConstants.CONDTION_OK);
-
+    public Bus createBus(BusRequest busRequest, @CurrentUser UserPrincipal currentUser) {
+        Bus bus = new Bus(busRequest.getName(),
+                          busRequest.getPlatesLetters(),
+                          busRequest.getPlatesNumbers(),
+                          busRequest.getKm());
+        String eventLog = utilityMethods.generateEntityCreationMessage("Bus",bus.getPlatesNumbers(),currentUser);
+        bus.addBusEvent(new BusEvent(eventLog));
+        logger.info(eventLog);
         return busRepository.save(bus);
     }
 

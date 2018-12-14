@@ -8,3 +8,7 @@ backend/application\.properties
 backend\.zip
 
 frontend\.7z
+
+frontend/package-lock\.json
+
+*.pdf

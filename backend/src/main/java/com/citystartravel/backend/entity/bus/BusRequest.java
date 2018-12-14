@@ -17,6 +17,8 @@ public class BusRequest {
     @Size(max = 10)
     private String platesNumbers;
 
+    private long km;
+
     public BusRequest() {}
 
     public String getName() {
@@ -41,5 +43,13 @@ public class BusRequest {
 
     public void setPlatesNumbers(String platesNumbers) {
         this.platesNumbers = platesNumbers;
+    }
+
+    public long getKm() {
+        return km;
+    }
+
+    public void setKm(long km) {
+        this.km = km;
     }
 }

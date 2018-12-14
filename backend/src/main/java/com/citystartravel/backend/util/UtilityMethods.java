@@ -3,6 +3,7 @@ package com.citystartravel.backend.util;
 import com.citystartravel.backend.exception.BadRequestException;
 import com.citystartravel.backend.exception.ResourceNotFoundException;
 import com.citystartravel.backend.payload.response.PagedResponse;
+import com.citystartravel.backend.security.CurrentUser;
 import com.citystartravel.backend.security.UserPrincipal;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -51,5 +52,9 @@ public class UtilityMethods<T> {
 
     public void delete(JpaRepository<T,Long> repository, T entity) {
         repository.delete(entity);
+    }
+
+    public String generateEntityCreationMessage(String entityType, String entityName, @CurrentUser UserPrincipal currentUser) {
+        return "[CREATED] "+entityType+" "+entityName+" created by "+currentUser.getUsername();
     }
 }

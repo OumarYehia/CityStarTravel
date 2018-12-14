@@ -1,8 +1,7 @@
 package com.citystartravel.backend.entity.bus;
 
-import com.citystartravel.backend.config.audit.DateAudit;
 import com.citystartravel.backend.config.audit.UserDateAudit;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NaturalId;
@@ -10,8 +9,8 @@ import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "buses", uniqueConstraints = {
@@ -19,7 +18,7 @@ import java.util.List;
                 "name"
         })
 })
-public class Bus extends UserDateAudit {
+class Bus extends UserDateAudit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,12 +37,12 @@ public class Bus extends UserDateAudit {
     @Size(max = 10)
     private String platesNumbers;
 
+    private boolean inOperation;
 
-    @Size(max = 25)
-    private String status;
+    //@Size(max = 4)
+    private int busCondition;
 
-    @Size(max = 25)
-    private String busCondition;
+    private long km;
 
     @OneToMany(
             mappedBy = "bus",
@@ -52,7 +51,14 @@ public class Bus extends UserDateAudit {
             orphanRemoval = true
     )
     @Fetch(FetchMode.SELECT)
-    private List<BusEvent> events = new ArrayList<>();
+    @JsonManagedReference
+    private Set<BusEvent> events = new HashSet<>();
+
+/*    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name="bus_busevents",
+            joinColumns = @JoinColumn(name="bus_id"),
+            inverseJoinColumns = @JoinColumn(name="busevent_id"))
+    private Set<BusEvent> events = new HashSet<>();*/
 
 /*    @OneToMany(
             mappedBy = "bus",
@@ -63,79 +69,103 @@ public class Bus extends UserDateAudit {
     @Fetch(FetchMode.SELECT)
     private List<SparePart> spareParts = new ArrayList<>();*/
 
-    public Bus() {}
+    Bus() {}
 
-    public Bus(@NotBlank @Size(max = 20) String name, @NotBlank @Size(max = 10) String platesLetters, @NotBlank @Size(max = 10) String platesNumbers, @Size(max = 25) String status, @Size(max = 25) String busCondition) {
+    Bus(@NotBlank @Size(max = 20) String name, @NotBlank @Size(max = 10) String platesLetters, @NotBlank @Size(max = 10) String platesNumbers, boolean inOperation, @Size(max = 4) int busCondition, Set<BusEvent> events, long km) {
         this.name = name;
         this.platesLetters = platesLetters;
         this.platesNumbers = platesNumbers;
-        this.status = status;
+        this.inOperation = inOperation;
         this.busCondition = busCondition;
+        this.events = events;
+        this.km = km;
     }
 
-    public Long getId() {
+    /*Healthy bus, in operation and in good condition.*/
+    Bus(@NotBlank @Size(max = 20) String name, @NotBlank @Size(max = 10) String platesLetters, @NotBlank @Size(max = 10) String platesNumbers, long km) {
+        this.name = name;
+        this.platesLetters = platesLetters;
+        this.platesNumbers = platesNumbers;
+        this.inOperation = true;
+        this.busCondition = 4;
+        this.km = km;
+    }
+
+    Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
-    public String getPlatesLetters() {
+    String getPlatesLetters() {
         return platesLetters;
     }
 
-    public void setPlatesLetters(String platesLetters) {
+    void setPlatesLetters(String platesLetters) {
         this.platesLetters = platesLetters;
     }
 
-    public String getPlatesNumbers() {
+    String getPlatesNumbers() {
         return platesNumbers;
     }
 
-    public void setPlatesNumbers(String platesNumbers) {
+    void setPlatesNumbers(String platesNumbers) {
         this.platesNumbers = platesNumbers;
     }
 
-    public String getStatus() {
-        return status;
+    boolean isInOperation() {
+        return inOperation;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    void setInOperation(boolean inOperation) {
+        this.inOperation = inOperation;
     }
 
-    public String getBusCondition() {
+    int getBusCondition() {
         return busCondition;
     }
 
-    public void setBusCondition(String busCondition) {
+    void setBusCondition(int busCondition) {
         this.busCondition = busCondition;
     }
 
-    public List<BusEvent> getEvents() {
+    Set<BusEvent> getEvents() {
         return events;
     }
 
-    public void setEvents(List<BusEvent> events) {
+    void setEvents(Set<BusEvent> events) {
         this.events = events;
     }
 
-    public void addBusEvent(BusEvent busEvent) {
+    void addBusEvent(BusEvent busEvent) {
         events.add(busEvent);
         busEvent.setBus(this);
     }
 
-    public void removeBusEvent(BusEvent busEvent) {
+    void removeBusEvent(BusEvent busEvent) {
         events.remove(busEvent);
         busEvent.setBus(null);
+    }
+
+    long getKm() {
+        return km;
+    }
+
+    void setKm(long km) {
+        this.km = km;
+    }
+
+    void addKm(long km) {
+        this.km += km;
     }
 }

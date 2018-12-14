@@ -1,13 +1,14 @@
 package com.citystartravel.backend.entity.bus;
 
 import com.citystartravel.backend.config.audit.UserDateAudit;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 @Entity
-@Table(name = "bus_events")
+@Table(name = "busevents")
 public class BusEvent extends UserDateAudit {
 
     @Id
@@ -16,6 +17,7 @@ public class BusEvent extends UserDateAudit {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="bus_id", nullable = false)
+    @JsonBackReference
     private Bus bus;
 
     @NotBlank
@@ -27,9 +29,14 @@ public class BusEvent extends UserDateAudit {
 
     public BusEvent() {}
 
+    public BusEvent(@NotBlank String text) {
+        this.text = text;
+    }
+
     public BusEvent(Bus bus, @NotBlank String text) {
         this.bus = bus;
         this.text = text;
+        this.resolved = false;
     }
 
     public BusEvent(Bus bus, @NotBlank String text, String busCondition) {

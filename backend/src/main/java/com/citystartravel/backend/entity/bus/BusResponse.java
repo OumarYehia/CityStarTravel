@@ -12,6 +12,7 @@ public class BusResponse {
     private String status;
     private String condition;
     private List<BusEvent> events = new ArrayList<>();
+    private long km;
 
     public BusResponse() {}
 
@@ -69,5 +70,13 @@ public class BusResponse {
 
     public void setEvents(List<BusEvent> events) {
         this.events = events;
+    }
+
+    public long getKm() {
+        return km;
+    }
+
+    public void setKm(long km) {
+        this.km = km;
     }
 }
