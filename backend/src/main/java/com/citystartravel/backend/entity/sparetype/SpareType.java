@@ -1,5 +1,6 @@
 package com.citystartravel.backend.entity.sparetype;
 
+import com.citystartravel.backend.config.audit.UserDateAudit;
 import com.citystartravel.backend.entity.spare.Spare;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -15,7 +16,7 @@ import java.util.List;
                 "name"
         })
 })
-public class SpareType {
+public class SpareType extends UserDateAudit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

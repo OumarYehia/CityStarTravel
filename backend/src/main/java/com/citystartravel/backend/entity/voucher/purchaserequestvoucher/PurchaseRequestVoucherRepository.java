@@ -1,5 +1,6 @@
 package com.citystartravel.backend.entity.voucher.purchaserequestvoucher;
 
+import com.citystartravel.backend.entity.voucher.purchaserequestvoucher.PurchaseRequestVoucher;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,6 +1,7 @@
 package com.citystartravel.backend.entity.bus;
 
 import com.citystartravel.backend.config.audit.UserDateAudit;
+import com.citystartravel.backend.entity.bus.event.BusEvent;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -18,7 +19,7 @@ import java.util.Set;
                 "name"
         })
 })
-class Bus extends UserDateAudit {
+public class Bus extends UserDateAudit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -91,81 +92,81 @@ class Bus extends UserDateAudit {
         this.km = km;
     }
 
-    Long getId() {
+    public Long getId() {
         return id;
     }
 
-    void setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    String getPlatesLetters() {
+    public String getPlatesLetters() {
         return platesLetters;
     }
 
-    void setPlatesLetters(String platesLetters) {
+    public void setPlatesLetters(String platesLetters) {
         this.platesLetters = platesLetters;
     }
 
-    String getPlatesNumbers() {
+    public String getPlatesNumbers() {
         return platesNumbers;
     }
 
-    void setPlatesNumbers(String platesNumbers) {
+    public void setPlatesNumbers(String platesNumbers) {
         this.platesNumbers = platesNumbers;
     }
 
-    boolean isInOperation() {
+    public boolean isInOperation() {
         return inOperation;
     }
 
-    void setInOperation(boolean inOperation) {
+    public void setInOperation(boolean inOperation) {
         this.inOperation = inOperation;
     }
 
-    int getBusCondition() {
+    public int getBusCondition() {
         return busCondition;
     }
 
-    void setBusCondition(int busCondition) {
+    public void setBusCondition(int busCondition) {
         this.busCondition = busCondition;
     }
 
-    Set<BusEvent> getEvents() {
+    public Set<BusEvent> getEvents() {
         return events;
     }
 
-    void setEvents(Set<BusEvent> events) {
+    public void setEvents(Set<BusEvent> events) {
         this.events = events;
     }
 
-    void addBusEvent(BusEvent busEvent) {
+    public void addBusEvent(BusEvent busEvent) {
         events.add(busEvent);
         busEvent.setBus(this);
     }
 
-    void removeBusEvent(BusEvent busEvent) {
+    public void removeBusEvent(BusEvent busEvent) {
         events.remove(busEvent);
         busEvent.setBus(null);
     }
 
-    long getKm() {
+    public long getKm() {
         return km;
     }
 
-    void setKm(long km) {
+    public void setKm(long km) {
         this.km = km;
     }
 
-    void addKm(long km) {
+    public void addKm(long km) {
         this.km += km;
     }
 }

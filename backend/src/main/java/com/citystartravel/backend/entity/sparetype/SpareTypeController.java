@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/spareTypes")
+@RequestMapping("/api/sparetype")
 public class SpareTypeController {
     
     @Autowired
@@ -18,20 +18,20 @@ public class SpareTypeController {
 
     private static final Logger logger = LoggerFactory.getLogger(SpareTypeController.class);
 
-    @GetMapping("/getAllSpareTypes")
+    @GetMapping("/getAll")
     public PagedResponse<SpareType> getSpareTypees(@CurrentUser UserPrincipal currentUser,
                                                    @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
                                                    @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
         return spareTypeService.getAllSpareTypes(currentUser, page, size);
     }
 
-    @GetMapping("/getSpareType")
+    @GetMapping("/get")
     public SpareType getSpareType(@CurrentUser UserPrincipal currentUser,
                       @RequestParam(value = "spareTypeID") Long id) {
         return spareTypeService.getSpareTypeById(id, currentUser);
     }
 
-    @PostMapping("/createSpareType")
+    @PostMapping("/create")
     public SpareType createSpareType(@CurrentUser UserPrincipal currentUser,
                          @RequestBody SpareTypeRequest spareTypeRequest) {
         return spareTypeService.createSpareType(spareTypeRequest);

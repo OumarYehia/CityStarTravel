@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/spares")
+@RequestMapping("/api/spare")
 public class SpareController {
 
     @Autowired
@@ -23,20 +23,20 @@ public class SpareController {
 
     private static final Logger logger = LoggerFactory.getLogger(com.citystartravel.backend.entity.spare.SpareController.class);
 
-    @GetMapping("/getAllSpares")
+    @GetMapping("/getAll")
     public PagedResponse<Spare> getSparees(@CurrentUser UserPrincipal currentUser,
                                                    @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
                                                    @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
         return spareService.getAllSpares(currentUser, page, size);
     }
 
-    @GetMapping("/getSpare")
+    @GetMapping("/get")
     public Spare getSpare(@CurrentUser UserPrincipal currentUser,
                                   @RequestParam(value = "spareID") Long id) {
         return spareService.getSpareById(id, currentUser);
     }
 
-    @PostMapping("/createSpare")
+    @PostMapping("/create")
     public List<Spare> createSpare(@CurrentUser UserPrincipal currentUser,
                                    @RequestBody SpareRequest spareRequest) {
         return spareService.createSpare(spareRequest);

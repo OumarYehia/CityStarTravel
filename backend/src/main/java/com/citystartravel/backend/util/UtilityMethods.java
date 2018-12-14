@@ -1,5 +1,7 @@
 package com.citystartravel.backend.util;
 
+import com.citystartravel.backend.entity.bus.Bus;
+import com.citystartravel.backend.entity.bus.BusResponse;
 import com.citystartravel.backend.exception.BadRequestException;
 import com.citystartravel.backend.exception.ResourceNotFoundException;
 import com.citystartravel.backend.payload.response.PagedResponse;
@@ -13,6 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
+import java.util.List;
 
 public class UtilityMethods<T> {
 
@@ -30,15 +33,15 @@ public class UtilityMethods<T> {
         validatePageNumberAndSize(page, size);
 
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
-        Page<T> spareTypePages = repository.findAll(pageable);
+        Page<T> pages = repository.findAll(pageable);
 
-        if(spareTypePages.getNumberOfElements() == 0) {
-            return new PagedResponse<>(Collections.emptyList(), spareTypePages.getNumber(),
-                    spareTypePages.getSize(), spareTypePages.getTotalElements(), spareTypePages.getTotalPages(), spareTypePages.isLast());
+        if(pages.getNumberOfElements() == 0) {
+            return new PagedResponse<>(Collections.emptyList(), pages.getNumber(),
+                    pages.getSize(), pages.getTotalElements(), pages.getTotalPages(), pages.isLast());
         }
 
-        return new PagedResponse<>(spareTypePages.getContent(), spareTypePages.getNumber(),
-                spareTypePages.getSize(), spareTypePages.getTotalElements(), spareTypePages.getTotalPages(), spareTypePages.isLast());
+        return new PagedResponse<>(pages.getContent(), pages.getNumber(),
+                pages.getSize(), pages.getTotalElements(), pages.getTotalPages(), pages.isLast());
     }
 
     public T getById(JpaRepository<T,Long> repository, UserPrincipal currentUser, Long id, String resourceName) {
@@ -57,4 +60,5 @@ public class UtilityMethods<T> {
     public String generateEntityCreationMessage(String entityType, String entityName, @CurrentUser UserPrincipal currentUser) {
         return "[CREATED] "+entityType+" "+entityName+" created by "+currentUser.getUsername();
     }
+
 }

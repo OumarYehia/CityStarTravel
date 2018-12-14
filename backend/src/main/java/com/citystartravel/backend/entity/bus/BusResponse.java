@@ -1,17 +1,14 @@
 package com.citystartravel.backend.entity.bus;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class BusResponse {
 
     private Long id;
     private String name;
     private String platesLetters;
     private String platesNumbers;
-    private String status;
+    private boolean inOperation;
     private String condition;
-    private List<BusEvent> events = new ArrayList<>();
+    //private List<BusEvent> events = new ArrayList<>();
     private long km;
 
     public BusResponse() {}
@@ -48,12 +45,12 @@ public class BusResponse {
         this.platesNumbers = platesNumbers;
     }
 
-    public String getStatus() {
-        return status;
+    public boolean isInOperation() {
+        return inOperation;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setInOperation(boolean inOperation) {
+        this.inOperation = inOperation;
     }
 
     public String getCondition() {
@@ -64,13 +61,13 @@ public class BusResponse {
         this.condition = condition;
     }
 
-    public List<BusEvent> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<BusEvent> events) {
-        this.events = events;
-    }
+//    public List<BusEvent> getEvents() {
+//        return events;
+//    }
+//
+//    public void setEvents(List<BusEvent> events) {
+//        this.events = events;
+//    }
 
     public long getKm() {
         return km;

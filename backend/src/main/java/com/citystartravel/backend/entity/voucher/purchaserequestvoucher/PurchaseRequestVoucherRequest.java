@@ -1,16 +1,12 @@
 package com.citystartravel.backend.entity.voucher.purchaserequestvoucher;
 
-import com.citystartravel.backend.config.audit.UserDateAudit;
-import com.citystartravel.backend.entity.voucher.VoucherItem;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import com.citystartravel.backend.entity.voucher.item.VoucherItemRequest;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PurchaseRequestVoucherRequest extends UserDateAudit {
+public class PurchaseRequestVoucherRequest {
 
     private Date date;
 
@@ -23,10 +19,17 @@ public class PurchaseRequestVoucherRequest extends UserDateAudit {
     private String deliveryNote;
     private String inspectionVoucher;
 
-    private List<VoucherItem> voucherItems = new ArrayList<>();
+    private List<VoucherItemRequest> voucherItemRequests = new ArrayList<>();
 
 
-    public PurchaseRequestVoucherRequest() {
+    public PurchaseRequestVoucherRequest() {}
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getSupplierCode() {
@@ -45,11 +48,43 @@ public class PurchaseRequestVoucherRequest extends UserDateAudit {
         this.supplierName = supplierName;
     }
 
-    public List<VoucherItem> getVoucherItems() {
-        return voucherItems;
+    public String getPurchaseOrder() {
+        return purchaseOrder;
     }
 
-    public void setVoucherItems(List<VoucherItem> voucherItems) {
-        this.voucherItems = voucherItems;
+    public void setPurchaseOrder(String purchaseOrder) {
+        this.purchaseOrder = purchaseOrder;
+    }
+
+    public String getSupplierInvoice() {
+        return supplierInvoice;
+    }
+
+    public void setSupplierInvoice(String supplierInvoice) {
+        this.supplierInvoice = supplierInvoice;
+    }
+
+    public String getDeliveryNote() {
+        return deliveryNote;
+    }
+
+    public void setDeliveryNote(String deliveryNote) {
+        this.deliveryNote = deliveryNote;
+    }
+
+    public String getInspectionVoucher() {
+        return inspectionVoucher;
+    }
+
+    public void setInspectionVoucher(String inspectionVoucher) {
+        this.inspectionVoucher = inspectionVoucher;
+    }
+
+    public List<VoucherItemRequest> getVoucherItemRequests() {
+        return voucherItemRequests;
+    }
+
+    public void setVoucherItemRequests(List<VoucherItemRequest> voucherItemRequests) {
+        this.voucherItemRequests = voucherItemRequests;
     }
 }

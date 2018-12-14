@@ -1,7 +1,8 @@
-package com.citystartravel.backend.entity.voucher;
+package com.citystartravel.backend.entity.voucher.item;
 
 import com.citystartravel.backend.entity.sparetype.SpareType;
 import com.citystartravel.backend.entity.voucher.purchaserequestvoucher.PurchaseRequestVoucher;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -31,18 +32,18 @@ public class VoucherItem {
     private String notes;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="purchaserequestvoucher_id", nullable = false)
+    @JoinColumn(name="purchase_request_voucher_id", nullable = false)
+    @JsonBackReference
     private PurchaseRequestVoucher purchaseRequestVoucher;
 
     public VoucherItem() {}
 
-    public VoucherItem(SpareType spareType, String description, String unit, @Min(value = 1) int quantity, String notes, PurchaseRequestVoucher purchaseRequestVoucher) {
+    public VoucherItem(SpareType spareType, String description, String unit, @Min(value = 1) int quantity, String notes) {
         this.spareType = spareType;
         this.description = description;
         this.unit = unit;
         this.quantity = quantity;
         this.notes = notes;
-        this.purchaseRequestVoucher = purchaseRequestVoucher;
     }
 
     public long getId() {

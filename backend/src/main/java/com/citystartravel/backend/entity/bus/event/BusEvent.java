@@ -1,10 +1,12 @@
-package com.citystartravel.backend.entity.bus;
+package com.citystartravel.backend.entity.bus.event;
 
 import com.citystartravel.backend.config.audit.UserDateAudit;
+import com.citystartravel.backend.entity.bus.Bus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -13,23 +15,28 @@ public class BusEvent extends UserDateAudit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="bus_id", nullable = false)
     @JsonBackReference
     private Bus bus;
 
-    @NotBlank
+    @NotNull
     private String text;
 
     private String busCondition;
 
     private boolean resolved;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private BusEventType type;
+
     public BusEvent() {}
 
-    public BusEvent(@NotBlank String text) {
+    public BusEvent(@NotNull BusEventType type, @NotNull String text) {
+        this.type = type;
         this.text = text;
     }
 
@@ -46,11 +53,11 @@ public class BusEvent extends UserDateAudit {
         this.resolved = false;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -84,6 +91,14 @@ public class BusEvent extends UserDateAudit {
 
     public void setResolved(boolean resolved) {
         this.resolved = resolved;
+    }
+
+    public BusEventType getType() {
+        return type;
+    }
+
+    public void setType(BusEventType type) {
+        this.type = type;
     }
 
     @Override

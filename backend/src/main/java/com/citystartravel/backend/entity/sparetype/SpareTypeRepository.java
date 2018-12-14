@@ -15,4 +15,6 @@ public interface SpareTypeRepository extends JpaRepository<SpareType, Long> {
     List<SpareType> findByIdIn(List<Long> busIds);
 
     List<SpareType> findByIdIn(List<Long> busIds, Sort sort);
+
+    SpareType getOne(Long aLong);
 }
