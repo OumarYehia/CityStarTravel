@@ -1,6 +1,5 @@
-@import "~bootstrap/dist/css/bootstrap.css";
 @import "~font-awesome/css/font-awesome.css";
-
+@import "assets/variables";
 
 html body{
   direction: rtl !important;
@@ -9,4 +8,80 @@ html body{
 
 .ng-spinner {
   top: 8px !important;
+}
+
+.card {
+  text-align: center;
+  color: white;
+
+  .card-header {
+    background-color: $primary-color;
+  }
+
+  .card-body {
+    background-color: $secondary-color;
+  }
+
+  .card-footer.empty {
+    background-color: $secondary-color;
+    padding: 3px;
+  }
+}
+
+.modal {
+  .modal-header {
+    background-color: $primary-color;
+    color: white;
+
+    .close {
+      color: white;
+
+      &:hover {
+        color: $secondary-color;
+      }
+    }
+  }
+
+  .modal-body {
+    border-bottom: 0.5rem solid $secondary-color;
+  }
+}
+
+nav {
+  .nav.nav-tabs{
+    border: none;
+    background: $primary-color;
+    border-radius:0;
+  }
+
+  div {
+    a {
+      cursor: pointer;
+      &.nav-item.nav-link {
+        border: none;
+        padding: 18px 25px;
+        color:#fff;
+        border-radius:0;
+
+        &:hover, &:focus, &.active {
+          border: none;
+          background: $secondary-color;
+          color:#fff;
+          border-radius:0;
+          transition:background 0.20s linear;
+        }
+
+      }
+    }
+  }
+
+}
+
+.tab-content{
+  background: #fdfdfd;
+  line-height: 25px;
+  border: 1px solid #ddd;
+  border-top:5px solid $secondary-color;
+  border-bottom:5px solid $secondary-color;
+  padding:20px 10px;
 }

@@ -4,11 +4,11 @@ const routes: Routes = [
 
   { path: '', canActivate: [AuthGuard], children: [
       { path: '', component: HomeComponent },
-      { path: 'bus', component: BusDetailsComponent, children: [
-          {path: '', component: BusEventsComponent},
+      { path: 'buses', component: BusesListComponent },
+      { path: 'buses/:id', component: BusDetailsComponent, children: [
+          {path: '', redirectTo: 'events', pathMatch: 'full'},
           {path: 'events', component: BusEventsComponent}
-        ]
-      },
+      ]},
       { path: 'vouchers', component: VouchersComponent },
       { path: 'user', component: ProfileComponent},
     ] },
@@ -28,6 +28,7 @@ import {BusDetailsComponent} from './bus/bus-details/bus-details.component';
 import {VouchersComponent} from './vouchers/vouchers.component';
 import {ProfileComponent} from './profile/profile.component';
 import {BusEventsComponent} from './bus/bus-details/bus-events/bus-events.component';
+import {BusesListComponent} from './bus/buses-list/buses-list.component';
 
 
 

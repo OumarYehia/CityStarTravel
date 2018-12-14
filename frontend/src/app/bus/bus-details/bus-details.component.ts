@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BusService} from '../bus.service';
 import {Bus} from '../bus.dto';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-bus-details',
@@ -10,18 +11,20 @@ import {Bus} from '../bus.dto';
 })
 export class BusDetailsComponent implements OnInit {
 
+  busID: number;
   bus: Bus;
-  number = 123453;
 
   constructor(
-    private busService: BusService
-  ) { }
+    private busService: BusService,
+    route: ActivatedRoute
+  ) {
+    this.busID = route.snapshot.params['id'];
+  }
 
   ngOnInit() {
-    this.busService.getBus(1).subscribe(
+    this.busService.getBus(this.busID).subscribe(
       bus => {
         this.bus = bus;
-        console.log(bus);
       }
     );
 

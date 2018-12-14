@@ -1,0 +1,137 @@
+<app-layout>
+  <div class="row">
+    <h1>الأتوبيسات</h1>
+    <div class="col">
+      <button
+        class="mid-ver btn btn-secondary btn-sm float-left"
+        (click)="onAddClick()">
+        اضف أتوبيس
+      </button>
+    </div>
+  </div>
+  <hr>
+
+  <div class="row">
+    <div class="col-md-4 col-sm-6 col-xs-12 mb-1" *ngFor="let bus of buses">
+      <div class="card">
+        <div class="overlay">
+          <a routerLink="{{bus?.id}}">التفاصيل</a>
+          <div class="action-icons">
+            <fa-icon class="edit" icon="pen" (click)="onEditClick(bus)"></fa-icon>
+            <fa-icon class="delete" icon="trash" (click)="onDeleteClick(bus)"></fa-icon>
+          </div>
+        </div>
+        <div class="card-header">
+          <h5 class="float-right">أتوبيس {{bus?.name}}</h5>
+          <fa-icon *ngIf="false" class="float-left mx-1 icon-danger" icon="oil-can"></fa-icon>
+          <fa-icon *ngIf="bus.condition <= 2" class="float-left mx-1 icon-warn" icon="exclamation-triangle"></fa-icon>
+          <fa-icon *ngIf="!bus.inOperation" class="float-left mx-1" icon="wrench"></fa-icon>
+        </div>
+        <img class="card-img-top" src="../../../assets/cs_bus.jpg" alt="bus image">
+        <div class="card-footer empty"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Commented part TODO delete-->
+  <div>
+    <!--<table class="table">-->
+    <!--<thead class="thead-dark">-->
+    <!--<tr>-->
+    <!--<th scope="col">#</th>-->
+    <!--<th scope="col">First</th>-->
+    <!--<th scope="col">Last</th>-->
+    <!--<th scope="col">Handle</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+    <!--<tr data-toggle="collapse" class="clickable">-->
+    <!--<th scope="row">Some Stuff</th>-->
+    <!--<td>Some Stuff</td>-->
+    <!--<td>Some more stuff</td>-->
+    <!--<td>And some more</td>-->
+    <!--</tr>-->
+    <!--<tr class="collapse">-->
+    <!--<td colspan="4">-->
+    <!--<div>Hidden by default</div>-->
+    <!--</td>-->
+    <!--</tr>-->
+    <!--</tbody>-->
+    <!--</table>-->
+  </div>
+</app-layout>
+
+<div bsModal #newBusModal="bs-modal" class="modal fade" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 *ngIf="!editableBusID" class="modal-title">اضف أتوبيس</h4>
+        <h4 *ngIf="editableBusID" class="modal-title">تعديل أتوبيس</h4>
+        <div class="col m-0 p-0">
+          <button type="button" class="float-left close" (click)="hideFormModal()">
+            <fa-icon icon="times"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <form class="form-group" [formGroup]="busForm" (submit)="submitBusForm()">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="busName">إسم الاتوبيس</label>
+            <div class="col-sm-9">
+              <input id="busName" class="form-control" formControlName="name" placeholder="إسم الاتوبيس">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="km">عدد الكيلومترات</label>
+            <div class="col-sm-9">
+              <input type="number" id="km" class="form-control" formControlName="km" placeholder="عدد الكيلومترات">
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="col-md-3 col-form-label" for="busName">اللوح المعدنية</label>
+            <div class="form-group row col-md-5">
+              <label class="col-sm-2 col-form-label" for="platesLetters">حروف</label>
+              <div class="col-sm-10">
+                <input id="platesLetters" class="form-control" formControlName="platesLetters" placeholder="حروف">
+              </div>
+            </div>
+            <div class="form-group row col-md-4">
+              <label class="col-sm-2 col-form-label" for="platesNumbers">أرقام</label>
+              <div class="col-sm-10">
+                <input id="platesNumbers" class="form-control" formControlName="platesNumbers" placeholder="أرقام">
+              </div>
+            </div>
+          </div>
+          <button *ngIf="!editableBusID" class="btn btn-secondary btn-sm float-left mx-1" type="submit">أضف</button>
+          <button *ngIf="editableBusID" class="btn btn-secondary btn-sm float-left mx-1" type="submit">تعديل</button>
+          <button class="btn btn-secondary btn-sm float-left mx-1" (click)="hideFormModal()" type="reset">الغاء</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #deleteBusModal="bs-modal" class="modal fade" tabindex="-1">
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">مسح أتوبيس {{deletableBus?.name}}</h4>
+        <div class="col m-0 p-0">
+          <button type="button" class="float-left close" (click)="hideDeleteModal()">
+            <fa-icon icon="times"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div>
+          تأكيد مسح أتوبيس {{deletableBus?.name}}
+        </div>
+        <button class="btn btn-secondary btn-sm float-left mx-1" (click)="deleteBus()">تأكيد</button>
+        <button class="btn btn-secondary btn-sm float-left mx-1" (click)="cancelDelete()">الغاء</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

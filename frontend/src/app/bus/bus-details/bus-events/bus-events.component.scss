@@ -29,19 +29,19 @@ $border_left_color_2: transparent;
   }
   >li {
     position: relative;
-    &:first-child {
-      .cbp_tmtime {
-        span.large {
-          color: $color_1;
-          font-size: 17px !important;
-          font-weight: 700;
-        }
-      }
-      .cbp_tmicon {
-        background: #fff;
-        color: $color_2;
-      }
-    }
+    //&:first-child {
+    //  .cbp_tmtime {
+    //    span.large {
+    //      color: $color_1;
+    //      font-size: 17px !important;
+    //      font-weight: 700;
+    //    }
+    //  }
+    //  .cbp_tmicon {
+    //    background: #fff;
+    //    color: $color_2;
+    //  }
+    //}
     &:nth-child(odd) {
       .cbp_tmtime {
         span {

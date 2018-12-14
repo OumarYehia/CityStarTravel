@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeArEg from '@angular/common/locales/ar-EG';
 
 import { AppComponent } from './app.component';
 import { UiModule } from './ui/ui.module';
@@ -16,11 +18,13 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { BusDetailsComponent } from './bus/bus-details/bus-details.component';
 import {NgxGaugeModule} from 'ngx-gauge';
 import { VouchersComponent } from './vouchers/vouchers.component';
-import {NgProgressModule} from '@ngx-progressbar/core';
-import {NgProgressHttpModule} from '@ngx-progressbar/http';
 import { ProfileComponent } from './profile/profile.component';
 import { BusEventsComponent } from './bus/bus-details/bus-events/bus-events.component';
 import {Ng2OdometerModule} from 'ng2-odometer';
+import { BusesListComponent } from './bus/buses-list/buses-list.component';
+import {ModalModule} from 'ngx-bootstrap';
+
+registerLocaleData(localeArEg);
 
 @NgModule({
   declarations: [
@@ -32,7 +36,8 @@ import {Ng2OdometerModule} from 'ng2-odometer';
     BusDetailsComponent,
     VouchersComponent,
     ProfileComponent,
-    BusEventsComponent
+    BusEventsComponent,
+    BusesListComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +46,8 @@ import {Ng2OdometerModule} from 'ng2-odometer';
     AppRoutingModule,
     ReactiveFormsModule,
     NgxGaugeModule,
-    Ng2OdometerModule.forRoot()
+    Ng2OdometerModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [
     AuthGuard,
@@ -50,7 +56,7 @@ import {Ng2OdometerModule} from 'ng2-odometer';
     UserService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
+    { provide: LOCALE_ID, useValue: 'ar-eg' },
     // provider used to create fake backend
     fakeBackendProvider
   ],

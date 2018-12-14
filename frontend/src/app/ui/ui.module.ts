@@ -8,12 +8,21 @@ import {AppRoutingModule} from '../app-routing.module';
 import {NgProgressModule} from '@ngx-progressbar/core';
 import {NgProgressHttpModule} from '@ngx-progressbar/http';
 import {HttpClientModule} from '@angular/common/http';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+
+// TODO: only include needed icons
+library.add(fas, far);
+
 
 @NgModule({
   imports: [
     CommonModule,
     AppRoutingModule,
     HttpClientModule,
+    FontAwesomeModule,
     NgProgressModule.forRoot({
       direction: 'rtl+',
       spinnerPosition: 'left',
@@ -22,6 +31,9 @@ import {HttpClientModule} from '@angular/common/http';
     NgProgressHttpModule.forRoot()
   ],
   declarations: [LayoutComponent, HeaderComponent, FooterComponent, AlertComponent],
-  exports: [LayoutComponent]
+  exports: [
+    LayoutComponent,
+    FontAwesomeModule
+  ]
 })
 export class UiModule { }
