@@ -1,5 +1,6 @@
 package com.citystartravel.backend.entity.voucher.item;
 
+import com.citystartravel.backend.entity.sparetype.SpareType;
 import com.citystartravel.backend.entity.sparetype.SpareTypeRepository;
 import com.citystartravel.backend.entity.sparetype.SpareTypeService;
 import com.citystartravel.backend.entity.voucher.purchaserequestvoucher.PurchaseRequestVoucher;
@@ -23,35 +24,21 @@ public class VoucherUtility {
     @Autowired
     private Mapper<VoucherItemRequest, VoucherItem> mapper_VIR_VI;
 
-    /*
-     * This method creates new entity voucher items based on details specified in the VoucherItemRequest
-     * @param purchaseRequestVoucherRequest: Voucher Request Received
-     */
-    /*public List<VoucherItem> CreateVoucherItemsFromRequest(PurchaseRequestVoucherRequest purchaseRequestVoucherRequest) {
-
-        // TODO: DEBUG
-        List<VoucherItemRequest> voucherItemRequests = purchaseRequestVoucherRequest.getVoucherItemRequests();
+    public List<VoucherItem> getVoucherItemsFromRequest(PurchaseRequestVoucherRequest request,
+                                                        UserPrincipal currentUser,
+                                                        PurchaseRequestVoucher purchaseRequestVoucher) {
+        List<VoucherItemRequest> voucherItemRequests = request.getVoucherItemRequests();
         List<VoucherItem> voucherItems = new ArrayList<>();
-        if(voucherItemRequests != null) {
-            for(VoucherItemRequest voucherItemRequest : voucherItemRequests) {
-                VoucherItem voucherItem = new VoucherItem();
+        SpareType spareType;
+        for(VoucherItemRequest voucherItemRequest : voucherItemRequests) {
+            VoucherItem voucherItem = mapper_VIR_VI.mapEntityToDto(voucherItemRequest, VoucherItem.class);
 
-                voucherItem.setSpareType(
-                        spareTypeRepository.getOne(voucherItemRequest.getSpareTypeID())
-                );
-                voucherItem.setQuantity(voucherItemRequest.getQuantity());
-                voucherItems.add(voucherItem);
-            }
+            spareType = spareTypeService.getSpareTypeById(voucherItemRequest.getSpareTypeID(), currentUser);
+            voucherItem.setSpareType(spareType);
+            voucherItem.setPurchaseRequestVoucher(purchaseRequestVoucher);
+
+            voucherItems.add(voucherItem);
         }
         return voucherItems;
-    }*/
-
-    // ---------------------------------- util ----------------------------------
-    private VoucherItem mapVIRequestToVI(VoucherItemRequest voucherItemRequest, UserPrincipal currentUser) {
-        VoucherItem voucherItem = mapper_VIR_VI.mapEntityToDto(voucherItemRequest,VoucherItem.class);
-        voucherItem.setSpareType(spareTypeService.getSpareTypeById(voucherItemRequest.getSpareTypeID(), currentUser));
-        return voucherItem;
     }
-
-
 }

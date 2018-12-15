@@ -5,4 +5,9 @@ export class Response<T> {
   totalElements: number;
   totalPages: number;
   last: number;
+  timestamp: string;
+  status: number;
+  error: string;
+  message: string;
+  path: string;
 }

@@ -22,6 +22,8 @@ public class VoucherItem {
     @JoinColumn(name="sparetype_id", nullable = false)
     private SpareType spareType;
 
+    private String name;
+
     private String description;
 
     private String unit;
@@ -68,6 +70,14 @@ public class VoucherItem {
 
     public void setSpareType(SpareType spareType) {
         this.spareType = spareType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {

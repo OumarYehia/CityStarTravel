@@ -1,12 +1,13 @@
 package com.citystartravel.backend.entity.spare;
 
+import com.citystartravel.backend.config.audit.UserDateAudit;
 import com.citystartravel.backend.entity.sparetype.SpareType;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "spares")
-public class Spare {
+public class Spare extends UserDateAudit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -73,7 +73,8 @@ public class BusService {
         return utilityMethods.update(busRepository, bus);
     }
 
-    public void deleteBus(Bus bus) {
+    public void deleteBus(long id) {
+        Bus bus = busRepository.getOne(id);
         utilityMethods.delete(busRepository, bus);
     }
 

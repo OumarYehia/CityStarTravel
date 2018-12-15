@@ -13,6 +13,8 @@ public class VoucherItemRequest {
     @NotBlank
     private long spareTypeID;
 
+    private String name;
+
     private String description;
 
     private String unit;
@@ -24,12 +26,12 @@ public class VoucherItemRequest {
 
     public VoucherItemRequest() {}
 
-    public VoucherItemRequest(long spareTypeID, String description, String unit, @Min(value = 1) int quantity, String notes) {
-        this.spareTypeID = spareTypeID;
-        this.description = description;
-        this.unit = unit;
-        this.quantity = quantity;
-        this.notes = notes;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public long getSpareTypeID() {

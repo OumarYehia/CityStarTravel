@@ -21,6 +21,8 @@ public class PurchaseRequestVoucher extends UserDateAudit {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long serialNo;
 
+    private String supplierCode;
+
     private String supplierName;
 
     private String needsRequest;
@@ -60,6 +62,14 @@ public class PurchaseRequestVoucher extends UserDateAudit {
         this.serialNo = serialNo;
     }
 
+    public String getSupplierCode() {
+        return supplierCode;
+    }
+
+    public void setSupplierCode(String supplierCode) {
+        this.supplierCode = supplierCode;
+    }
+
     public String getSupplierName() {
         return supplierName;
     }
@@ -67,7 +77,6 @@ public class PurchaseRequestVoucher extends UserDateAudit {
     public void setSupplierName(String supplierName) {
         this.supplierName = supplierName;
     }
-
 
     public List<VoucherItem> getVoucherItems() {
         return voucherItems;

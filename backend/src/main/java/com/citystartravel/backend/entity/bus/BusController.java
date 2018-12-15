@@ -65,6 +65,22 @@ public class BusController {
 
     }
 
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteBus(@CurrentUser UserPrincipal currentUser,
+                                       @RequestParam long id) {
+        try{
+            busService.deleteBus(id);
+            return ResponseEntity.noContent().build();
+        }
+        catch (Exception ex) {
+            logger.error(ex.getMessage());
+            return new ResponseEntity(
+                    new ApiResponse(false,"Unable to create bus."),HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+
     // ------------------------ EVENTS ------------------------
     @GetMapping("/events")
     public List<BusEvent> getEvents(@CurrentUser UserPrincipal currentUser,
