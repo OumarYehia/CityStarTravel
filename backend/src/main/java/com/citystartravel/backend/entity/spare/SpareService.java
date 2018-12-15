@@ -1,5 +1,7 @@
 package com.citystartravel.backend.entity.spare;
 
+import com.citystartravel.backend.entity.sparetype.SpareType;
+import com.citystartravel.backend.entity.sparetype.SpareTypeService;
 import com.citystartravel.backend.payload.response.PagedResponse;
 import com.citystartravel.backend.security.UserPrincipal;
 import com.citystartravel.backend.util.UtilityMethods;
@@ -16,6 +18,9 @@ public class SpareService {
     @Autowired
     private SpareRepository spareRepository;
 
+    @Autowired
+    private SpareTypeService spareTypeService;
+
     private static final Logger logger = LoggerFactory.getLogger(SpareService.class);
 
     private UtilityMethods<Spare> utilityMethods = new UtilityMethods<>();
@@ -28,17 +33,19 @@ public class SpareService {
         return utilityMethods.getById(spareRepository, currentUser, spareId,"Spare");
     }
 
-    public List<Spare> createSpare(SpareRequest spareRequest) {
+    public List<Spare> createSpare(SpareRequest spareRequest, UserPrincipal currentUser) {
 
         List<Spare> spares = new ArrayList<>();
+        SpareType spareType = spareTypeService.getSpareTypeById(spareRequest.getSpareTypeID(), currentUser);
         for(int i=0 ; i<spareRequest.getQuantity() ; i++) {
-            Spare spare = new Spare(spareRequest.getSpareType());
+            Spare spare = new Spare(spareType);
+            spare.setName(spareRequest.getName());
             spareRepository.save(spare);
             logger.info("[CREATED] Spare "+spare.getName()+" Created.");
             spares.add(spare);
         }
         logger.info("[CREATED] "+spareRequest.getQuantity()+
-                " new Spares of type "+spareRequest.getSpareType().getName()+" Created.");
+                " new Spares of type "+spareType.getName()+" Created.");
         return spares;
     }
 }

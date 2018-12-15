@@ -2,6 +2,7 @@ package com.citystartravel.backend.entity.spare;
 
 import com.citystartravel.backend.config.audit.UserDateAudit;
 import com.citystartravel.backend.entity.sparetype.SpareType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 
@@ -22,6 +23,7 @@ public class Spare extends UserDateAudit {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="sparetype_id", nullable = false)
+    @JsonBackReference
     private SpareType spareType;
 
     public Spare() {}

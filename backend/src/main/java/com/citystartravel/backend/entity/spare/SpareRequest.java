@@ -1,10 +1,8 @@
 package com.citystartravel.backend.entity.spare;
 
-import com.citystartravel.backend.entity.sparetype.SpareType;
-
 public class SpareRequest {
 
-    private SpareType spareType;
+    private long spareTypeID;
 
     private String name;
 
@@ -12,23 +10,13 @@ public class SpareRequest {
 
     public SpareRequest() {}
 
-    public SpareRequest(SpareType spareType, int quantity) {
-        this.spareType = spareType;
-        this.quantity = quantity;
+
+    public long getSpareTypeID() {
+        return spareTypeID;
     }
 
-    public SpareRequest(SpareType spareType, String name, int quantity) {
-        this.spareType = spareType;
-        this.name = name;
-        this.quantity = quantity;
-    }
-
-    public SpareType getSpareType() {
-        return spareType;
-    }
-
-    public void setSpareType(SpareType spareType) {
-        this.spareType = spareType;
+    public void setSpareTypeID(long spareType) {
+        this.spareTypeID = spareType;
     }
 
     public String getName() {

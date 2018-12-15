@@ -39,6 +39,6 @@ public class SpareController {
     @PostMapping("/create")
     public List<Spare> createSpare(@CurrentUser UserPrincipal currentUser,
                                    @RequestBody SpareRequest spareRequest) {
-        return spareService.createSpare(spareRequest);
+        return spareService.createSpare(spareRequest, currentUser);
     }
 }
