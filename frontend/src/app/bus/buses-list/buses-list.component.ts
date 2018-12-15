@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {BusService} from '../bus.service';
 import {Bus} from '../bus.dto';
 import {ModalDirective} from 'ngx-bootstrap';
+import {AlertService} from '../../shared/services';
 
 @Component({
   selector: 'app-buses-list',
@@ -24,6 +25,7 @@ export class BusesListComponent implements OnInit {
     private busesService: BusService,
     private router: Router,
     private fb: FormBuilder,
+    private alertService: AlertService
   ) {
   }
 
@@ -68,6 +70,7 @@ export class BusesListComponent implements OnInit {
     this.busesService.deleteBus(this.deletableBus.id).subscribe(
       () => {
         this.deletableBus = null;
+        // this.alertService.success('Deleted Successfully');
         this.getBuses();
       }
     );

@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeArEg from '@angular/common/locales/ar-EG';
-
 import { AppComponent } from './app.component';
 import { UiModule } from './ui/ui.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +22,9 @@ import { BusEventsComponent } from './bus/bus-details/bus-events/bus-events.comp
 import {Ng2OdometerModule} from 'ng2-odometer';
 import { BusesListComponent } from './bus/buses-list/buses-list.component';
 import {ModalModule} from 'ngx-bootstrap';
+import { WarehouseManagementComponent } from './warehouse/warehouse-management/warehouse-management.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {AppMaterialModule} from './app-material/app-material.module';
 
 registerLocaleData(localeArEg);
 
@@ -37,7 +39,8 @@ registerLocaleData(localeArEg);
     VouchersComponent,
     ProfileComponent,
     BusEventsComponent,
-    BusesListComponent
+    BusesListComponent,
+    WarehouseManagementComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,9 @@ registerLocaleData(localeArEg);
     ReactiveFormsModule,
     NgxGaugeModule,
     Ng2OdometerModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    BrowserAnimationsModule,
+    AppMaterialModule
   ],
   providers: [
     AuthGuard,

@@ -34,7 +34,7 @@ export class BusService {
   }
 
   deleteBus(busID: number) {
-    const params = new HttpParams().set('busID', busID.toString());
+    const params = new HttpParams().set('id', busID.toString());
     return this.http.delete(`${environment.apiUrl}/bus/delete`, {headers: new HttpHeaders(), params: params});
   }
 }

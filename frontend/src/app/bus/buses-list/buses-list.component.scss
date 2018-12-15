@@ -1,14 +1,5 @@
 @import "../../../assets/variables";
 
-.thead-dark {
-  background-color: $primary-color;
-
-  th {
-    background-color: $primary-color;
-  }
-}
-
-
 .icon-danger {
   color: red;
 }
@@ -34,28 +25,6 @@
   }
   &:hover {
     opacity: 1;
-  }
-}
-
-.mid-ver {
-  position: absolute;
-  top: 50%;
-  left: 1%;
-  transform: translateY(-50%);
-}
-
-.btn-secondary {
-  background-color: $secondary-color;
-  border-color: $secondary-color;
-  color: white;
-
-  &:not(:disabled):active, &:hover {
-    background-color: white;
-    color: $secondary-color;
-  }
-
-  &:focus {
-    box-shadow: none;
   }
 }
 

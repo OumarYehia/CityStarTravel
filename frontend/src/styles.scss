@@ -85,3 +85,31 @@ nav {
   border-bottom:5px solid $secondary-color;
   padding:20px 10px;
 }
+
+.btn-secondary {
+  background-color: $secondary-color;
+  border-color: $secondary-color;
+  color: white;
+
+  &:not(:disabled):active, &:hover {
+    background-color: white;
+    color: $secondary-color;
+  }
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.table {
+  .thead-dark {
+    background-color: $primary-color;
+
+    th {
+      background-color: $primary-color;
+    }
+  }
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

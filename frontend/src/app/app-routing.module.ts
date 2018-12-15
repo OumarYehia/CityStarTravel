@@ -1,21 +1,25 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+
 const routes: Routes = [
 
-  { path: '', canActivate: [AuthGuard], children: [
-      { path: '', component: HomeComponent },
-      { path: 'buses', component: BusesListComponent },
-      { path: 'buses/:id', component: BusDetailsComponent, children: [
-          {path: '', redirectTo: 'events', pathMatch: 'full'},
-          {path: 'events', component: BusEventsComponent}
+  {
+    path: '', canActivate: [AuthGuard], children: [
+      {path: '', component: HomeComponent},
+      {path: 'buses', component: BusesListComponent},
+      {path: 'buses/:id', component: BusDetailsComponent, children: [
+        {path: '', redirectTo: 'events', pathMatch: 'full'},
+        {path: 'events', component: BusEventsComponent}
       ]},
-      { path: 'vouchers', component: VouchersComponent },
-      { path: 'user', component: ProfileComponent},
-    ] },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: '404', component: PageNotFoundComponent },
-  { path: '**', pathMatch: 'full', redirectTo: '404' }
+      {path: 'vouchers', component: VouchersComponent},
+      {path: 'user', component: ProfileComponent},
+      {path: 'warehouse', component: WarehouseManagementComponent}
+    ]
+  },
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
+  {path: '404', component: PageNotFoundComponent},
+  {path: '**', pathMatch: 'full', redirectTo: '404'}
 ];
 
 
@@ -29,7 +33,7 @@ import {VouchersComponent} from './vouchers/vouchers.component';
 import {ProfileComponent} from './profile/profile.component';
 import {BusEventsComponent} from './bus/bus-details/bus-events/bus-events.component';
 import {BusesListComponent} from './bus/buses-list/buses-list.component';
-
+import {WarehouseManagementComponent} from './warehouse/warehouse-management/warehouse-management.component';
 
 
 @NgModule({
@@ -41,4 +45,5 @@ import {BusesListComponent} from './bus/buses-list/buses-list.component';
   ],
   declarations: []
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
