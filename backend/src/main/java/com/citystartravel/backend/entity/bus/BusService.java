@@ -81,10 +81,10 @@ public class BusService {
     // ---------------------------------- util ----------------------------------
 
     private BusResponse mapBusToDto(Bus bus) {
-        return mapper.mapEntityToDto(bus,BusResponse.class);
+        return mapper.mapEntityToDto(bus, new BusResponse());
     }
 
     private PagedResponse<BusResponse> mapBusPagesToDtoPages(PagedResponse<Bus> busPagedResponse) {
-        return mapper.mapEntityPagesToDtoPages(busPagedResponse, BusResponse.class);
+        return mapper.mapEntityPagesToDtoPages(busPagedResponse, new BusResponse());
     }
 }

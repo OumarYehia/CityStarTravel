@@ -22,6 +22,9 @@ public class VoucherUtility {
     private SpareTypeService spareTypeService;
 
     @Autowired
+    private VoucherItemRepository voucherItemRepository;
+
+    @Autowired
     private Mapper<VoucherItemRequest, VoucherItem> mapper_VIR_VI;
 
     public List<VoucherItem> getVoucherItemsFromRequest(PurchaseRequestVoucherRequest request,
@@ -31,12 +34,12 @@ public class VoucherUtility {
         List<VoucherItem> voucherItems = new ArrayList<>();
         SpareType spareType;
         for(VoucherItemRequest voucherItemRequest : voucherItemRequests) {
-            VoucherItem voucherItem = mapper_VIR_VI.mapEntityToDto(voucherItemRequest, VoucherItem.class);
-
+            VoucherItem voucherItem = new VoucherItem(voucherItemRequest.getQuantity(), purchaseRequestVoucher);
+            voucherItem = mapper_VIR_VI.mapEntityToDto(voucherItemRequest, voucherItem);
             spareType = spareTypeService.getSpareTypeById(voucherItemRequest.getSpareTypeID(), currentUser);
             voucherItem.setSpareType(spareType);
             voucherItem.setPurchaseRequestVoucher(purchaseRequestVoucher);
-
+            voucherItem = voucherItemRepository.save(voucherItem);
             voucherItems.add(voucherItem);
         }
         return voucherItems;

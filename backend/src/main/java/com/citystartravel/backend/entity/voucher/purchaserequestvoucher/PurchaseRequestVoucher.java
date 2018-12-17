@@ -9,9 +9,10 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Table(name = "purchase_request_vouchers")
+@Table(name = "purchaserequestvouchers")
 public class PurchaseRequestVoucher extends UserDateAudit {
 
     @Id
@@ -83,7 +84,8 @@ public class PurchaseRequestVoucher extends UserDateAudit {
     }
 
     public void setVoucherItems(List<VoucherItem> voucherItems) {
-        this.voucherItems = voucherItems;
+        this.voucherItems.retainAll(voucherItems);
+        this.voucherItems.addAll(voucherItems);
     }
 
     void addVoucherItem(VoucherItem voucherItem) {
@@ -110,5 +112,18 @@ public class PurchaseRequestVoucher extends UserDateAudit {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PurchaseRequestVoucher voucher = (PurchaseRequestVoucher) o;
+        return Objects.equals(id, voucher.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

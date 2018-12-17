@@ -47,9 +47,13 @@ public class PurchaseRequestVoucherService {
     }
 
     public PurchaseRequestVoucher createPurchaseRequestVoucher(PurchaseRequestVoucherRequest purchaseRequestVoucherRequest, @CurrentUser UserPrincipal currentUser) {
-        PurchaseRequestVoucher purchaseRequestVoucher = mapPRVToPRVRequest(purchaseRequestVoucherRequest, currentUser);
+        PurchaseRequestVoucher purchaseRequestVoucher = new PurchaseRequestVoucher();
+        purchaseRequestVoucher = purchaseRequestVoucherRepository.save(purchaseRequestVoucher); // creates a new Purchase Request Voucher in the database to attach it to Voucher Item
+        purchaseRequestVoucher = mapPRVToPRVRequest(purchaseRequestVoucherRequest, purchaseRequestVoucher, currentUser);
+
         String eventLog = utilityMethods.generateEntityCreationMessage("PurchaseRequestVoucher",String.valueOf(purchaseRequestVoucher.getSerialNo()),currentUser);
         logger.info(eventLog);
+
         return purchaseRequestVoucherRepository.save(purchaseRequestVoucher);
     }
 
@@ -63,9 +67,9 @@ public class PurchaseRequestVoucherService {
 
     // ---------------------------------- util ----------------------------------
 
-    private PurchaseRequestVoucher mapPRVToPRVRequest(PurchaseRequestVoucherRequest request, @CurrentUser UserPrincipal currentUser) {
+    private PurchaseRequestVoucher mapPRVToPRVRequest(PurchaseRequestVoucherRequest request, PurchaseRequestVoucher purchaseRequestVoucher, @CurrentUser UserPrincipal currentUser) {
         // creates new PRV from PRVRequest
-        PurchaseRequestVoucher purchaseRequestVoucher = mapper.mapEntityToDto(request,PurchaseRequestVoucher.class);
+        purchaseRequestVoucher = mapper.mapEntityToDto(request,purchaseRequestVoucher);
         // handle voucher items
         List<VoucherItem> voucherItems = voucherUtility.getVoucherItemsFromRequest(request, currentUser, purchaseRequestVoucher);
         purchaseRequestVoucher.setVoucherItems(voucherItems);

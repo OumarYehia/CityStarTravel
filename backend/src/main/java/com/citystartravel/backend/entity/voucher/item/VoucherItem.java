@@ -3,9 +3,11 @@ package com.citystartravel.backend.entity.voucher.item;
 import com.citystartravel.backend.entity.sparetype.SpareType;
 import com.citystartravel.backend.entity.voucher.purchaserequestvoucher.PurchaseRequestVoucher;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.util.Objects;
 
 @Entity
 @Table(name = "voucher_items")
@@ -20,6 +22,7 @@ public class VoucherItem {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="sparetype_id", nullable = false)
+    @JsonIgnore
     private SpareType spareType;
 
     private String name;
@@ -34,11 +37,16 @@ public class VoucherItem {
     private String notes;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="purchase_request_voucher_id", nullable = false)
+    @JoinColumn(name="purchaserequestvoucher_id", nullable = false)
     @JsonBackReference
     private PurchaseRequestVoucher purchaseRequestVoucher;
 
     public VoucherItem() {}
+
+    public VoucherItem(@Min(value = 1) int quantity, PurchaseRequestVoucher purchaseRequestVoucher) {
+        this.quantity = quantity;
+        this.purchaseRequestVoucher = purchaseRequestVoucher;
+    }
 
     public VoucherItem(SpareType spareType, String description, String unit, @Min(value = 1) int quantity, String notes) {
         this.spareType = spareType;
@@ -118,5 +126,18 @@ public class VoucherItem {
 
     public void setPurchaseRequestVoucher(PurchaseRequestVoucher purchaseRequestVoucher) {
         this.purchaseRequestVoucher = purchaseRequestVoucher;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        VoucherItem item = (VoucherItem) o;
+        return Objects.equals(id, item.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

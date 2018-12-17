@@ -1,7 +1,5 @@
 package com.citystartravel.backend.entity.voucher.purchaserequestvoucher;
 
-import com.citystartravel.backend.entity.role.RoleName;
-import com.citystartravel.backend.entity.voucher.item.VoucherItem;
 import com.citystartravel.backend.entity.voucher.item.VoucherUtility;
 import com.citystartravel.backend.payload.response.ApiResponse;
 import com.citystartravel.backend.payload.response.PagedResponse;
@@ -31,16 +29,32 @@ public class PurchaseRequestVoucherController {
     private static final Logger logger = LoggerFactory.getLogger(PurchaseRequestVoucherController.class);
 
     @GetMapping("/getAll")
-    public PagedResponse<PurchaseRequestVoucher> getPurchaseRequestVouchers(@CurrentUser UserPrincipal currentUser,
+    public ResponseEntity<?> getPurchaseRequestVouchers(@CurrentUser UserPrincipal currentUser,
                                        @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
                                        @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
-        return purchaseRequestVoucherService.getAllPurchaseRequestVouchers(currentUser, page, size);
+        try{
+            PagedResponse<PurchaseRequestVoucher> purchaseRequestVouchers = purchaseRequestVoucherService.getAllPurchaseRequestVouchers(currentUser, page, size);
+            return ResponseEntity.ok(purchaseRequestVouchers);
+        }
+        catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            return new ResponseEntity(
+                    new ApiResponse(false,"Unable to fetch Purchase Request Vouchers."),HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/get")
-    public PurchaseRequestVoucher getPurchaseRequestVoucher(@CurrentUser UserPrincipal currentUser,
+    public ResponseEntity<?> getPurchaseRequestVoucher(@CurrentUser UserPrincipal currentUser,
                       @RequestParam(value = "id") Long id) {
-        return purchaseRequestVoucherService.getPurchaseRequestVoucherById(id, currentUser);
+        try{
+            PurchaseRequestVoucher purchaseRequestVoucher = purchaseRequestVoucherService.getPurchaseRequestVoucherById(id, currentUser);
+            return ResponseEntity.ok(purchaseRequestVoucher);
+        }
+        catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            return new ResponseEntity(
+                    new ApiResponse(false,"Purchase Request Voucher with id: "+id+" not found."),HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/create")
@@ -48,16 +62,10 @@ public class PurchaseRequestVoucherController {
                                        @RequestBody PurchaseRequestVoucherRequest purchaseRequestVoucherRequest) {
         try{
             PurchaseRequestVoucher purchaseRequestVoucher = purchaseRequestVoucherService.createPurchaseRequestVoucher(purchaseRequestVoucherRequest, currentUser);
-
-
-
-
-
-
             return ResponseEntity.ok(purchaseRequestVoucher);
         }
         catch (Exception ex) {
-            logger.error(ex.getMessage());
+            logger.error(ex.getMessage(), ex);
             return new ResponseEntity(
                     new ApiResponse(false,"Unable to create purchaseRequestVoucher."),HttpStatus.BAD_REQUEST);
         }

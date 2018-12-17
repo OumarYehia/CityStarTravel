@@ -17,11 +17,12 @@ public class Mapper<E,D> {
         modelMapper = new ModelMapper();
     }
 
-    public D mapEntityToDto(E e, Class<D> DtoClass) {
-        return modelMapper.map(e, DtoClass);
+    public D mapEntityToDto(E e, D d) {
+        modelMapper.map(e, d);
+        return d;
     }
 
-    public PagedResponse<D> mapEntityPagesToDtoPages(PagedResponse<E> entityPagedResponse, Class<D> DtoClass) {
+    public PagedResponse<D> mapEntityPagesToDtoPages(PagedResponse<E> entityPagedResponse, D d) {
         PagedResponse<D> dtoPagedResponse = new PagedResponse<>();
         dtoPagedResponse.setLast(entityPagedResponse.isLast());
         dtoPagedResponse.setPage(entityPagedResponse.getPage());
@@ -32,7 +33,7 @@ public class Mapper<E,D> {
         List<E> entities = entityPagedResponse.getContent();
         List<D> dtos = new ArrayList<>();
         for(E e: entities) {
-            dtos.add(mapEntityToDto(e, DtoClass));
+            dtos.add(mapEntityToDto(e, d));
         }
         dtoPagedResponse.setContent(dtos);
         return dtoPagedResponse;

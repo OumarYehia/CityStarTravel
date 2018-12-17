@@ -12,3 +12,5 @@ frontend\.7z
 frontend/package-lock\.json
 
 *.pdf
+
+*.zip
