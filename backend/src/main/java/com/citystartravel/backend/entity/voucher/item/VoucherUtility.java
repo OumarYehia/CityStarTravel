@@ -1,15 +1,13 @@
 package com.citystartravel.backend.entity.voucher.item;
 
 import com.citystartravel.backend.entity.sparetype.SpareType;
-import com.citystartravel.backend.entity.sparetype.SpareTypeRepository;
 import com.citystartravel.backend.entity.sparetype.SpareTypeService;
-import com.citystartravel.backend.entity.voucher.purchaserequestvoucher.PurchaseRequestVoucher;
-import com.citystartravel.backend.entity.voucher.purchaserequestvoucher.PurchaseRequestVoucherRequest;
-import com.citystartravel.backend.payload.response.PagedResponse;
+import com.citystartravel.backend.entity.voucher.Voucher;
+import com.citystartravel.backend.entity.voucher.VoucherDto;
+import com.citystartravel.backend.entity.voucher.purchaserequest.PurchaseRequestDtoRequest;
 import com.citystartravel.backend.security.UserPrincipal;
 import com.citystartravel.backend.util.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,18 +25,17 @@ public class VoucherUtility {
     @Autowired
     private Mapper<VoucherItemRequest, VoucherItem> mapper_VIR_VI;
 
-    public List<VoucherItem> getVoucherItemsFromRequest(PurchaseRequestVoucherRequest request,
+    public List<VoucherItem> getVoucherItemsFromRequest(VoucherDto dto,
                                                         UserPrincipal currentUser,
-                                                        PurchaseRequestVoucher purchaseRequestVoucher) {
-        List<VoucherItemRequest> voucherItemRequests = request.getVoucherItemRequests();
+                                                        Voucher voucher) {
+        List<VoucherItemRequest> voucherItemRequests = dto.getVoucherItemRequests();
         List<VoucherItem> voucherItems = new ArrayList<>();
         SpareType spareType;
         for(VoucherItemRequest voucherItemRequest : voucherItemRequests) {
-            VoucherItem voucherItem = new VoucherItem(voucherItemRequest.getQuantity(), purchaseRequestVoucher);
-            voucherItem = mapper_VIR_VI.mapEntityToDto(voucherItemRequest, voucherItem);
+            VoucherItem voucherItem = mapper_VIR_VI.mapEntityToDto(voucherItemRequest, VoucherItem.class);
             spareType = spareTypeService.getSpareTypeById(voucherItemRequest.getSpareTypeID(), currentUser);
             voucherItem.setSpareType(spareType);
-            voucherItem.setPurchaseRequestVoucher(purchaseRequestVoucher);
+            voucherItem.setVoucher(voucher);
             voucherItem = voucherItemRepository.save(voucherItem);
             voucherItems.add(voucherItem);
         }

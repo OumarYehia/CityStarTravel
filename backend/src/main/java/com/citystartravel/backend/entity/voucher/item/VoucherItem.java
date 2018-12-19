@@ -1,7 +1,7 @@
 package com.citystartravel.backend.entity.voucher.item;
 
 import com.citystartravel.backend.entity.sparetype.SpareType;
-import com.citystartravel.backend.entity.voucher.purchaserequestvoucher.PurchaseRequestVoucher;
+import com.citystartravel.backend.entity.voucher.Voucher;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,6 +20,8 @@ public class VoucherItem {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long serialNo;
 
+    private long spareTypeID;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="sparetype_id", nullable = false)
     @JsonIgnore
@@ -37,15 +39,15 @@ public class VoucherItem {
     private String notes;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="purchaserequestvoucher_id", nullable = false)
+    @JoinColumn(name="voucher_id", nullable = false)
     @JsonBackReference
-    private PurchaseRequestVoucher purchaseRequestVoucher;
+    private Voucher voucher;
 
     public VoucherItem() {}
 
-    public VoucherItem(@Min(value = 1) int quantity, PurchaseRequestVoucher purchaseRequestVoucher) {
+    public VoucherItem(@Min(value = 1) int quantity, Voucher voucher) {
         this.quantity = quantity;
-        this.purchaseRequestVoucher = purchaseRequestVoucher;
+        this.voucher = voucher;
     }
 
     public VoucherItem(SpareType spareType, String description, String unit, @Min(value = 1) int quantity, String notes) {
@@ -70,6 +72,14 @@ public class VoucherItem {
 
     public void setSerialNo(long serialNo) {
         this.serialNo = serialNo;
+    }
+
+    public long getSpareTypeID() {
+        return spareTypeID;
+    }
+
+    public void setSpareTypeID(long spareTypeID) {
+        this.spareTypeID = spareTypeID;
     }
 
     public SpareType getSpareType() {
@@ -120,12 +130,12 @@ public class VoucherItem {
         this.notes = notes;
     }
 
-    public PurchaseRequestVoucher getPurchaseRequestVoucher() {
-        return purchaseRequestVoucher;
+    public Voucher getVoucher() {
+        return voucher;
     }
 
-    public void setPurchaseRequestVoucher(PurchaseRequestVoucher purchaseRequestVoucher) {
-        this.purchaseRequestVoucher = purchaseRequestVoucher;
+    public void setVoucher(Voucher voucher) {
+        this.voucher = voucher;
     }
 
     @Override

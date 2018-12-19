@@ -35,7 +35,7 @@ public class SpareType extends UserDateAudit {
     @OneToMany(
             mappedBy = "spareType",
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             orphanRemoval = true
     )
     @Fetch(FetchMode.SELECT)

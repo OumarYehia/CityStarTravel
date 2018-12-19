@@ -1,10 +1,5 @@
 package com.citystartravel.backend.entity.voucher.item;
 
-import com.citystartravel.backend.entity.sparetype.SpareType;
-import com.citystartravel.backend.entity.voucher.purchaserequestvoucher.PurchaseRequestVoucher;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 

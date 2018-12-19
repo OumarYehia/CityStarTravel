@@ -1,6 +1,6 @@
-package com.citystartravel.backend.entity.voucher.purchaserequestvoucher;
+package com.citystartravel.backend.entity.voucher.purchaserequest;
 
-import com.citystartravel.backend.config.audit.UserDateAudit;
+import com.citystartravel.backend.entity.voucher.Voucher;
 import com.citystartravel.backend.entity.voucher.item.VoucherItem;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Fetch;
@@ -12,26 +12,16 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "purchaserequestvouchers")
-public class PurchaseRequestVoucher extends UserDateAudit {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long serialNo;
-
-    private String supplierCode;
-
-    private String supplierName;
+//@Table(name = "purchaserequestvouchers")
+@DiscriminatorValue("purchaserequest")
+public class PurchaseRequest extends Voucher {
 
     private String needsRequest;
 
     private String address;
 
     @OneToMany(
-            mappedBy = "purchaseRequestVoucher",
+            mappedBy = "voucher",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,
             orphanRemoval = true
@@ -41,43 +31,7 @@ public class PurchaseRequestVoucher extends UserDateAudit {
     private List<VoucherItem> voucherItems = new ArrayList<>();
 
 
-    public PurchaseRequestVoucher() {}
-
-    public PurchaseRequestVoucher(String supplierName) {
-        this.supplierName = supplierName;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getSerialNo() {
-        return serialNo;
-    }
-
-    public void setSerialNo(long serialNo) {
-        this.serialNo = serialNo;
-    }
-
-    public String getSupplierCode() {
-        return supplierCode;
-    }
-
-    public void setSupplierCode(String supplierCode) {
-        this.supplierCode = supplierCode;
-    }
-
-    public String getSupplierName() {
-        return supplierName;
-    }
-
-    public void setSupplierName(String supplierName) {
-        this.supplierName = supplierName;
-    }
+    public PurchaseRequest() {}
 
     public List<VoucherItem> getVoucherItems() {
         return voucherItems;
@@ -90,12 +44,12 @@ public class PurchaseRequestVoucher extends UserDateAudit {
 
     void addVoucherItem(VoucherItem voucherItem) {
         voucherItems.add(voucherItem);
-        voucherItem.setPurchaseRequestVoucher(this);
+        voucherItem.setVoucher(this);
     }
 
     void removeVoucherItem(VoucherItem voucherItem) {
         voucherItems.remove(voucherItem);
-        voucherItem.setPurchaseRequestVoucher(null);
+        voucherItem.setVoucher(null);
     }
 
     public String getNeedsRequest() {
@@ -118,12 +72,12 @@ public class PurchaseRequestVoucher extends UserDateAudit {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PurchaseRequestVoucher voucher = (PurchaseRequestVoucher) o;
-        return Objects.equals(id, voucher.id);
+        PurchaseRequest voucher = (PurchaseRequest) o;
+        return Objects.equals(this.getId(), voucher.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(this.getId());
     }
 }
