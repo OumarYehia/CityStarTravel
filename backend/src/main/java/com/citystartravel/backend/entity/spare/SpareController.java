@@ -36,9 +36,10 @@ public class SpareController {
         return spareService.getSpareById(id, currentUser);
     }
 
-    @PostMapping("/create")
-    public List<Spare> createSpare(@CurrentUser UserPrincipal currentUser,
-                                   @RequestBody SpareRequest spareRequest) {
-        return spareService.createSpare(spareRequest, currentUser);
+    @GetMapping("/bus/getAll")
+    public Spare getAllSparesForBus(@CurrentUser UserPrincipal currentUser,
+                          @RequestParam(value = "spareID") Long id) {
+        return spareService.getSpareById(id, currentUser);
     }
+
 }

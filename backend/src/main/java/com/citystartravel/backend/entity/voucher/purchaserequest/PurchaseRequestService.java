@@ -1,9 +1,7 @@
-package com.citystartravel.backend.entity.voucher.purchaserequestvoucher;
+package com.citystartravel.backend.entity.voucher.purchaserequest;
 
-import com.citystartravel.backend.entity.sparetype.SpareType;
 import com.citystartravel.backend.entity.sparetype.SpareTypeService;
 import com.citystartravel.backend.entity.voucher.item.VoucherItem;
-import com.citystartravel.backend.entity.voucher.item.VoucherItemRequest;
 import com.citystartravel.backend.entity.voucher.item.VoucherUtility;
 import com.citystartravel.backend.payload.response.PagedResponse;
 import com.citystartravel.backend.security.CurrentUser;
@@ -15,18 +13,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /* ------------------------ PRV: Purchase Request Voucher ------------------------ */
 @Service
-public class PurchaseRequestVoucherService {
+public class PurchaseRequestService {
     
     @Autowired
-    private PurchaseRequestVoucherRepository purchaseRequestVoucherRepository;
+    private PurchaseRequestRepository purchaseRequestRepository;
 
     @Autowired
-    private Mapper<PurchaseRequestVoucherRequest, PurchaseRequestVoucher> mapper;
+    private Mapper<PurchaseRequestDtoRequest, PurchaseRequest> mapper;
 
     @Autowired
     private VoucherUtility voucherUtility;
@@ -34,46 +31,46 @@ public class PurchaseRequestVoucherService {
     @Autowired
     private SpareTypeService spareTypeService;
 
-    private static final Logger logger = LoggerFactory.getLogger(PurchaseRequestVoucherService.class);
+    private static final Logger logger = LoggerFactory.getLogger(PurchaseRequestService.class);
 
-    private UtilityMethods<PurchaseRequestVoucher> utilityMethods = new UtilityMethods<>();
+    private UtilityMethods<PurchaseRequest> utilityMethods = new UtilityMethods<>();
 
-    public PagedResponse<PurchaseRequestVoucher> getAllPurchaseRequestVouchers(UserPrincipal currentUser, int page, int size) {
-        return utilityMethods.getAll(purchaseRequestVoucherRepository,currentUser,page,size);
+    public PagedResponse<PurchaseRequest> getAllPurchaseRequestVouchers(UserPrincipal currentUser, int page, int size) {
+        return utilityMethods.getAll(purchaseRequestRepository,currentUser,page,size);
     }
 
-    public PurchaseRequestVoucher getPurchaseRequestVoucherById(Long purchaseRequestVoucherId, UserPrincipal currentUser) {
-        return utilityMethods.getById(purchaseRequestVoucherRepository, currentUser, purchaseRequestVoucherId,"PurchaseRequestVoucher");
+    public PurchaseRequest getPurchaseRequestVoucherById(Long purchaseRequestVoucherId, @CurrentUser UserPrincipal currentUser) {
+        return utilityMethods.getById(purchaseRequestRepository, currentUser, purchaseRequestVoucherId,"PurchaseRequest");
     }
 
-    public PurchaseRequestVoucher createPurchaseRequestVoucher(PurchaseRequestVoucherRequest purchaseRequestVoucherRequest, @CurrentUser UserPrincipal currentUser) {
-        PurchaseRequestVoucher purchaseRequestVoucher = new PurchaseRequestVoucher();
-        purchaseRequestVoucher = purchaseRequestVoucherRepository.save(purchaseRequestVoucher); // creates a new Purchase Request Voucher in the database to attach it to Voucher Item
-        purchaseRequestVoucher = mapPRVToPRVRequest(purchaseRequestVoucherRequest, purchaseRequestVoucher, currentUser);
+    public PurchaseRequest createPurchaseRequestVoucher(PurchaseRequestDtoRequest purchaseRequestDtoRequest, @CurrentUser UserPrincipal currentUser) {
+        PurchaseRequest purchaseRequest = new PurchaseRequest();
+        purchaseRequest = purchaseRequestRepository.save(purchaseRequest); // creates a new Purchase Request Voucher in the database to attach it to Voucher Item
+        purchaseRequest = mapPRVToPRVRequest(purchaseRequestDtoRequest, purchaseRequest, currentUser);
 
-        String eventLog = utilityMethods.generateEntityCreationMessage("PurchaseRequestVoucher",String.valueOf(purchaseRequestVoucher.getSerialNo()),currentUser);
+        String eventLog = utilityMethods.generateEntityCreationMessage("PurchaseRequest",String.valueOf(purchaseRequest.getId()),currentUser);
         logger.info(eventLog);
 
-        return purchaseRequestVoucherRepository.save(purchaseRequestVoucher);
+        return purchaseRequestRepository.save(purchaseRequest);
     }
 
-    public PurchaseRequestVoucher updatePurchaseRequestVoucher(PurchaseRequestVoucher purchaseRequestVoucher) {
-        return utilityMethods.update(purchaseRequestVoucherRepository,purchaseRequestVoucher);
+    public PurchaseRequest updatePurchaseRequestVoucher(PurchaseRequest purchaseRequest) {
+        return utilityMethods.update(purchaseRequestRepository, purchaseRequest);
     }
 
-    public void deletePurchaseRequestVoucher(PurchaseRequestVoucher purchaseRequestVoucher) {
-        utilityMethods.delete(purchaseRequestVoucherRepository,purchaseRequestVoucher);
+    public void deletePurchaseRequestVoucher(PurchaseRequest purchaseRequest) {
+        utilityMethods.delete(purchaseRequestRepository, purchaseRequest);
     }
 
     // ---------------------------------- util ----------------------------------
 
-    private PurchaseRequestVoucher mapPRVToPRVRequest(PurchaseRequestVoucherRequest request, PurchaseRequestVoucher purchaseRequestVoucher, @CurrentUser UserPrincipal currentUser) {
+    private PurchaseRequest mapPRVToPRVRequest(PurchaseRequestDtoRequest request, PurchaseRequest purchaseRequest, @CurrentUser UserPrincipal currentUser) {
         // creates new PRV from PRVRequest
-        purchaseRequestVoucher = mapper.mapEntityToDto(request,purchaseRequestVoucher);
+        mapper.mapEntityToDto(request, purchaseRequest);
         // handle voucher items
-        List<VoucherItem> voucherItems = voucherUtility.getVoucherItemsFromRequest(request, currentUser, purchaseRequestVoucher);
-        purchaseRequestVoucher.setVoucherItems(voucherItems);
-        return purchaseRequestVoucher;
+        List<VoucherItem> voucherItems = voucherUtility.getVoucherItemsFromRequest(request, currentUser, purchaseRequest);
+        purchaseRequest.setVoucherItems(voucherItems);
+        return purchaseRequest;
     }
 
 

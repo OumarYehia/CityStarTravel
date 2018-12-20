@@ -29,7 +29,7 @@ public class BusEventService {
         return busEventRepository.findByBusId(busId);
     }
 
-    public BusEvent getBusEventById(Long busId, UserPrincipal currentUser) {
+    public BusEvent getBusEventById(Long busId, @CurrentUser UserPrincipal currentUser) {
         return utilityMethods.getById(busEventRepository,currentUser,busId,"BusEvent");
     }
 

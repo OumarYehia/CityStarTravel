@@ -1,8 +1,8 @@
-package com.citystartravel.backend.entity.voucher.purchaserequestvoucher;
+package com.citystartravel.backend.entity.voucher.purchaserequest;
 
-import com.citystartravel.backend.config.audit.UserDateAudit;
 import com.citystartravel.backend.entity.voucher.Voucher;
 import com.citystartravel.backend.entity.voucher.item.VoucherItem;
+import com.citystartravel.backend.entity.voucher.stockreceived.StockReceived;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -13,9 +13,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-//@Table(name = "purchaserequestvouchers")
-@DiscriminatorValue("purchaserequest")
-public class PurchaseRequestVoucher extends Voucher {
+//@DiscriminatorValue("purchaserequest")
+public class PurchaseRequest extends Voucher {
 
     private String needsRequest;
 
@@ -31,8 +30,18 @@ public class PurchaseRequestVoucher extends Voucher {
     @JsonManagedReference
     private List<VoucherItem> voucherItems = new ArrayList<>();
 
+    @OneToMany(
+            mappedBy = "purchaseRequest",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            orphanRemoval = true
+    )
+    @Fetch(FetchMode.SELECT)
+    @JsonManagedReference
+    private List<StockReceived> stockReceivedList = new ArrayList<>();
 
-    public PurchaseRequestVoucher() {}
+    public PurchaseRequest() { super();}
+
 
     public List<VoucherItem> getVoucherItems() {
         return voucherItems;
@@ -69,11 +78,19 @@ public class PurchaseRequestVoucher extends Voucher {
         this.address = address;
     }
 
+    public List<StockReceived> getStockReceivedList() {
+        return stockReceivedList;
+    }
+
+    public void setStockReceivedList(List<StockReceived> stockReceivedList) {
+        this.stockReceivedList = stockReceivedList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PurchaseRequestVoucher voucher = (PurchaseRequestVoucher) o;
+        PurchaseRequest voucher = (PurchaseRequest) o;
         return Objects.equals(this.getId(), voucher.getId());
     }
 

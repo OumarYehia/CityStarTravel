@@ -1,7 +1,9 @@
 package com.citystartravel.backend.entity.spare;
 
 import com.citystartravel.backend.config.audit.UserDateAudit;
+import com.citystartravel.backend.entity.bus.Bus;
 import com.citystartravel.backend.entity.sparetype.SpareType;
+import com.citystartravel.backend.entity.voucher.stockreceived.StockReceived;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
@@ -26,10 +28,32 @@ public class Spare extends UserDateAudit {
     @JsonBackReference
     private SpareType spareType;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name="stock_received_id", nullable = false)
+    @JsonBackReference
+    private StockReceived stockReceived;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="bus_id")
+    @JsonBackReference
+    private Bus bus;
+
+
     public Spare() {}
 
     public Spare(SpareType spareType) {
         this.spareType = spareType;
+    }
+
+    public Spare(SpareType spareType, StockReceived stockReceived) {
+        this.spareType = spareType;
+        this.stockReceived = stockReceived;
+    }
+
+    public Spare(String name, SpareType spareType, StockReceived stockReceived) {
+        this.name = name;
+        this.spareType = spareType;
+        this.stockReceived = stockReceived;
     }
 
     public Spare(SpareType spareType, String name) {
@@ -75,5 +99,21 @@ public class Spare extends UserDateAudit {
 
     public void setSpareType(SpareType spareType) {
         this.spareType = spareType;
+    }
+
+    public StockReceived getStockReceived() {
+        return stockReceived;
+    }
+
+    public void setStockReceived(StockReceived stockReceived) {
+        this.stockReceived = stockReceived;
+    }
+
+    public Bus getBus() {
+        return bus;
+    }
+
+    public void setBus(Bus bus) {
+        this.bus = bus;
     }
 }

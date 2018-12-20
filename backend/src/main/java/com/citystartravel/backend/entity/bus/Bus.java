@@ -2,6 +2,7 @@ package com.citystartravel.backend.entity.bus;
 
 import com.citystartravel.backend.config.audit.UserDateAudit;
 import com.citystartravel.backend.entity.bus.event.BusEvent;
+import com.citystartravel.backend.entity.spare.Spare;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -61,16 +62,17 @@ public class Bus extends UserDateAudit {
             inverseJoinColumns = @JoinColumn(name="busevent_id"))
     private Set<BusEvent> events = new HashSet<>();*/
 
-/*    @OneToMany(
+    @OneToMany(
             mappedBy = "bus",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,
             orphanRemoval = true
     )
     @Fetch(FetchMode.SELECT)
-    private List<SparePart> spareParts = new ArrayList<>();*/
+    @JsonManagedReference
+    private Set<Spare> spares = new HashSet<>();
 
-    Bus() {}
+    public Bus() {}
 
     Bus(@NotBlank @Size(max = 20) String name, @NotBlank @Size(max = 10) String platesLetters, @NotBlank @Size(max = 10) String platesNumbers, boolean inOperation, @Size(max = 4) int busCondition, Set<BusEvent> events, long km) {
         this.name = name;
@@ -156,6 +158,25 @@ public class Bus extends UserDateAudit {
     public void removeBusEvent(BusEvent busEvent) {
         events.remove(busEvent);
         busEvent.setBus(null);
+    }
+
+    public Set<Spare> getSpares() {
+        return spares;
+    }
+
+    public void setSpares(Set<Spare> spares) {
+        this.spares.retainAll(spares);
+        this.spares.addAll(spares);
+    }
+
+    public void addSpare(Spare spare) {
+        spares.add(spare);
+        spare.setBus(this);
+    }
+
+    public void removeSpare(Spare spare) {
+        spares.remove(spare);
+        spare.setBus(null);
     }
 
     public long getKm() {

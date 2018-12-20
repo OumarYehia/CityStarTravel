@@ -1,7 +1,9 @@
-package com.citystartravel.backend.entity.voucher.purchaserequest;
+package com.citystartravel.backend.entity.voucher.stockreceived;
 
 import com.citystartravel.backend.entity.voucher.Voucher;
 import com.citystartravel.backend.entity.voucher.item.VoucherItem;
+import com.citystartravel.backend.entity.voucher.purchaserequest.PurchaseRequest;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -12,13 +14,17 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-//@Table(name = "purchaserequestvouchers")
-@DiscriminatorValue("purchaserequest")
-public class PurchaseRequest extends Voucher {
+//@DiscriminatorValue("stockreceived")
+public class StockReceived extends Voucher {
 
-    private String needsRequest;
+    private String deliveryNote;
 
-    private String address;
+    private String supplierInvoice;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name="purchase_request_id", nullable = false)
+    @JsonBackReference
+    private PurchaseRequest purchaseRequest;
 
     @OneToMany(
             mappedBy = "voucher",
@@ -31,7 +37,15 @@ public class PurchaseRequest extends Voucher {
     private List<VoucherItem> voucherItems = new ArrayList<>();
 
 
-    public PurchaseRequest() {}
+    public StockReceived() {}
+
+    public PurchaseRequest getPurchaseRequest() {
+        return purchaseRequest;
+    }
+
+    public void setPurchaseRequest(PurchaseRequest purchaseRequest) {
+        this.purchaseRequest = purchaseRequest;
+    }
 
     public List<VoucherItem> getVoucherItems() {
         return voucherItems;
@@ -52,27 +66,27 @@ public class PurchaseRequest extends Voucher {
         voucherItem.setVoucher(null);
     }
 
-    public String getNeedsRequest() {
-        return needsRequest;
+    public String getDeliveryNote() {
+        return deliveryNote;
     }
 
-    public void setNeedsRequest(String needsRequest) {
-        this.needsRequest = needsRequest;
+    public void setDeliveryNote(String deliveryNote) {
+        this.deliveryNote = deliveryNote;
     }
 
-    public String getAddress() {
-        return address;
+    public String getSupplierInvoice() {
+        return supplierInvoice;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setSupplierInvoice(String supplierInvoice) {
+        this.supplierInvoice = supplierInvoice;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PurchaseRequest voucher = (PurchaseRequest) o;
+        StockReceived voucher = (StockReceived) o;
         return Objects.equals(this.getId(), voucher.getId());
     }
 

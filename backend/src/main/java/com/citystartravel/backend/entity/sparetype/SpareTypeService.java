@@ -1,6 +1,7 @@
 package com.citystartravel.backend.entity.sparetype;
 
 import com.citystartravel.backend.payload.response.PagedResponse;
+import com.citystartravel.backend.security.CurrentUser;
 import com.citystartravel.backend.security.UserPrincipal;
 import com.citystartravel.backend.util.UtilityMethods;
 import org.slf4j.Logger;
@@ -22,7 +23,7 @@ public class SpareTypeService {
         return utilityMethods.getAll(spareTypeRepository,currentUser,page,size);
     }
 
-    public SpareType getSpareTypeById(Long spareTypeId, UserPrincipal currentUser) {
+    public SpareType getSpareTypeById(Long spareTypeId, @CurrentUser UserPrincipal currentUser) {
         return utilityMethods.getById(spareTypeRepository, currentUser, spareTypeId,"SpareType");
     }
 

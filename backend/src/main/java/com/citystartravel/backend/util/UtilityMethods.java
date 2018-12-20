@@ -29,7 +29,7 @@ public class UtilityMethods<T> {
         }
     }
 
-    public PagedResponse<T> getAll(JpaRepository<T,Long> repository, UserPrincipal currentUser, int page, int size) {
+    public PagedResponse<T> getAll(JpaRepository<T,Long> repository, @CurrentUser UserPrincipal currentUser, int page, int size) {
         validatePageNumberAndSize(page, size);
 
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
@@ -44,7 +44,7 @@ public class UtilityMethods<T> {
                 pages.getSize(), pages.getTotalElements(), pages.getTotalPages(), pages.isLast());
     }
 
-    public T getById(JpaRepository<T,Long> repository, UserPrincipal currentUser, Long id, String resourceName) {
+    public T getById(JpaRepository<T,Long> repository, @CurrentUser UserPrincipal currentUser, Long id, String resourceName) {
         return repository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException(resourceName, "id", id));
     }

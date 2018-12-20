@@ -1,4 +1,4 @@
-package com.citystartravel.backend.entity.voucher.purchaserequestvoucher;
+package com.citystartravel.backend.entity.voucher.purchaserequest;
 
 import com.citystartravel.backend.entity.voucher.item.VoucherUtility;
 import com.citystartravel.backend.payload.response.ApiResponse;
@@ -13,27 +13,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/vouchers/purchaserequest")
-public class PurchaseRequestVoucherController {
+public class PurchaseRequestController {
     
     @Autowired
-    private PurchaseRequestVoucherService purchaseRequestVoucherService;
+    private PurchaseRequestService purchaseRequestService;
 
     @Autowired
     private VoucherUtility voucherUtility;
 
-    private static final Logger logger = LoggerFactory.getLogger(PurchaseRequestVoucherController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PurchaseRequestController.class);
 
     @GetMapping("/getAll")
     public ResponseEntity<?> getPurchaseRequestVouchers(@CurrentUser UserPrincipal currentUser,
                                        @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
                                        @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
         try{
-            PagedResponse<PurchaseRequestVoucher> purchaseRequestVouchers = purchaseRequestVoucherService.getAllPurchaseRequestVouchers(currentUser, page, size);
+            PagedResponse<PurchaseRequest> purchaseRequestVouchers = purchaseRequestService.getAllPurchaseRequestVouchers(currentUser, page, size);
             return ResponseEntity.ok(purchaseRequestVouchers);
         }
         catch (Exception ex) {
@@ -47,8 +44,8 @@ public class PurchaseRequestVoucherController {
     public ResponseEntity<?> getPurchaseRequestVoucher(@CurrentUser UserPrincipal currentUser,
                       @RequestParam(value = "id") Long id) {
         try{
-            PurchaseRequestVoucher purchaseRequestVoucher = purchaseRequestVoucherService.getPurchaseRequestVoucherById(id, currentUser);
-            return ResponseEntity.ok(purchaseRequestVoucher);
+            PurchaseRequest purchaseRequest = purchaseRequestService.getPurchaseRequestVoucherById(id, currentUser);
+            return ResponseEntity.ok(purchaseRequest);
         }
         catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
@@ -59,10 +56,10 @@ public class PurchaseRequestVoucherController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createPurchaseRequestVoucher(@CurrentUser UserPrincipal currentUser,
-                                       @RequestBody PurchaseRequestVoucherRequest purchaseRequestVoucherRequest) {
+                                       @RequestBody PurchaseRequestDtoRequest purchaseRequestDtoRequest) {
         try{
-            PurchaseRequestVoucher purchaseRequestVoucher = purchaseRequestVoucherService.createPurchaseRequestVoucher(purchaseRequestVoucherRequest, currentUser);
-            return ResponseEntity.ok(purchaseRequestVoucher);
+            PurchaseRequest purchaseRequest = purchaseRequestService.createPurchaseRequestVoucher(purchaseRequestDtoRequest, currentUser);
+            return ResponseEntity.ok(purchaseRequest);
         }
         catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
@@ -76,9 +73,9 @@ public class PurchaseRequestVoucherController {
     public ResponseEntity<?> deletePurchaseRequestVoucher(@CurrentUser UserPrincipal currentUser,
                                                             @RequestParam(value = "id") Long id) {
         try {
-            purchaseRequestVoucherService.deletePurchaseRequestVoucher(
-                    purchaseRequestVoucherService.getPurchaseRequestVoucherById(id, currentUser));
-            logger.info("[DELETED] PurchaseRequestVoucher with id: "+id+" deleted.");
+            purchaseRequestService.deletePurchaseRequestVoucher(
+                    purchaseRequestService.getPurchaseRequestVoucherById(id, currentUser));
+            logger.info("[DELETED] PurchaseRequest with id: "+id+" deleted.");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         catch (Exception ex)

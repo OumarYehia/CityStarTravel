@@ -39,7 +39,7 @@ public class BusService {
         return mapBusPagesToDtoPages(utilityMethods.getAll(busRepository, currentUser, page, size));
     }
 
-    public BusResponse getBusById(Long busId, UserPrincipal currentUser) {
+    public BusResponse getBusById(Long busId, @CurrentUser UserPrincipal currentUser) {
         return mapBusToDto(utilityMethods.getById(busRepository,currentUser,busId,"Bus"));
     }
 
@@ -64,7 +64,7 @@ public class BusService {
         return busRepository.findAll();
     }
 
-    public Bus getBusByIdEntity(Long busId, UserPrincipal currentUser) {
+    public Bus getBusByIdEntity(Long busId, @CurrentUser UserPrincipal currentUser) {
         return utilityMethods.getById(busRepository,currentUser,busId,"Bus");
     }
 
