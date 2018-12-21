@@ -11,8 +11,77 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="stockForm">
+          <mat-form-field class="col-md-6">
+            <input matInput [matDatepicker]="dateField" formControlName="date" placeholder="التاريخ">
+            <mat-datepicker-toggle matSuffix [for]="dateField"></mat-datepicker-toggle>
+            <mat-datepicker #dateField></mat-datepicker>
+          </mat-form-field>
 
+          <mat-form-field class="col-md-6">
+            <mat-select formControlName="bus" placeholder="الأتوبيس">
+              <mat-option *ngFor="let bus of buses" [value]="bus.id">
+                {{bus.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </form>
+        <form [formGroup]="itemForm" (submit)="addItem()">
+          <fa-icon class="clickable add-item" *ngIf="!showItemForm" icon="plus-circle" (click)="showItemForm = true"></fa-icon>
+          <fa-icon class="clickable add-item" *ngIf="showItemForm" icon="times-circle" (click)="showItemForm = false"></fa-icon>
+          <table class="table table-hover col-md-12">
+            <thead class="thead-dark">
+            <tr class="d-flex">
+              <th class="col-md-3" scope="col">كود الصنف</th>
+              <th class="col-md-4" scope="col">وصف الصنف</th>
+              <th class="col-md-3" scope="col">الوحدة</th>
+              <th class="col-md-2" scope="col">الكمية</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="form-table-row" [ngClass]="{
+                    'd-none': !showItemForm,
+                    'd-flex': showItemForm
+              }">
+              <td class="col-md-3"><input matInput formControlName="itemCode" placeholder="كود الصنف"></td>
+              <td class="col-md-4"><input matInput formControlName="description" placeholder="وصف الصنف"></td>
+              <td class="col-md-3"><input matInput formControlName="unit" placeholder="الوحدة"></td>
+              <td class="col-md-2"><input matInput formControlName="quantity" placeholder="الكمية"></td>
+            </tr>
+            <tr class="form-table-row" [ngClass]="{'d-none': !showItemForm }">
+              <td colspan="5">
+                <textarea matInput formControlName="notes" placeholder="الملاحظات"></textarea>
+                <button type="submit" class="btn btn-secondary btn-sm float-left mt-1 py-0">اضف صنف</button>
+              </td>
+            </tr>
+
+            <ng-container *ngFor="let item of stockItems">
+              <tr [ngClass]="{
+                        'clickable ': item != selectedItem,
+                        'form-table-row': item == selectedItem
+                  }" class="d-flex" (click)="selectItem(item)">
+                <td class="col-md-3">{{item.itemCode}}</td>
+                <td class="col-md-4">{{item.description}}</td>
+                <td class="col-md-3">{{item.unit}}</td>
+                <td class="col-md-2">{{item.quantity}}</td>
+              </tr>
+              <tr [ngClass]="{
+                        'collapse ': item != selectedItem,
+                        'form-table-row': item == selectedItem
+                  }" >
+                <td colspan="5">
+                  <div>وصف الصنف:</div>
+                  <div>{{item.description}}</div>
+                </td>
+              </tr>
+            </ng-container>
+
+            </tbody>
+          </table>
+        </form>
+
+        <button class="btn btn-secondary btn-sm float-left mt-3" (click)="addPurchaseRequest()">
+          اضف طلب شراء جديد
+        </button>
       </div>
     </div>
   </div>

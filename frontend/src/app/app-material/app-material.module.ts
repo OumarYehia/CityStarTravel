@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import {
+  MatAutocompleteModule,
   MatButtonModule,
   MatCheckboxModule,
   MatDatepickerModule,
@@ -19,7 +20,8 @@ import {
     MatButtonModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatAutocompleteModule
   ],
   exports: [
     MatCheckboxModule,
@@ -29,7 +31,8 @@ import {
     MatButtonModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatAutocompleteModule
   ]
 })
 export class AppMaterialModule { }

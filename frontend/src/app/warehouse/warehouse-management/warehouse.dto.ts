@@ -14,3 +14,11 @@ export class PurchaseRequest {
   supplierName: string;
   purchaseItems: PurchaseItem[];
 }
+
+export class StockIssueItem {
+  itemCode: string;
+  description: string;
+  unit: string;
+  quantity: number;
+  notes: string;
+}

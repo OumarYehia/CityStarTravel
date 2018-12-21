@@ -29,8 +29,10 @@
           </mat-form-field>
         </form>
         <form [formGroup]="itemForm" (submit)="addItem()">
-          <fa-icon class="clickable add-item" *ngIf="!showItemForm" icon="plus-circle" (click)="showItemForm = true"></fa-icon>
-          <fa-icon class="clickable add-item" *ngIf="showItemForm" icon="times-circle" (click)="showItemForm = false"></fa-icon>
+          <fa-icon class="clickable add-item" *ngIf="!showItemForm" icon="plus-circle"
+                   (click)="showItemForm = true"></fa-icon>
+          <fa-icon class="clickable add-item" *ngIf="showItemForm" icon="times-circle"
+                   (click)="showItemForm = false"></fa-icon>
           <table class="table table-hover">
             <thead class="thead-dark">
             <tr>
@@ -43,7 +45,15 @@
             </thead>
             <tbody>
             <tr class="form-table-row" [ngClass]="{'d-none': !showItemForm }">
-              <td><input matInput formControlName="itemCode" placeholder="كود الصنف"></td>
+              <td>
+                <input matInput formControlName="itemCode" placeholder="كود الصنف" [matAutocomplete]="auto">
+
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let st of filteredCodes | async" [value]="st.name">
+                    <span>{{st.name}}</span>
+                  </mat-option>
+                </mat-autocomplete>
+              </td>
               <td><input matInput formControlName="refCode" placeholder="كود المورد"></td>
               <td><input matInput formControlName="quantity" placeholder="الكمية"></td>
               <td><input matInput formControlName="make" placeholder="الماركة"></td>
@@ -70,7 +80,7 @@
               <tr [ngClass]="{
                         'collapse ': item != selectedItem,
                         'form-table-row': item == selectedItem
-                  }" >
+                  }">
                 <td colspan="5">
                   <div>وصف الصنف:</div>
                   <div>{{item.description}}</div>

@@ -2,6 +2,9 @@ import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core'
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PurchaseItem} from '../warehouse.dto';
+import {map, startWith} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {SpareType} from '../../warehhouse.dto';
 
 @Component({
   selector: 'app-purchase-request',
@@ -18,7 +21,11 @@ export class PurchaseRequestComponent implements OnInit, AfterViewInit {
   purchaseItems: PurchaseItem[] = [];
   selectedItem: PurchaseItem;
 
+  filteredCodes: Observable<SpareType[]>;
+  spareTypes: SpareType[] = [];
+
   isViewInit = false;
+  showItemForm = false;
 
   @Input()
   set showModal(show: boolean) {
@@ -30,7 +37,25 @@ export class PurchaseRequestComponent implements OnInit, AfterViewInit {
 
   constructor(
     private fb: FormBuilder,
-  ) {}
+  ) {
+    // let st = new SpareType();
+    // st.name = 'واحد';
+    // st.id = 0;
+    // st.serialNo = 1234;
+    // this.spareTypes.push(st);
+    //
+    // st = new SpareType();
+    // st.name = 'ولد';
+    // st.id = 0;
+    // st.serialNo = 1234;
+    // this.spareTypes.push(st);
+    //
+    // st = new SpareType();
+    // st.name = 'آه';
+    // st.id = 0;
+    // st.serialNo = 1234;
+    // this.spareTypes.push(st);
+  }
 
   ngOnInit() {
     this.itemForm = this.fb.group({
@@ -48,6 +73,16 @@ export class PurchaseRequestComponent implements OnInit, AfterViewInit {
       supplierCode: ['', Validators.required],
       supplierName: ['', Validators.required]
     });
+
+    this.filteredCodes = this.itemForm.get('itemCode').valueChanges
+      .pipe(
+        startWith(''),
+        map(st => st ? this._filterSpareTypes(st) : this.spareTypes.slice())
+      );
+  }
+
+  private _filterSpareTypes(spareType): SpareType[] {
+    return this.spareTypes.filter(st => st.name.indexOf(spareType) === 0);
   }
 
   ngAfterViewInit() {

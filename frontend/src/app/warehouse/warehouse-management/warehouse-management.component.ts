@@ -11,8 +11,8 @@ import {Spare, SpareType} from '../warehhouse.dto';
 export class WarehouseManagementComponent implements OnInit {
 
 
-  spareTypes: SpareType[];
-  spares: Spare[];
+  spareTypes: SpareType[] = [];
+  spares: Spare[] = [];
   showPurchase: boolean;
   showStock: boolean;
 

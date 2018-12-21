@@ -15,7 +15,7 @@
   top: 2.3rem;
   left: 1rem;
   color: white;
-
+  z-index: 1;
   &:hover {
     color: $secondary-color;
   }
