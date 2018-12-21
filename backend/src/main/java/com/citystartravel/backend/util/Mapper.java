@@ -3,6 +3,7 @@ package com.citystartravel.backend.util;
 
 import com.citystartravel.backend.payload.response.PagedResponse;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,6 +16,10 @@ public class Mapper<E,D> {
 
     public Mapper() {
         modelMapper = new ModelMapper();
+    }
+
+    public void addMappings(PropertyMap<E, D> skippedFields) {
+        modelMapper.addMappings(skippedFields);
     }
 
     public D mapEntityToDto(E e, Class<D> dClass) {

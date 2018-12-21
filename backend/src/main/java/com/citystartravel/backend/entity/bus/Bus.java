@@ -3,6 +3,7 @@ package com.citystartravel.backend.entity.bus;
 import com.citystartravel.backend.config.audit.UserDateAudit;
 import com.citystartravel.backend.entity.bus.event.BusEvent;
 import com.citystartravel.backend.entity.spare.Spare;
+import com.citystartravel.backend.entity.voucher.stockissue.StockIssue;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -56,12 +57,6 @@ public class Bus extends UserDateAudit {
     @JsonManagedReference
     private Set<BusEvent> events = new HashSet<>();
 
-/*    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="bus_busevents",
-            joinColumns = @JoinColumn(name="bus_id"),
-            inverseJoinColumns = @JoinColumn(name="busevent_id"))
-    private Set<BusEvent> events = new HashSet<>();*/
-
     @OneToMany(
             mappedBy = "bus",
             cascade = CascadeType.ALL,
@@ -71,6 +66,17 @@ public class Bus extends UserDateAudit {
     @Fetch(FetchMode.SELECT)
     @JsonManagedReference
     private Set<Spare> spares = new HashSet<>();
+
+    @OneToMany(
+            mappedBy = "bus",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            orphanRemoval = true
+    )
+    @Fetch(FetchMode.SELECT)
+    @JsonManagedReference
+    private Set<StockIssue> stockIssueVouchers = new HashSet<>();
+
 
     public Bus() {}
 
@@ -189,5 +195,24 @@ public class Bus extends UserDateAudit {
 
     public void addKm(long km) {
         this.km += km;
+    }
+
+    public Set<StockIssue> getStockIssueVouchers() {
+        return stockIssueVouchers;
+    }
+
+    public void setStockIssueVouchers(Set<StockIssue> stockIssueVouchers) {
+        this.stockIssueVouchers.retainAll(stockIssueVouchers);
+        this.stockIssueVouchers.addAll(stockIssueVouchers);
+    }
+
+    public void addStockIssueVoucher(StockIssue stockIssue) {
+        stockIssueVouchers.add(stockIssue);
+        stockIssue.setBus(this);
+    }
+
+    public void removeStockIssueVoucher(StockIssue stockIssue) {
+        stockIssueVouchers.remove(stockIssue);
+        stockIssue.setBus(null);
     }
 }

@@ -59,13 +59,4 @@ public class UserController {
         return userProfileResponse;
     }
 
-
-    /*@GetMapping("/users/{username}/votes")
-    public PagedResponse<BusResponse> getBussVotedBy(@PathVariable(value = "username") String username,
-                                                       @CurrentUser UserPrincipal currentUser,
-                                                       @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
-                                                       @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
-        return busService.getBussVotedBy(username, currentUser, page, size);
-    }*/
-
 }

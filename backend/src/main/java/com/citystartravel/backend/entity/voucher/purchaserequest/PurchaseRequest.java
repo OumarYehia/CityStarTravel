@@ -83,7 +83,8 @@ public class PurchaseRequest extends Voucher {
     }
 
     public void setStockReceivedList(List<StockReceived> stockReceivedList) {
-        this.stockReceivedList = stockReceivedList;
+        this.stockReceivedList.retainAll(stockReceivedList);
+        this.stockReceivedList.addAll(stockReceivedList);
     }
 
     @Override

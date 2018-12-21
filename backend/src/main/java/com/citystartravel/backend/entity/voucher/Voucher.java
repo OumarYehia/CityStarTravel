@@ -100,6 +100,7 @@ public class Voucher extends UserDateAudit {
     }
 
     public void setVoucherItems(List<VoucherItem> voucherItems) {
-        this.voucherItems = voucherItems;
+        this.voucherItems.retainAll(voucherItems);
+        this.voucherItems.addAll(voucherItems);
     }
 }

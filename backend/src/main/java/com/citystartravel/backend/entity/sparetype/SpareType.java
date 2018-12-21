@@ -90,6 +90,7 @@ public class SpareType extends UserDateAudit {
     }
 
     public void setSpares(List<Spare> spares) {
-        this.spares = spares;
+        this.spares.retainAll(spares);
+        this.spares.addAll(spares);
     }
 }
