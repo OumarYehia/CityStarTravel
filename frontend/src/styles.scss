@@ -14,6 +14,14 @@ html body{
   text-align: center;
   color: white;
 
+  &.card-white-body {
+    .card-body {
+      color: black;
+      background-color: white;
+      border-bottom: 0.5rem solid $secondary-color;
+    }
+  }
+
   .card-header {
     background-color: $primary-color;
   }
@@ -27,6 +35,8 @@ html body{
     padding: 3px;
   }
 }
+
+
 
 .modal {
   .modal-header {
@@ -94,6 +104,8 @@ nav {
   &:not(:disabled):active, &:hover {
     background-color: white;
     color: $secondary-color;
+    border-color: $secondary-color;
+
   }
 
   &:focus {
@@ -109,6 +121,8 @@ nav {
       background-color: $primary-color;
     }
   }
+
+  border-bottom: 0.5rem solid $secondary-color;
 }
 
 html, body { height: 100%; }

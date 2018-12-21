@@ -10,17 +10,19 @@ import {Spare, SpareType} from '../warehhouse.dto';
 })
 export class WarehouseManagementComponent implements OnInit {
 
-  @ViewChild('newPurchaseModal') newPurchaseModal: ModalDirective;
-  @ViewChild('newStockReceivedModal') newStockReceivedModal: ModalDirective;
 
   spareTypes: SpareType[];
   spares: Spare[];
+  showPurchase: boolean;
+  showStock: boolean;
 
   constructor(
     private warehouseService: WarehouseService
   ) {  }
 
   ngOnInit() {
+    this.showPurchase = false;
+    this.showStock = false;
     this.warehouseService.getSpareTypesList().subscribe(
       res => {
         this.spareTypes = res.content;
@@ -29,34 +31,19 @@ export class WarehouseManagementComponent implements OnInit {
 
     this.warehouseService.getSparesList().subscribe(
       res => {
-        console.log(res);
         this.spares = res.content;
       }
     );
   }
 
   onPurchaseClick() {
-    this.showPurchaseModal();
+    this.showPurchase = !this.showPurchase;
   }
 
   onStockReceivedClick() {
-    this.showStockReceivedModal();
+    this.showStock = !this.showStock;
   }
 
-  showPurchaseModal(): void {
-    this.newPurchaseModal.show();
-  }
 
-  hidePurchaseModal(): void {
-    this.newPurchaseModal.hide();
-  }
-
-  showStockReceivedModal(): void {
-    this.newStockReceivedModal.show();
-  }
-
-  hideStockReceivedModal(): void {
-    this.newStockReceivedModal.hide();
-  }
 
 }

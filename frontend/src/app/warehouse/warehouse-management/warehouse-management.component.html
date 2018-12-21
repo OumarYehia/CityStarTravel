@@ -18,9 +18,9 @@
 
   <div class="row">
     <div class="col-md-4">
-      <div class="card text-white">
+      <div class="card card-white-body">
         <h5 class="card-header">أنواع قطع الغيار</h5>
-        <div class="card-body">
+        <div class="card-body text-right">
           <div *ngFor="let spareType of spareTypes">
             <mat-checkbox>{{spareType.name}}</mat-checkbox>
           </div>
@@ -60,38 +60,5 @@
   </div>
 </app-layout>
 
-<div bsModal #newPurchaseModal="bs-modal" class="modal fade" tabindex="-1">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">طلب شراء جديد</h4>
-        <div class="col m-0 p-0">
-          <button type="button" class="float-left close" (click)="hidePurchaseModal()">
-            <fa-icon icon="times"></fa-icon>
-          </button>
-        </div>
-      </div>
-      <div class="modal-body">
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<div bsModal #newStockReceivedModal="bs-modal" class="modal fade" tabindex="-1">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">إذن صرف جديد</h4>
-        <div class="col m-0 p-0">
-          <button type="button" class="float-left close" (click)="hideStockReceivedModal()">
-            <fa-icon icon="times"></fa-icon>
-          </button>
-        </div>
-      </div>
-      <div class="modal-body">
-
-      </div>
-    </div>
-  </div>
-</div>
+<app-purchase-request [showModal]="showPurchase"></app-purchase-request>
+<app-stock-received [showModal]="showStock"></app-stock-received>

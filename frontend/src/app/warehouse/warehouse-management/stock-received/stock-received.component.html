@@ -1,0 +1,19 @@
+<div bsModal #newStockReceivedModal="bs-modal" class="modal fade" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">إذن صرف جديد</h4>
+        <div class="col m-0 p-0">
+          <button type="button" class="float-left close" (click)="hideStockReceivedModal()">
+            <fa-icon icon="times"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="stockForm">
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

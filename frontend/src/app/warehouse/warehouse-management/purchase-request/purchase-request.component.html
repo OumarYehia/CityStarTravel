@@ -1,0 +1,91 @@
+<div bsModal #newPurchaseModal="bs-modal" class="modal fade" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">طلب شراء جديد</h4>
+        <div class="col m-0 p-0">
+          <button type="button" class="float-left close" (click)="hidePurchaseModal()">
+            <fa-icon icon="times"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="purchaseForm">
+          <mat-form-field class="col-md-6">
+            <input matInput [matDatepicker]="dateField" formControlName="date" placeholder="التاريخ">
+            <mat-datepicker-toggle matSuffix [for]="dateField"></mat-datepicker-toggle>
+            <mat-datepicker #dateField></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-6">
+            <input matInput formControlName="needsRequest" placeholder="رقم طلب الاحتياجات">
+          </mat-form-field>
+          <mat-form-field class="col-md-6">
+            <input matInput formControlName="supplierCode" placeholder="رقم المورد">
+          </mat-form-field>
+
+          <mat-form-field class="col-md-6">
+            <input matInput formControlName="supplierName" placeholder="اسم المورد">
+          </mat-form-field>
+        </form>
+        <form [formGroup]="itemForm" (submit)="addItem()">
+          <fa-icon class="clickable add-item" *ngIf="!showItemForm" icon="plus-circle" (click)="showItemForm = true"></fa-icon>
+          <fa-icon class="clickable add-item" *ngIf="showItemForm" icon="times-circle" (click)="showItemForm = false"></fa-icon>
+          <table class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+              <th scope="col">كود الصنف</th>
+              <th scope="col">كود المورد</th>
+              <th scope="col">الكمية</th>
+              <th scope="col">الماركة</th>
+              <th scope="col">الوحدة</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="form-table-row" [ngClass]="{'d-none': !showItemForm }">
+              <td><input matInput formControlName="itemCode" placeholder="كود الصنف"></td>
+              <td><input matInput formControlName="refCode" placeholder="كود المورد"></td>
+              <td><input matInput formControlName="quantity" placeholder="الكمية"></td>
+              <td><input matInput formControlName="make" placeholder="الماركة"></td>
+              <td><input matInput formControlName="unit" placeholder="الوحدة"></td>
+            </tr>
+            <tr class="form-table-row" [ngClass]="{'d-none': !showItemForm }">
+              <td colspan="5">
+                <textarea matInput formControlName="description" placeholder="وصف الصنف"></textarea>
+                <button type="submit" class="btn btn-secondary btn-sm float-left mt-1 py-0">اضف صنف</button>
+              </td>
+            </tr>
+
+            <ng-container *ngFor="let item of purchaseItems">
+              <tr [ngClass]="{
+                        'clickable ': item != selectedItem,
+                        'form-table-row': item == selectedItem
+                  }" (click)="selectItem(item)">
+                <td>{{item.itemCode}}</td>
+                <td>{{item.refCode}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.make}}</td>
+                <td>{{item.unit}}</td>
+              </tr>
+              <tr [ngClass]="{
+                        'collapse ': item != selectedItem,
+                        'form-table-row': item == selectedItem
+                  }" >
+                <td colspan="5">
+                  <div>وصف الصنف:</div>
+                  <div>{{item.description}}</div>
+                </td>
+              </tr>
+            </ng-container>
+
+            </tbody>
+          </table>
+        </form>
+
+        <button class="btn btn-secondary btn-sm float-left mt-3" (click)="addPurchaseRequest()">
+          اضف طلب شراء جديد
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

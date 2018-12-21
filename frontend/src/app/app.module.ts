@@ -25,6 +25,8 @@ import {ModalModule} from 'ngx-bootstrap';
 import { WarehouseManagementComponent } from './warehouse/warehouse-management/warehouse-management.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {AppMaterialModule} from './app-material/app-material.module';
+import { PurchaseRequestComponent } from './warehouse/warehouse-management/purchase-request/purchase-request.component';
+import { StockReceivedComponent } from './warehouse/warehouse-management/stock-received/stock-received.component';
 
 registerLocaleData(localeArEg);
 
@@ -40,7 +42,9 @@ registerLocaleData(localeArEg);
     ProfileComponent,
     BusEventsComponent,
     BusesListComponent,
-    WarehouseManagementComponent
+    WarehouseManagementComponent,
+    PurchaseRequestComponent,
+    StockReceivedComponent
   ],
   imports: [
     BrowserModule,
