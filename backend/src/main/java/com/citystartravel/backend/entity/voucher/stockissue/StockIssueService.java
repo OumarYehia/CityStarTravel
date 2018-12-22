@@ -61,7 +61,7 @@ public class StockIssueService {
         String eventLog = utilityMethods.generateEntityCreationMessage("StockIssue",String.valueOf(stockIssue.getId()),currentUser);
         logger.info(eventLog);
 
-        //spareService.createSparesFromVoucherItems(stockIssue.getVoucherItems(), currentUser);
+        spareService.assignSparesToBus(stockIssue.getVoucherItems(), stockIssue.getBus(), currentUser);
 
         return stockIssueRepository.save(stockIssue);
     }
@@ -83,6 +83,5 @@ public class StockIssueService {
         stockIssue.setVoucherItems(voucherItems);
         return stockIssue;
     }
-
 
 }

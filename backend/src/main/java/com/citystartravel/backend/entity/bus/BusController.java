@@ -28,17 +28,17 @@ public class BusController {
     private static final Logger logger = LoggerFactory.getLogger(BusController.class);
 
     @GetMapping("/getAll")
-    public ResponseEntity<BusResponse> getBuses(@CurrentUser UserPrincipal currentUser,
+    public ResponseEntity<?> getBuses(@CurrentUser UserPrincipal currentUser,
                                        @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
                                        @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
         try{
             PagedResponse<BusResponse> pagedResponse = busService.getAllBuses(currentUser, page, size);
             logger.debug(pagedResponse.toString());
-            return new ResponseEntity(pagedResponse,HttpStatus.OK);
+            return new ResponseEntity<>(pagedResponse,HttpStatus.OK);
         }
         catch (Exception ex) {
             logger.error(ex.getMessage());
-            return new ResponseEntity(
+            return new ResponseEntity<>(
                     new ApiResponse(false,"Unable to getAll buses."),HttpStatus.BAD_REQUEST);
         }
     }
@@ -59,7 +59,7 @@ public class BusController {
         }
         catch (Exception ex) {
             logger.error(ex.getMessage());
-            return new ResponseEntity(
+            return new ResponseEntity<>(
                     new ApiResponse(false,"Unable to create bus."),HttpStatus.BAD_REQUEST);
         }
 
@@ -74,7 +74,7 @@ public class BusController {
         }
         catch (Exception ex) {
             logger.error(ex.getMessage());
-            return new ResponseEntity(
+            return new ResponseEntity<>(
                     new ApiResponse(false,"Unable to create bus."),HttpStatus.BAD_REQUEST);
         }
 
@@ -103,7 +103,7 @@ public class BusController {
         }
         catch (Exception ex) {
             logger.error(ex.getMessage());
-            return new ResponseEntity(
+            return new ResponseEntity<>(
                     new ApiResponse(false,"Unable to add events to bus "+bus.getName()),HttpStatus.BAD_REQUEST);
         }
     }*/

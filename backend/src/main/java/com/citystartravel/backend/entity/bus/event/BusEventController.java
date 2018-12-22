@@ -51,7 +51,7 @@ class BusEventController {
         }
         catch (Exception ex) {
             logger.error(ex.getMessage());
-            return new ResponseEntity(
+            return new ResponseEntity<>(
                     new ApiResponse(false,"Unable to create busEvent."),HttpStatus.BAD_REQUEST);
         }
 

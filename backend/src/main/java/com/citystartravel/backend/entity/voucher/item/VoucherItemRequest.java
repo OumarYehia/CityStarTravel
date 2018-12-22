@@ -1,12 +1,13 @@
 package com.citystartravel.backend.entity.voucher.item;
 
+import com.citystartravel.backend.entity.sparetype.SpareTypeRequest;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 public class VoucherItemRequest {
 
-    @NotBlank
-    private long spareTypeID;
+    private SpareTypeRequest spareType;
 
     private String name;
 
@@ -29,12 +30,12 @@ public class VoucherItemRequest {
         this.name = name;
     }
 
-    public long getSpareTypeID() {
-        return spareTypeID;
+    public SpareTypeRequest getSpareType() {
+        return spareType;
     }
 
-    public void setSpareTypeID(long spareType) {
-        this.spareTypeID = spareType;
+    public void setSpareType(SpareTypeRequest spareType) {
+        this.spareType = spareType;
     }
 
     public String getDescription() {

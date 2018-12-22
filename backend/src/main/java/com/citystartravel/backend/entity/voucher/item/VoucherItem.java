@@ -20,10 +20,11 @@ public class VoucherItem {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long serialNo;
 
+    @Transient
     private long spareTypeID;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="sparetype_id", nullable = false)
+    @JoinColumn(nullable = false)
     @JsonIgnore
     private SpareType spareType;
 
@@ -39,7 +40,7 @@ public class VoucherItem {
     private String notes;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="voucher_id", nullable = false)
+    @JoinColumn(nullable = false)
     @JsonBackReference
     private Voucher voucher;
 

@@ -1,6 +1,7 @@
 package com.citystartravel.backend.entity.voucher.stockissue;
 
 import com.citystartravel.backend.entity.voucher.item.VoucherUtility;
+import com.citystartravel.backend.exception.AppException;
 import com.citystartravel.backend.payload.response.ApiResponse;
 import com.citystartravel.backend.payload.response.PagedResponse;
 import com.citystartravel.backend.security.CurrentUser;
@@ -35,7 +36,7 @@ public class StockIssueController {
         }
         catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
-            return new ResponseEntity(
+            return new ResponseEntity<>(
                     new ApiResponse(false,"Unable to fetch Stock Issue Vouchers."),HttpStatus.BAD_REQUEST);
         }
     }
@@ -49,7 +50,7 @@ public class StockIssueController {
         }
         catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
-            return new ResponseEntity(
+            return new ResponseEntity<>(
                     new ApiResponse(false,"Stock Issue Voucher with id: "+id+" not found."),HttpStatus.NOT_FOUND);
         }
     }
@@ -61,9 +62,14 @@ public class StockIssueController {
             StockIssue stockIssue = stockIssueService.createStockIssueVoucher(stockIssueDtoRequest, currentUser);
             return ResponseEntity.ok(stockIssue);
         }
+        catch (AppException appEx) {
+            logger.error(appEx.getMessage(), appEx);
+            return new ResponseEntity<>(
+                    new ApiResponse(false,appEx.getMessage()),HttpStatus.BAD_REQUEST);
+        }
         catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
-            return new ResponseEntity(
+            return new ResponseEntity<>(
                     new ApiResponse(false,"Unable to create stockIssueVoucher."),HttpStatus.BAD_REQUEST);
         }
     }
@@ -80,7 +86,7 @@ public class StockIssueController {
         catch (Exception ex)
         {
             logger.error(ex.getMessage());
-            return new ResponseEntity(
+            return new ResponseEntity<>(
                     new ApiResponse(false,"Unable to delete stockIssueVoucher."),HttpStatus.BAD_REQUEST);
         }
 

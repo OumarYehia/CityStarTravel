@@ -25,6 +25,14 @@ public class VoucherUtility {
     @Autowired
     private Mapper<VoucherItemRequest, VoucherItem> mapper_VIR_VI;
 
+    /**
+     * Creates a list of VoucherItems from a list of VoucherItemRequest. If the spareTypeID = -1, this sparetype needs to
+     * be created. Otherwise, set the SpareType for a given item with the given ID.
+     * @param dto
+     * @param currentUser
+     * @param voucher
+     * @return
+     */
     public List<VoucherItem> getVoucherItemsFromRequest(VoucherDto dto,
                                                         UserPrincipal currentUser,
                                                         Voucher voucher) {
@@ -33,7 +41,10 @@ public class VoucherUtility {
         SpareType spareType;
         for(VoucherItemRequest voucherItemRequest : voucherItemRequests) {
             VoucherItem voucherItem = mapper_VIR_VI.mapEntityToDto(voucherItemRequest, VoucherItem.class);
-            spareType = spareTypeService.getSpareTypeById(voucherItemRequest.getSpareTypeID(), currentUser);
+            if(voucherItemRequest.getSpareType().getId() == -1) // new SpareType, create it first
+                spareType = spareTypeService.createSpareType(voucherItemRequest.getSpareType());
+            else
+                spareType = spareTypeService.getSpareTypeById(voucherItemRequest.getSpareType().getId(), currentUser);
             voucherItem.setSpareType(spareType);
             voucherItem.setVoucher(voucher);
             voucherItem = voucherItemRepository.save(voucherItem);

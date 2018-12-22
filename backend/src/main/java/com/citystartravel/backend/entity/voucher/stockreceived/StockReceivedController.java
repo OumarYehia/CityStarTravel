@@ -35,7 +35,7 @@ public class StockReceivedController {
         }
         catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
-            return new ResponseEntity(
+            return new ResponseEntity<>(
                     new ApiResponse(false,"Unable to fetch Stock Received Vouchers."),HttpStatus.BAD_REQUEST);
         }
     }
@@ -49,7 +49,7 @@ public class StockReceivedController {
         }
         catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
-            return new ResponseEntity(
+            return new ResponseEntity<>(
                     new ApiResponse(false,"Stock Received Voucher with id: "+id+" not found."),HttpStatus.NOT_FOUND);
         }
     }
@@ -63,7 +63,7 @@ public class StockReceivedController {
         }
         catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
-            return new ResponseEntity(
+            return new ResponseEntity<>(
                     new ApiResponse(false,"Unable to create stockReceivedVoucher."),HttpStatus.BAD_REQUEST);
         }
     }
@@ -80,7 +80,7 @@ public class StockReceivedController {
         catch (Exception ex)
         {
             logger.error(ex.getMessage());
-            return new ResponseEntity(
+            return new ResponseEntity<>(
                     new ApiResponse(false,"Unable to delete stockReceivedVoucher."),HttpStatus.BAD_REQUEST);
         }
 

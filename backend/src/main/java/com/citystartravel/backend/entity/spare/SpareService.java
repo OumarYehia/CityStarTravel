@@ -1,9 +1,10 @@
 package com.citystartravel.backend.entity.spare;
 
-import com.citystartravel.backend.entity.sparetype.SpareType;
+import com.citystartravel.backend.entity.bus.Bus;
 import com.citystartravel.backend.entity.sparetype.SpareTypeService;
 import com.citystartravel.backend.entity.voucher.item.VoucherItem;
 import com.citystartravel.backend.entity.voucher.stockreceived.StockReceived;
+import com.citystartravel.backend.exception.AppException;
 import com.citystartravel.backend.payload.response.PagedResponse;
 import com.citystartravel.backend.security.CurrentUser;
 import com.citystartravel.backend.security.UserPrincipal;
@@ -36,22 +37,7 @@ public class SpareService {
         return utilityMethods.getById(spareRepository, currentUser, spareId,"Spare");
     }
 
-    public List<Spare> createSpare(SpareRequest spareRequest, @CurrentUser UserPrincipal currentUser) {
-
-        List<Spare> spares = new ArrayList<>();
-        SpareType spareType = spareTypeService.getSpareTypeById(spareRequest.getSpareTypeID(), currentUser);
-        for(int i=0 ; i<spareRequest.getQuantity() ; i++) {
-            Spare spare = new Spare(spareType);
-            spare.setName(spareRequest.getName());
-            spareRepository.save(spare);
-            logger.info("[CREATED] Spare "+spare.getName()+" Created.");
-            spares.add(spare);
-        }
-        logger.info("[CREATED] "+spareRequest.getQuantity()+
-                " new Spares of type "+spareType.getName()+" Created.");
-        return spares;
-    }
-
+    // --------------------------- Stock Received ---------------------------
     public List<Spare> createSparesFromVoucherItems(List<VoucherItem> voucherItems, @CurrentUser UserPrincipal currentUser) {
         List<Spare> spares = new ArrayList<>();
         for(VoucherItem voucherItem : voucherItems) {
@@ -72,5 +58,29 @@ public class SpareService {
         }
 
         return spares;
+    }
+
+
+    // --------------------------- Stock Issue ---------------------------
+    private List<Spare> getSparesAvailableBySpareType(Long spareTypeId, @CurrentUser UserPrincipal currentUser) {
+        return spareRepository.findBySpareTypeIdAndAvailable(spareTypeId, true);
+    }
+
+    public boolean assignSparesToBus(List<VoucherItem> voucherItems, Bus bus, @CurrentUser UserPrincipal currentUser) {
+        for(VoucherItem voucherItem : voucherItems) {
+            List<Spare> availableSpares = getSparesAvailableBySpareType(voucherItem.getSpareType().getId(), currentUser);
+            int quantityAvailableOfSpareType = availableSpares.size();
+            if(voucherItem.getQuantity() <= quantityAvailableOfSpareType) {
+                for(Spare spare : availableSpares) {
+                    spare.setAvailable(false);
+                    spare.setBus(bus);
+                    spareRepository.save(spare);
+                }
+            }
+            else
+                throw new AppException("Not enough quantity of ["+voucherItem.getSpareType().getName()+"] to assign to bus ["
+                        +bus.getName()+"]. Quantity available is: "+quantityAvailableOfSpareType);
+        }
+        return true;
     }
 }
