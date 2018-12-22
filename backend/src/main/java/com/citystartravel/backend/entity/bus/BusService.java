@@ -7,17 +7,21 @@ import com.citystartravel.backend.entity.bus.event.BusEventType;
 import com.citystartravel.backend.payload.response.PagedResponse;
 import com.citystartravel.backend.security.CurrentUser;
 import com.citystartravel.backend.security.UserPrincipal;
+import com.citystartravel.backend.util.AppConstants;
 import com.citystartravel.backend.util.Mapper;
 import com.citystartravel.backend.util.UtilityMethods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 
 @Service
+@PropertySource(value={"classpath:messages_ar.properties"})
 public class BusService {
 
     @Autowired
@@ -49,9 +53,10 @@ public class BusService {
                           busRequest.getPlatesNumbers(),
                           busRequest.getKm());
         String eventLog = utilityMethods.generateEntityCreationMessage("Bus",bus.getName(),currentUser);
-        bus.addBusEvent(new BusEvent(BusEventType.GENERAL, eventLog));
+        bus.addBusEvent(new BusEvent(BusEventType.GENERAL, AppConstants.NEW_BUS));
+        BusResponse busResponse = mapBusToDto(busRepository.save(bus));
         logger.info(eventLog);
-        return mapBusToDto(busRepository.save(bus));
+        return busResponse;
     }
 
     public List<BusEvent> getBusEvents(Long id) {
@@ -86,5 +91,17 @@ public class BusService {
 
     private PagedResponse<BusResponse> mapBusPagesToDtoPages(PagedResponse<Bus> busPagedResponse) {
         return mapper.mapEntityPagesToDtoPages(busPagedResponse, BusResponse.class);
+    }
+
+    public boolean addBusEvents(Bus bus, BusEvent busEvent, @CurrentUser UserPrincipal currentUser) {
+        try{
+            bus.addBusEvent(busEvent);
+            busRepository.save(bus);
+            return true;
+        }
+        catch(Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            return false;
+        }
     }
 }

@@ -1,6 +1,9 @@
 package com.citystartravel.backend.entity.spare;
 
 import com.citystartravel.backend.entity.bus.Bus;
+import com.citystartravel.backend.entity.bus.BusService;
+import com.citystartravel.backend.entity.bus.event.BusEvent;
+import com.citystartravel.backend.entity.bus.event.BusEventType;
 import com.citystartravel.backend.entity.sparetype.SpareTypeService;
 import com.citystartravel.backend.entity.voucher.item.VoucherItem;
 import com.citystartravel.backend.entity.voucher.stockreceived.StockReceived;
@@ -15,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 
 @Service
@@ -28,6 +32,9 @@ public class SpareService {
     private static final Logger logger = LoggerFactory.getLogger(SpareService.class);
 
     private UtilityMethods<Spare> utilityMethods = new UtilityMethods<>();
+
+    @Autowired
+    private BusService busService;
 
     public PagedResponse<Spare> getAllSpares(UserPrincipal currentUser, int page, int size) {
         return utilityMethods.getAll(spareRepository,currentUser,page,size);
@@ -75,6 +82,8 @@ public class SpareService {
                     spare.setAvailable(false);
                     spare.setBus(bus);
                     spareRepository.save(spare);
+                    String eventString = generateBusEventString(spare.getId(), spare.getSpareType().getName());
+                    busService.addBusEvents(bus, new BusEvent(BusEventType.SPARE_PART_ADDED, eventString), currentUser);
                 }
             }
             else
@@ -82,5 +91,12 @@ public class SpareService {
                         +bus.getName()+"]. Quantity available is: "+quantityAvailableOfSpareType);
         }
         return true;
+    }
+
+    private String generateBusEventString(long spareId, String spareName) {
+        StringBuilder stringBuilder = new StringBuilder();
+        Formatter formatter = new Formatter(stringBuilder);
+        formatter.format("تم صرف القطعة رقم %d%n من نوع %s.", spareId, spareName);
+        return stringBuilder.toString();
     }
 }

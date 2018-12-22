@@ -33,6 +33,10 @@ public class BusEventService {
         return utilityMethods.getById(busEventRepository,currentUser,busId,"BusEvent");
     }
 
+    public BusEvent createBusEvent(BusEvent busEvent, @CurrentUser UserPrincipal currentUser) {
+        return busEventRepository.save(busEvent);
+    }
+
     public BusEvent updateBusEvent(BusEvent busEvent) {
         return utilityMethods.update(busEventRepository, busEvent);
     }
@@ -40,6 +44,7 @@ public class BusEventService {
     public void deleteBus(BusEvent busEvent) {
         utilityMethods.delete(busEventRepository, busEvent);
     }
+
 
 
 }
