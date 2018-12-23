@@ -21,7 +21,6 @@ import java.util.*;
 
 
 @Service
-@PropertySource(value={"classpath:messages_ar.properties"})
 public class BusService {
 
     @Autowired

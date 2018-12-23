@@ -107,4 +107,9 @@ public class BusController {
                     new ApiResponse(false,"Unable to add events to bus "+bus.getName()),HttpStatus.BAD_REQUEST);
         }
     }*/
+
+    @GetMapping("/open/open")
+    public int open() {
+        return 19;
+    }
 }

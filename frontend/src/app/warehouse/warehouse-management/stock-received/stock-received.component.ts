@@ -2,7 +2,7 @@ import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core'
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Bus} from '../../../bus/bus.dto';
-import {PurchaseItem, StockIssueItem} from '../warehouse.dto';
+import {VoucherItem} from '../../warehhouse.dto';
 
 @Component({
   selector: 'app-stock-received',
@@ -16,8 +16,8 @@ export class StockReceivedComponent implements OnInit, AfterViewInit {
   stockForm: FormGroup;
   itemForm: FormGroup;
 
-  stockItems: StockIssueItem[] = [];
-  selectedItem: StockIssueItem;
+  stockItems: VoucherItem[] = [];
+  selectedItem: VoucherItem;
 
   buses: Bus[];
 

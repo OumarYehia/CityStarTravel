@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  // apiUrl: 'http://localhost:5000/api'
-  apiUrl: 'http://192.168.1.5:5000/api'
+  //apiUrl: 'http://localhost:5000/api'
+  apiUrl: 'http://ec2-18-217-172-117.us-east-2.compute.amazonaws.com:8080/backend-0.0.1-SNAPSHOT/api'
+  // apiUrl: 'http://192.168.1.5:5000/api'
 };
 
 /*

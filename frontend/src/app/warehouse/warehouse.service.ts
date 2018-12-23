@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Response} from '../shared/models';
-import {Spare, SpareType, StockIssue} from './warehhouse.dto';
-import {PurchaseRequest} from './warehouse-management/warehouse.dto';
+import {PurchaseRequest, Spare, SpareType, StockIssue} from './warehhouse.dto';
 
 @Injectable({
   providedIn: 'root'
