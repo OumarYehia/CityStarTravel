@@ -46,7 +46,7 @@
             <tbody>
             <tr class="form-table-row" [ngClass]="{'d-none': !showItemForm }">
               <td>
-                <input matInput formControlName="itemCode" placeholder="كود الصنف" [matAutocomplete]="auto">
+                <input matInput formControlName="spareTypeName" placeholder="النوع" [matAutocomplete]="auto">
 
                 <mat-autocomplete #auto="matAutocomplete">
                   <mat-option *ngFor="let st of filteredCodes | async" [value]="st.name">
@@ -66,12 +66,12 @@
               </td>
             </tr>
 
-            <ng-container *ngFor="let item of purchaseItems">
+            <ng-container *ngFor="let item of voucherItems">
               <tr [ngClass]="{
                         'clickable ': item != selectedItem,
                         'form-table-row': item == selectedItem
                   }" (click)="selectItem(item)">
-                <td>{{item.itemCode}}</td>
+                <td>{{item.spareType.name}}</td>
                 <td>{{item.refCode}}</td>
                 <td>{{item.quantity}}</td>
                 <td>{{item.make}}</td>

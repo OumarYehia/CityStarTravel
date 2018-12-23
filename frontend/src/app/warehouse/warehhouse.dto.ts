@@ -12,3 +12,27 @@ export class Spare {
   spareType: SpareType;
   quantity: number;
 }
+
+export class VoucherItem {
+  spareType: SpareType;
+  refCode: string;
+  quantity: number;
+  make: string;
+  unit: string;
+  description: string;
+  notes: string;
+}
+
+export class PurchaseRequest {
+  date: Date;
+  needsRequest: string;
+  supplierCode: string;
+  supplierName: string;
+  voucherItemRequests: VoucherItem[];
+}
+
+export class StockIssue {
+  busID: number;
+  date: Date;
+  voucherItemRequests: VoucherItem[];
+}

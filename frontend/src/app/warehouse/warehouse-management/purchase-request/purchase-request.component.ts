@@ -1,15 +1,17 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {PurchaseItem} from '../warehouse.dto';
 import {map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import {SpareType} from '../../warehhouse.dto';
+import {PurchaseRequest, SpareType, VoucherItem} from '../../warehhouse.dto';
+import {WarehouseService} from '../../warehouse.service';
+import {AlertService} from '../../../shared/services';
 
 @Component({
   selector: 'app-purchase-request',
   templateUrl: './purchase-request.component.html',
-  styleUrls: ['./purchase-request.component.scss']
+  styleUrls: ['./purchase-request.component.scss'],
+  providers: [WarehouseService, AlertService]
 })
 export class PurchaseRequestComponent implements OnInit, AfterViewInit {
 
@@ -18,8 +20,8 @@ export class PurchaseRequestComponent implements OnInit, AfterViewInit {
   itemForm: FormGroup;
   purchaseForm: FormGroup;
 
-  purchaseItems: PurchaseItem[] = [];
-  selectedItem: PurchaseItem;
+  voucherItems: VoucherItem[] = [];
+  selectedItem: VoucherItem;
 
   filteredCodes: Observable<SpareType[]>;
   spareTypes: SpareType[] = [];
@@ -37,6 +39,8 @@ export class PurchaseRequestComponent implements OnInit, AfterViewInit {
 
   constructor(
     private fb: FormBuilder,
+    private warehouseService: WarehouseService,
+    private alert: AlertService
   ) {
     // let st = new SpareType();
     // st.name = 'واحد';
@@ -58,8 +62,13 @@ export class PurchaseRequestComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.warehouseService.getSpareTypesList().subscribe(res => {
+      this.spareTypes = res.content;
+      console.log(this.spareTypes);
+    });
+
     this.itemForm = this.fb.group({
-      itemCode: ['', Validators.required],
+      spareTypeName: ['', Validators.required],
       refCode: ['', Validators.required],
       quantity: ['', Validators.required],
       make: ['', Validators.required],
@@ -74,7 +83,7 @@ export class PurchaseRequestComponent implements OnInit, AfterViewInit {
       supplierName: ['', Validators.required]
     });
 
-    this.filteredCodes = this.itemForm.get('itemCode').valueChanges
+    this.filteredCodes = this.itemForm.get('spareTypeName').valueChanges
       .pipe(
         startWith(''),
         map(st => st ? this._filterSpareTypes(st) : this.spareTypes.slice())
@@ -98,11 +107,20 @@ export class PurchaseRequestComponent implements OnInit, AfterViewInit {
   }
 
   addItem() {
-    this.purchaseItems.push(this.itemForm.value);
+    const voucherItem: VoucherItem = this.itemForm.value;
+    voucherItem.spareType = this.spareTypes.filter(
+      st => st.name === this.itemForm.controls['spareTypeName'].value)[0];
+    this.voucherItems.push(voucherItem);
     this.itemForm.reset();
   }
 
   addPurchaseRequest() {
+    const purchaseRequest: PurchaseRequest = this.purchaseForm.value;
+
+    purchaseRequest.voucherItemRequests = this.voucherItems;
+    this.warehouseService.addPurchaseRequest(purchaseRequest).subscribe(res => {
+      this.alert.success('تمت الإضافة بنجاح');
+    });
   }
 
   selectItem(item) {
